@@ -73,7 +73,7 @@ function loadMachines(){
 
                 //Se llena con el siguiente ciclo
                 for(let i=0; i < convertedInfo['machines'].length; i++){
-                    cards += '<div class="col-md-4 mt-3 mb-3 mb-sm-0">' +
+                    cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
                                 '<div class="card">' +
                                     '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
                                     '<div class="card-body">' +
@@ -179,7 +179,7 @@ function findMachine(){
 
                 //Se llena con el siguiente ciclo
                 for(let i=0; i < convertedInfo['machines'].length; i++){
-                    cards += '<div class="col-md-4 mt-3 mb-3 mb-sm-0">' +
+                    cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
                                 '<div class="card">' +
                                     '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
                                     '<div class="card-body">' +
