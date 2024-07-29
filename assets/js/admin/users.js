@@ -122,19 +122,19 @@ function loadDataUser(id){
                 //Se imprime la información
 
                 $("#divIdEditUser").append(
-                    '<input id="inputIdEditUser" name="inputIdEditUser" type="hidden" value="' + id + '">'
+                    '<input class="form-control" id="inputIdEditUser" name="inputIdEditUser" type="hidden" value="' + id + '">'
                 );
 
                 $("#divNameEditUser").append(
-                    '<input id="inputNameEditUser" name="inputNameEditUser" type="text" placeholder="Ingresa el nombre" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].name_user + '">'
+                    '<input class="form-control" id="inputNameEditUser" name="inputNameEditUser" type="text" placeholder="Ingresa el nombre" value="' + convertedInfo['user'].name_user + '">'
                 );
 
                 $("#divPhoneEditUser").append(
-                    '<input id="inputPhoneEditUser" name="inputPhoneEditUser" type="text" placeholder="Ingresa el número teléfonico" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].phone_user + '">'
+                    '<input class="form-control" id="inputPhoneEditUser" name="inputPhoneEditUser" type="text" placeholder="Ingresa el número teléfonico" value="' + convertedInfo['user'].phone_user + '">'
                 );
 
                 $("#divPasswordEditUser").append(
-                    '<input id="inputPasswordEditUser" name="inputPasswordEditUser" type="text" placeholder="Ingresa la contraseña" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].password_user + '">'
+                    '<input class="form-control" id="inputPasswordEditUser" name="inputPasswordEditUser" type="text" placeholder="Ingresa la contraseña" value="' + convertedInfo['user'].password_user + '">'
                 );
 
                 let roles = '';
@@ -142,7 +142,7 @@ function loadDataUser(id){
                 switch(convertedInfo['user'].role_id){
                     case 2:
 
-                        roles += '<select id="selectRoleEditUser" name="selectRoleEditUser" style="margin-left: 8px; width: 250px;">' +
+                        roles += '<select class="form-select" id="selectRoleEditUser" name="selectRoleEditUser">' +
                                     '<option value="2" selected>ADMIN</option>' +
                                     '<option value="3">TÉCNICO</option>' +
                                  '</select>';
@@ -152,7 +152,7 @@ function loadDataUser(id){
                         break;
                     case 3:
 
-                        roles += '<select id="selectRoleEditUser" name="selectRoleEditUser" style="margin-left: 8px; width: 250px;">' +
+                        roles += '<select class="form-select" id="selectRoleEditUser" name="selectRoleEditUser">' +
                                     '<option value="2">ADMIN</option>' +
                                     '<option value="3" selected>TÉCNICO</option>' +
                                  '</select>';

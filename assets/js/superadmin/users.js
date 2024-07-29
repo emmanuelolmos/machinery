@@ -118,7 +118,7 @@ function loadCompanies(){
 
                 //Se imprime el select para los nombres de empresas
                 $("#divCompanyAddUser").append(
-                    '<select name="selectCompanyAddUser" id="selectCompanyAddUser" style="margin-left: 8px; width: 250px;"></select>'
+                    '<select class="form-select" name="selectCompanyAddUser" id="selectCompanyAddUser"></select>'
                 );
 
                 //Se obtienen las opciones de empresas
@@ -176,12 +176,12 @@ function loadDataUser(id){
 
                 //Se imprime el select para los nombres de empresas
                 $("#divCompanyEditUser").append(
-                    '<select name="selectCompanyEditUser" id="selectCompanyEditUser" style="margin-left: 8px; width: 250px;"></select>'
+                    '<select class="form-select" name="selectCompanyEditUser" id="selectCompanyEditUser"></select>'
                 );
 
                 //Se imprime el select para los nombres de empresas
                 $("#divRoleEditUser").append(
-                    '<select name="selectRoleEditUser" id="selectRoleEditUser" style="margin-left: 8px; width: 250px;"></select>'
+                    '<select class="form-select" name="selectRoleEditUser" id="selectRoleEditUser"></select>'
                 );
 
                 //Se obtienen las opciones de empresas
@@ -221,19 +221,19 @@ function loadDataUser(id){
                 );
 
                 $("#divIdEditUser").append(
-                    '<input id="inputIdEditUser" name="inputIdEditUser" type="hidden" value="' + id + '">'
+                    '<input class="form-control" id="inputIdEditUser" name="inputIdEditUser" type="hidden" value="' + id + '">'
                 );
 
                 $("#divNameEditUser").append(
-                    '<input id="inputNameEditUser" name="inputNameEditUser" type="text" placeholder="Ingresa el nombre" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].name_user + '">'
+                    '<input class="form-control" id="inputNameEditUser" name="inputNameEditUser" type="text" placeholder="Ingresa el nombre" value="' + convertedInfo['user'].name_user + '">'
                 );
 
                 $("#divPhoneEditUser").append(
-                    '<input id="inputPhoneEditUser" name="inputPhoneEditUser" type="text" placeholder="Ingresa el número teléfonico" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].phone_user + '">'
+                    '<input class="form-control" id="inputPhoneEditUser" name="inputPhoneEditUser" type="text" placeholder="Ingresa el número teléfonico" value="' + convertedInfo['user'].phone_user + '">'
                 );
 
                 $("#divPasswordEditUser").append(
-                    '<input id="inputPasswordEditUser" name="inputPasswordEditUser" type="text" placeholder="Ingresa la contraseña" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['user'].password_user + '">'
+                    '<input class="form-control" id="inputPasswordEditUser" name="inputPasswordEditUser" type="text" placeholder="Ingresa la contraseña" value="' + convertedInfo['user'].password_user + '">'
                 );
                 
             }else{

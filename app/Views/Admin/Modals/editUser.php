@@ -15,20 +15,20 @@
                 <div id="errorMessageEditUser" class="text-center">
                     <!--Mensaje de error-->
                 </div>
-                <div id="divNameEditUser" class="text-center">
-                    <label for="name">Nombre:</label>
+                <div id="divNameEditUser" class="">
+                    <label class="form-label" for="name">Nombre:</label>
                     <!--Nombre del usuario-->
                 </div>
-                <div id="divPhoneEditUser" class="text-center mt-4">
-                    <label for="phone">Teléfono:</label>
+                <div id="divPhoneEditUser" class="mt-3">
+                    <label class="form-label" for="phone">Teléfono:</label>
                     <!--Teléfono del usuario-->
                 </div>
-                <div id="divPasswordEditUser" class="text-center mt-4">
-                    <label for="password">Contraseña:</label>
+                <div id="divPasswordEditUser" class="mt-3">
+                    <label class="form-label" for="password">Contraseña:</label>
                     <!--Contraseña-->
                 </div>
-                <div id="divRoleEditUser" class="text-center mt-4">
-                    <label for="role">Cargo:</label>
+                <div id="divRoleEditUser" class="mt-3">
+                    <label class="form-label" for="role">Cargo:</label>
                     <!--Roles-->
                 </div>
                 <div class="text-center mt-4">
