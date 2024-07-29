@@ -74,7 +74,7 @@ function loadCompaniesAddMachine(){
 
                 //Se imprime el select para los nombres de empresas
                 $("#divCompanyAddMachine").append(
-                    '<select name="selectCompanyAddMachine" id="selectCompanyAddMachine" style="margin-left: 8px; width: 250px;"></select>'
+                    '<select class="form-select" name="selectCompanyAddMachine" id="selectCompanyAddMachine"></select>'
                 );
 
                 //Se obtienen las opciones de empresas
@@ -359,7 +359,7 @@ function loadDataMachine(id){
 
                 //Se imprime el select para los nombres de empresas
                 $("#divCompanyEditMachine").append(
-                    '<select name="selectCompanyEditMachineModal" id="selectCompanyEditMachineModal" style="margin-left: 8px; width: 250px;"></select>'
+                    '<select class="form-select" name="selectCompanyEditMachineModal" id="selectCompanyEditMachineModal"></select>'
                 );
 
                 //Se obtienen las opciones de empresas
@@ -400,31 +400,31 @@ function loadDataMachine(id){
                 //Se imprime la información
 
                 $("#divIdEditMachineModal").append(
-                    '<input id="inputIdEditMachineModal" name="inputIdEditMachineModal" type="hidden" value="' + id + '">'
+                    '<input class="form-control" id="inputIdEditMachineModal" name="inputIdEditMachineModal" type="hidden" value="' + id + '">'
                 );
 
                 $("#divNameEditMachineModal").append(
-                    '<input id="inputNameEditMachineModal" name="inputNameEditMachineModal" type="text" placeholder="Ingresa el nombre" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['machine'].name_machine + '">'
+                    '<input class="form-control" id="inputNameEditMachineModal" name="inputNameEditMachineModal" type="text" placeholder="Ingresa el nombre" value="' + convertedInfo['machine'].name_machine + '">'
                 );
 
                 $("#divMarkEditMachineModal").append(
-                    '<input id="inputMarkEditMachineModal" name="inputMarkEditMachineModal" type="text" placeholder="Ingresa la marca" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['machine'].mark_machine + '">'
+                    '<input class="form-control" id="inputMarkEditMachineModal" name="inputMarkEditMachineModal" type="text" placeholder="Ingresa la marca" value="' + convertedInfo['machine'].mark_machine + '">'
                 );
 
                 $("#divModelEditMachineModal").append(
-                    '<input id="inputModelEditMachineModal" name="inputModelEditMachineModal" type="text" placeholder="Ingresa el modelo" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['machine'].model_machine + '">'
+                    '<input class="form-control" id="inputModelEditMachineModal" name="inputModelEditMachineModal" type="text" placeholder="Ingresa el modelo" value="' + convertedInfo['machine'].model_machine + '">'
                 );
 
                 $("#divSerieEditMachineModal").append(
-                    '<input id="inputSerieEditMachineModal" name="inputSerieEditMachineModal" type="text" placeholder="Ingresa el número de serie" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['machine'].serie_machine + '">'
+                    '<input class="form-control" id="inputSerieEditMachineModal" name="inputSerieEditMachineModal" type="text" placeholder="Ingresa el número de serie" value="' + convertedInfo['machine'].serie_machine + '">'
                 );
 
                 $("#divDescriptionEditMachineModal").append(
-                    '<textarea id="inputDescriptionEditMachineModal" name="inputDescriptionEditMachineModal" style="margin-left: 8px; width:250px" placeholder="Ingresa las observaciones">' + convertedInfo['machine'].observation_machine + '</textarea>'
+                    '<textarea class="form-control" id="inputDescriptionEditMachineModal" name="inputDescriptionEditMachineModal" placeholder="Ingresa las observaciones">' + convertedInfo['machine'].observation_machine + '</textarea>'
                 );
 
                 $("#divDateEditMachineModal").append(
-                    '<input id="inputDateEditMachineModal" name="inputDateEditMachineModal" type="date" required pattern="\d{4}-\d{2}-\d{2}" style="margin-left: 8px; width: 250px;" value="' + convertedInfo['machine'].date_machine + '">'
+                    '<input class="form-control" id="inputDateEditMachineModal" name="inputDateEditMachineModal" type="date" required pattern="\d{4}-\d{2}-\d{2}" value="' + convertedInfo['machine'].date_machine + '">'
                 );
 
                 $("#divImageEditMachineModal").append(

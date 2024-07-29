@@ -12,39 +12,37 @@
                 <div id="errorMessageAddMachineModal" class="text-center">
                     <!--Mensaje de error-->
                 </div>
-                <div class="text-center">
-                    <label for="inputNameAddMachineModal">Nombre:</label>
-                    <input id="inputNameAddMachineModal" name="inputNameAddMachineModal" type="text" placeholder="Ingresa el nombre" style="margin-left: 8px; width: 250px;">
+                <div class="">
+                    <label class="form-label" for="inputNameAddMachineModal">Nombre:</label>
+                    <input class="form-control" id="inputNameAddMachineModal" name="inputNameAddMachineModal" type="text" placeholder="Ingresa el nombre">
                 </div>
-                <div class="text-center mt-4">
-                    <label for="inputMarkAddMachineModal">Marca:</label>
-                    <input id="inputMarkAddMachineModal" name="inputMarkAddMachineModal" type="text" placeholder="Ingresa la marca" style="margin-left: 8px; width: 250px;">
+                <div class="mt-3">
+                    <label class="form-label" for="inputMarkAddMachineModal">Marca:</label>
+                    <input class="form-control" id="inputMarkAddMachineModal" name="inputMarkAddMachineModal" type="text" placeholder="Ingresa la marca">
                 </div>
-                <div class="text-center mt-4">
-                    <label for="inputModelAddMachineModal">Modelo:</label>
-                    <input id="inputModelAddMachineModal" name="inputModelAddMachineModal" type="text" placeholder="Ingresa el modelo" style="margin-left: 8px; width: 250px;">
+                <div class="mt-3">
+                    <label class="form-label" for="inputModelAddMachineModal">Modelo:</label>
+                    <input class="form-control" id="inputModelAddMachineModal" name="inputModelAddMachineModal" type="text" placeholder="Ingresa el modelo">
                 </div>
-                <div class="text-center mt-4">
-                    <label for="inputSerieAddMachineModal">Número de serie:</label>
-                    <input id="inputSerieAddMachineModal" name="inputSerieAddMachineModal" type="text" placeholder="Ingresa el número de serie" style="margin-left: 8px; width: 250px;">
+                <div class="mt-3">
+                    <label class="form-label" for="inputSerieAddMachineModal">Número de serie:</label>
+                    <input class="form-control" id="inputSerieAddMachineModal" name="inputSerieAddMachineModal" type="text" placeholder="Ingresa el número de serie">
                 </div>
-                <div class="text-center mt-4">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <label for="inputDescriptionAddMachineModal">Observaciones:</label>
-                        <textarea id="inputDescriptionAddMachineModal" name="inputDescriptionAddMachineModal" style="margin-left: 8px; width:250px" placeholder="Ingresa las observaciones"></textarea>
-                    </div>
+                <div class="mt-3">
+                    <label class="form-label" for="inputDescriptionAddMachineModal">Observaciones:</label>
+                    <textarea class="form-control" id="inputDescriptionAddMachineModal" name="inputDescriptionAddMachineModal" placeholder="Ingresa las observaciones"></textarea>
                 </div>
-                <div class="text-center mt-4">
-                    <label for="inputDateAddMachineModal">Fecha de compra:</label>
-                    <input id="inputDateAddMachineModal" name="inputDateAddMachineModal" type="date" required pattern="\d{4}-\d{2}-\d{2}" style="margin-left: 8px; width: 250px;">
+                <div class="mt-3">
+                    <label class="form-label" for="inputDateAddMachineModal">Fecha de compra:</label>
+                    <input class="form-control" id="inputDateAddMachineModal" name="inputDateAddMachineModal" type="date" required pattern="\d{4}-\d{2}-\d{2}">
                 </div>
-                <div id="divCompanyAddMachine" class="text-center mt-4">
-                    <label for="role">Empresa:</label>
+                <div id="divCompanyAddMachine" class="mt-3">
+                    <label class="form-label" for="role">Empresa:</label>
                     <!--Empresas-->
                 </div>
-                <div class="text-center mt-4">
-                    <label for="inputImageAddMachineModal">Imagen:</label>
-                    <input id="inputImageAddMachineModal" name="inputImageAddMachineModal" type="file" accept="image/*" style="margin-left: 8px; width: 250px;">
+                <div class="mt-3">
+                    <label class="form-label" for="inputImageAddMachineModal">Imagen:</label>
+                    <input class="form-control" id="inputImageAddMachineModal" name="inputImageAddMachineModal" type="file" accept="image/*">
                 </div>
                 
                 <div class="text-center mt-4">

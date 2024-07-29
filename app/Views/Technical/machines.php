@@ -31,26 +31,26 @@
         include 'Components/navbar.php';
     ?>
 
-    <div class="card shadow mb-5" style="margin-left: 40px; margin-right: 40px; margin-top:40px;">
+    <div class="card shadow mt-4 mb-5 mx-5">
 
-        <div id="divNameCompany" class="ms-3 mt-4">
+        <div id="divNameCompany" class="ms-3 mt-3">
             <!-- Nombre de la empresa -->
         </div>
 
-        <div class="d-flex justify-content-between p-2 bg-primary text-white mt-2 ms-3 me-3">
+        <div class="d-flex justify-content-between p-2 bg-primary text-white mt-2 ms-3 me-3 rounded">
 
         <div>
-            <h1 class="fs-5" style="margin-left: 20px; margin-top:5px;">
+            <h1 class="fs-5 mt-1 ms-3">
                 Administrar maquinas
             </h1>
         </div>
 
         <div>
-            <input id="inputNameMachine" class="border rounded-1" onkeyup="findMachine()" type="text" style="width: 400px; margin-top:5px;" placeholder="Ingresa el nombre de la maquina a buscar">
+        <input id="inputNameMachine" class="form-control form-control-sm mt-1" onkeyup="findMachine()" type="text" style="width: 400px;" placeholder="Ingresa el nombre de la maquina a buscar">
         </div>
 
         <div>
-            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addMachineModal" style="margin-right: 30px;">
+            <button class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#addMachineModal">
                 <i class="bi bi-plus-circle"></i></i> Agregar
             </button>
         </div>

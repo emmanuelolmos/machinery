@@ -31,31 +31,31 @@
         include 'Components/navbar.php';
     ?>
 
-    <div class="card shadow" style="margin-left: 40px; margin-right: 40px; margin-top:40px;">
-        <div class="d-flex justify-content-between p-2 bg-primary text-white" style="margin-left: 20px; margin-right: 20px; margin-top:40px">
+    <div class="card shadow ms-4 me-4 mt-4">
+        <div class="d-flex justify-content-between p-2 bg-primary text-white ms-3 me-3 mt-3 rounded">
 
         <div>
-            <h1 class="fs-5" style="margin-left: 20px; margin-top:5px;">
+            <h1 class="fs-5 ms-3 mt-1">
                 Administrar usuarios
             </h1>
         </div>
         <div>
-            <button class="btn btn-secondary" onclick="loadCompanies()" data-bs-toggle="modal" data-bs-target="#addUserModal" style="margin-right: 30px;">
+            <button class="btn btn-secondary me-3" onclick="loadCompanies()" data-bs-toggle="modal" data-bs-target="#addUserModal">
                 <i class="bi bi-person-plus-fill"></i> Agregar
             </button>
         </div>
            
         </div>
 
-        <div id="divUsers" class="p-2" style="margin-left: 10px; margin-right: 10px; margin-top:10px">
+        <div id="divUsers" class="table-responsive ms-3 me-3 mt-3">
             <table id="tableUsers" class="text-center" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="background-color: #BDBDBD; padding: 10px;" scope="col">NOMBRE</th>
-                        <th style="background-color: #BDBDBD; padding: 10px;" scope="col">TELEFONO</th>
-                        <th style="background-color: #BDBDBD; padding: 10px;" scope="col">EMPRESA</th>
-                        <th style="background-color: #BDBDBD; padding: 10px;" scope="col">CARGO</th>
-                        <th style="background-color: #BDBDBD; padding: 10px;" scope="col">OPCIONES</th>
+                        <th class="p-2 bg-secondary text-white" scope="col">NOMBRE</th>
+                        <th class="p-2 bg-secondary text-white" scope="col">TELEFONO</th>
+                        <th class="p-2 bg-secondary text-white" scope="col">EMPRESA</th>
+                        <th class="p-2 bg-secondary text-white" scope="col">CARGO</th>
+                        <th class="p-2 bg-secondary text-white" scope="col">OPCIONES</th>
                     </tr>
                 </thead>
 

@@ -33,7 +33,7 @@
     <div class="card shadow mx-5 mt-5">
 
         <!--Mensaje de bienvenida-->
-        <div class="mt-5 mx-auto">
+        <div class="mt-5 mx-3 text-center">
             <h1 class="fs-2">Bienvenido Administrador</h1>
         </div>
 
