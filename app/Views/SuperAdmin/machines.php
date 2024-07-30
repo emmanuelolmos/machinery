@@ -33,20 +33,20 @@
 
     <div class="card shadow mt-4 mb-5 mx-5">
 
-        <div class="d-flex justify-content-between p-2 bg-primary text-white mt-2 ms-3 me-3 rounded">
+        <div class="d-flex row justify-content-between p-2 bg-primary text-white mt-2 ms-3 me-3 rounded">
 
-        <div>
+        <div class="col-12 col-md-4 text-center text-md-start">
             <h1 class="fs-5 mt-1 ms-3">
                 Administrar maquinas
             </h1>
         </div>
 
-        <div>
-            <input id="inputNameMachine" class="form-control form-control-sm mt-1" onkeyup="findMachine()" type="text" style="width: 400px;" placeholder="Ingresa el nombre de la maquina a buscar">
+        <div class="col-12 col-md-4 text-center">
+            <input id="inputNameMachine" class="form-control form-control-sm mt-1" onkeyup="findMachine()" type="text" placeholder="Ingresa el nombre de la maquina a buscar">
         </div>
 
-        <div>
-            <button class="btn btn-secondary me-3" onclick="loadCompaniesAddMachine()" data-bs-toggle="modal" data-bs-target="#addMachineModal">
+        <div class="col-12 col-md-4 mt-2 mt-md-0 text-center text-md-end">
+            <button class="btn btn-secondary" onclick="loadCompaniesAddMachine()" data-bs-toggle="modal" data-bs-target="#addMachineModal">
                 <i class="bi bi-plus-circle"></i></i> Agregar
             </button>
         </div>
