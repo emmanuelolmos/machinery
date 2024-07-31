@@ -52,14 +52,14 @@ $env = parse_ini_file('../../../.env');
         <div class="d-flex">
 
             <!-- Primer división -->
-            <div class="divCategories" style="width: 80%;">
+            <div class="divCategories" style="width: 100%;">
 
                 <!-- Abarca las categorias-->
                 <div class="mt-2 mx-5">
 
                     <div class="d-flex">
                         <h2 class="fs-4">Categorias</h2>
-                        <button class="btn btn-dark ms-2" type="button"><i class="bi bi-plus-circle"></i></button>
+                        <button class="btn btn-dark ms-2" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="bi bi-plus-circle"></i></button>
                     </div>
 
                     <div class="card-container">
@@ -105,19 +105,35 @@ $env = parse_ini_file('../../../.env');
                     </div>
                 </div>
 
+                <div class="divShowChecks mt-3 mx-5">
+                    <div class="d-flex">
+                        <h4 class="mt-1">Checks</h4>
+                        <button class="ms-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#showChecksModal">Mostrar</button>
+                    </div>
+                </div>
+
                 <!-- Titulo -->
-                <h3 class="mt-1 fs-4 text-center">Nueva plantilla</h3>
+                <h3 class="mt-3 fs-4 text-center">Nueva plantilla</h3>
 
                 <!-- Abarca la tabla de la plantilla -->
                 <div class="mt-1 mb-5 mx-5">
 
-                    <div class="table-responsive">
+                    <div>
+                        <label class="form-label" for="">Categoria</label>
+                        <select class="form-select" name="" id="">
+                            <option value="1">Autos</option>
+                            <option value="2">Camiones</option>
+                            <option value="3">Trailes</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive mt-2">
 
                         <table class="text-center" style="width:100%;">
 
                             <thead>
                                 <tr>
-                                    <th class="col-8 p-2 bg-secondary text-white" scope="col">CHECK</th>
+                                    <th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>
                                     <th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>
                                 </tr>
                             </thead>
@@ -153,6 +169,10 @@ $env = parse_ini_file('../../../.env');
                         </table>
                     </div>
 
+                    <div class="mt-2 text-center">
+                        <button class="btn btn-primary">Registrar</button>
+                    </div>
+
                 </div>
 
             </div>
@@ -160,7 +180,7 @@ $env = parse_ini_file('../../../.env');
             <!-- Segunda división -->
             <div class="divChecks" style="width: 20%;">
 
-                <div class="mt-2 mx-1">
+                <div class="mt-2 me-3">
                     
                     <div class="row">
 
@@ -168,43 +188,32 @@ $env = parse_ini_file('../../../.env');
                             <h4 class="ms-2 fs-5 text-center">Checks</h4>
                         </div>
 
-                        <div class="col-12 col-sm-4">
-                            <button class="btn btn-dark btn-sm ms-1 mb-1" type="button"><i class="bi bi-plus-circle"></i></button>
+                        <div class="col-12 col-sm-4 text-start">
+                            <button class="btn btn-dark btn-sm ms-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#addCheckModal"><i class="bi bi-plus-circle"></i></button>
                         </div>
 
                     </div>
 
                     <div class="table-responsive">
-                        <table class="text-center" style="width:100%;">
-                        <thead>
+                        <table id="tableChecks" class="text-center" style="width:100%;">
+                            <thead>
                                 <tr>
                                     <th class="col-8 p-2 bg-black text-white" scope="col">CHECK</th>
                                     <th class="col-4 p-2 bg-black text-white" scope="col">AGREGAR</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 10px;">Limpiar con trapo</td>
-                                    <td class="text-center" style="padding: 10px;">
-                                        <button class="btn btn-success" onclick="loadDataUser()" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                            <i class="bi bi-plus-square"></i>
-                                        </button>
-                                    </td>
-                                    
-                                </tr>
+                            <tbody id="tbodyChecks">
 
-                                <tr>
-                                    <td style="padding: 10px;">Cambiar cartuchos</td>
-                                    <td class="text-center" style="padding: 10px;">
-                                        <button class="btn btn-success" onclick="loadDataUser()" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                            <i class="bi bi-plus-square"></i>
-                                        </button>
-                                    </td>
-                                    
-                                </tr>
+                                <!-- Registros de checks -->
+                                
                             </tbody>
                         </table>
+
+                        <div id="divMessageTableChecks" class="mt-2 text-center text-danger">
+                            <!-- Mensaje de error -->
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -217,6 +226,8 @@ $env = parse_ini_file('../../../.env');
     <!-- Modales -->
     <?php
         include 'Modals/addCategory.php';
+        include 'Modals/showChecks.php';
+        include 'Modals/addCheck.php';
     ?>
 
     <!-- Scripts -->
