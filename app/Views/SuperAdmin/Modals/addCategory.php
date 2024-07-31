@@ -8,11 +8,15 @@
             </div>
             <div class="modal-body">
 
-                <form id="formAddCheck">
-                    
+                <form id="formAddCategory">
+
+                    <div id="errorMessageAddCategoryModal" class="text-center">
+                        <!--Mensaje de error-->
+                    </div>
+
                     <div>
                         <label class="form-label" for="inputNameAddCategory">Nombre</label>
-                        <input class="form-control" type="text" placeholder="Ingresa el nombre de la categoria">
+                        <input class="form-control" name="inputNameAddCategory" id="inputNameAddCategory" type="text" placeholder="Ingresa el nombre de la categoria">
                     </div>
 
                     <div class="mt-2">

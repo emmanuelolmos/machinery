@@ -59,48 +59,18 @@ $env = parse_ini_file('../../../.env');
 
                     <div class="d-flex">
                         <h2 class="fs-4">Categorias</h2>
-                        <button class="btn btn-dark ms-2" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="bi bi-plus-circle"></i></button>
+                        <button class="btn btn-dark ms-2" onclick="deleteMessageAddCategory()" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="bi bi-plus-circle"></i></button>
                     </div>
 
-                    <div class="card-container">
-                        <!-- Categoria 1 -->
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mt-2 mb-2">
-                            <div class="card">
-                                <img class="mx-auto mt-1" src="../../../assets/img/iconoAuto.jpeg" style="width: 120px; height:100px;" alt="">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownCategoriesBtn" data-bs-toggle="dropdown" aria-expanded="false">Autos</button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownCategoriesBtn">
-                                    <li class="dropdown-item" onclick="">Plantilla 1</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 2</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 3</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div id="cardsCategories" class="card-container">
 
-                        <!-- Categoria 2 -->
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mt-2 mb-2">
-                            <div class="card">
-                                <img class="mx-auto mt-1" src="../../../assets/img/iconoCamion.jpg" style="width: 120px; height:100px;" alt="">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownCategoriesBtn" data-bs-toggle="dropdown" aria-expanded="false">Camiones</button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownCategoriesBtn">
-                                    <li class="dropdown-item" onclick="">Plantilla 4</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 5</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 6</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <!-- Categorias --> 
 
-                        <!-- Categoria 3 -->
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mt-2 mb-2">
-                            <div class="card">
-                                <img class="mx-auto mt-1" src="../../../assets/img/iconoTrailer.avif" style="width: 120px; height:100px;" alt="">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownCategoriesBtn" data-bs-toggle="dropdown" aria-expanded="false">Trailers</button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownCategoriesBtn">
-                                    <li class="dropdown-item" onclick="">Plantilla 7</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 8</li>
-                                    <li class="dropdown-item" onclick="">Plantilla 9</li>
-                                </ul>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div id="divMessageCardsCategories" class="text-danger">
+                        
+                        <!-- Mensaje de error --> 
 
                     </div>
                 </div>
