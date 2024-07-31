@@ -7,5 +7,5 @@ function redirectMachinesPanel(){
 }
 
 function redirectTemplatesPanel(){
-
+    location.href = 'templates.php';
 }

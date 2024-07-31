@@ -20,7 +20,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Plantillas</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/SuperAdmin/templates.php'; ?>">Plantillas</a>
         </li>
 
         <li class="nav-item">

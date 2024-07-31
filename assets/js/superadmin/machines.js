@@ -148,7 +148,7 @@ function loadMachines(){
                                             '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
                                                 '<li class="dropdown-item">Asignar mantenimiento</li>' +
-                                                '<li class="dropdown-item">Crear checks</li>' +
+                                                '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Crear checks</li>' +
                                                 '<li class="dropdown-item">Generar revisiones</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
@@ -443,6 +443,10 @@ function loadDataMachine(id){
         } 
     }); 
 
+}
+
+function redirectChecks(id){
+    location.href = 'checks.php?id_machine=' + id;
 }
 
 function deleteMachine(id){
