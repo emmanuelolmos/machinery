@@ -53,6 +53,25 @@ switch($function){
         
         break;
     
+    case 'getTemplates':
+
+        $id_category = $_POST['id_category'];
+
+        $template = new Template();
+
+        $result = $template->getTemplates($id_category);
+
+        if($result == 'Empty' || $result == 'Error'){
+            $response['success'] = false;
+            $response['error'] = $result;
+        }else{
+            $response['success'] = true;
+            $response['templates'] = $result;
+        }
+
+        echo json_encode($response);
+
+        break;
     
     default:
 

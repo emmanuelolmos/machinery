@@ -3,6 +3,7 @@
 session_start();
 
 require "../../Models/Category.php";
+require "../../Models/Template.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){
@@ -58,12 +59,18 @@ switch($function){
         $category = new Category();
 
         $result = $category->getCategories();
+
+        //Se obtienen las plantillas
+        $template = new Template();
+
+        $templates = $template->getTemplatesAll();
         
         //Si hay un error se manda por la variable data
         if($result != 'Empty' && $result != 'Error'){
 
             $response['success'] = true;
             $response['categories'] = $result;
+            $response['templates'] = $templates;
 
         }else{
 

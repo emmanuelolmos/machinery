@@ -159,8 +159,30 @@ function loadCardsCategory(){
                                     '<div class="card">' +
                                         '<img class="mx-auto mt-1" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['categories'][i].image_category + '" style="width: 120px; height:100px;" alt="">' +
                                         '<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownCategoriesBtn" data-bs-toggle="dropdown" aria-expanded="false">' + convertedInfo['categories'][i].name_category + '</button>' +
-                                        '<ul class="dropdown-menu" aria-labelledby="dropdownCategoriesBtn">' +
-                                        '</ul>' +
+                                        '<ul class="dropdown-menu" aria-labelledby="dropdownCategoriesBtn">'; 
+                                        
+                    if(convertedInfo['templates'] == 'Empty' || convertedInfo['templates'] == 'Error'){
+                        cards += '<li class="dropdown-item">Sin plantillas</li>';
+                    }else{
+
+                        let empty = true;
+
+                        for(let j = 0; j < convertedInfo['templates'].length; j++){
+
+                            if(convertedInfo['categories'][i].id_category == convertedInfo['templates'][j].category_id){
+                                cards += '<li class="dropdown-item">' + convertedInfo['templates'][j].name_template + '</li>';
+                                empty = false;
+                            }
+                        }
+
+                        if(empty){
+                            cards += '<li class="dropdown-item">Sin plantillas</li>';
+                        }
+
+                    }                 
+                    
+                                        
+                    cards +=             '</ul>' +
                                     '</div>' +
                                 '</div>';
                 }

@@ -12,6 +12,47 @@ class Template{
         $this->connection = Connection::ConnectDB();
     }
 
+    function getTemplatesAll(){
+
+        $query = "SELECT * FROM templates WHERE status_template = '1' ORDER BY name_template";
+
+        $statement = $this->connection->prepare($query);
+
+        if($statement->execute()){
+
+            $templates = $statement->fetchAll();
+
+            if(isset($templates[0]['id_template'])){
+                return $templates;
+            }else{
+                return 'Empty';
+            }
+        }else{
+            return 'Error';
+        }
+    }
+
+    function getTemplates($id_category){
+
+        $query = "SELECT * FROM templates WHERE category_id = :category_id AND status_template = '1'";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':category_id', $id_category);
+
+        if($statement->execute()){
+
+            $templates = $statement->fetchAll();
+
+            if(isset($templates[0]['id_template'])){
+                return $templates;
+            }else{
+                return 'Empty';
+            }
+        }else{
+            return 'Error';
+        }
+    }
+
     function insertTemplate($name, $category, $checks){
 
         //Se comprueba que no haya otra plantilla con el mismo nombre
