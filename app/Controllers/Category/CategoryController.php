@@ -83,6 +83,24 @@ switch($function){
 
         break;
 
+    case 'deleteCategory':
+
+        $id_category = $_POST['id_category'];
+
+        $category = new Category();
+
+        $result = $category->deleteCategory($id_category);
+
+        if(empty($result)){
+            $response['success'] = true;
+        }else{
+            $response['success'] = false;
+        }
+
+        echo json_encode($response);
+
+        break;
+
     default:
 
         echo '

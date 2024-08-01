@@ -58,14 +58,16 @@ $env = parse_ini_file('../../../.env');
                 <div class="mt-2 mx-5">
 
                     <div class="d-flex">
-                        <h2 class="fs-4">Categorias</h2>
+                        <h2 class="fs-4 mt-1">Categorias</h2>
                         <button class="btn btn-dark ms-2" onclick="deleteMessageAddCategory()" type="button" data-bs-toggle="modal" data-bs-target="#addCategoryModal"><i class="bi bi-plus-circle"></i></button>
                     </div>
 
-                    <div id="cardsCategories" class="card-container">
+                    <div id="divCardsCategories">
+                        <div id="cardsCategories" class="card-container">
 
-                        <!-- Categorias --> 
+                            <!-- Categorias --> 
 
+                        </div>
                     </div>
 
                     <div id="divMessageCardsCategories" class="text-danger">
@@ -78,7 +80,7 @@ $env = parse_ini_file('../../../.env');
                 <div class="divShowChecks mt-3 mx-5">
                     <div class="d-flex">
                         <h4 class="mt-1">Checks</h4>
-                        <button class="ms-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#showChecksModal">Mostrar</button>
+                        <button class="ms-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#showChecksModal" onclick="showChecks()">Mostrar</button>
                     </div>
                 </div>
 

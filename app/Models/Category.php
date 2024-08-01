@@ -105,6 +105,20 @@ class Category{
         }
     }
 
+    function deleteCategory($id_category){
+
+        $query = "UPDATE categories SET status_category = '0' WHERE id_category = :id_category";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id_category', $id_category);
+
+        if($statement->execute()){
+            return '';
+        }else{
+            return 'Error';
+        }
+    }
+
     
 }
 

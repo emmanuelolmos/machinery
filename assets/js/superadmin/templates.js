@@ -109,6 +109,7 @@ function loadTableChecks(){
                 }
 
                 $("#tbodyChecks").append(tbody);
+                $("#tbodyChecksModal").append(tbody);
                 
             }else{
 
@@ -117,14 +118,23 @@ function loadTableChecks(){
                         $("#divMessageTableChecks").append(
                             '<h5 id="errorTableChecks" class="text-danger">Error en la conexión con la base de datos.</h5>'
                         );
+                        $("#divMessageTableModal").append(
+                            '<h5 id="errorTableChecks" class="text-danger">Error en la conexión con la base de datos.</h5>'
+                        );
                         break;
                     case 'Empty':
                         $("#divMessageTableChecks").append(
                             '<h5 id="errorTableChecks" class="text-danger">Sin registros.</h5>'
                         );
+                        $("#divMessageTableChecksModal").append(
+                            '<h5 id="errorTableChecks" class="text-danger">Sin registros.</h5>'
+                        );
                         break;
                     default:
                         $("#divMessageTableChecks").append(
+                            '<h5 id="errorTableChecks" class="text-danger">Error desconocido.</h5>'
+                        );
+                        $("#divMessageTableChecksModal").append(
                             '<h5 id="errorTableChecks" class="text-danger">Error desconocido.</h5>'
                         );
                         break;
@@ -140,6 +150,10 @@ function loadTableChecks(){
 }
 
 function loadCardsCategory(){
+
+    $("#cardsCategories").remove();
+    $("#divCardsCategories").append('<div id="cardsCategories" class="card-container"></div>');
+
     var petition = {function: 'getCategories'};
     
     $.ajax({ 
@@ -165,19 +179,17 @@ function loadCardsCategory(){
                         cards += '<li class="dropdown-item">Sin plantillas</li>';
                     }else{
 
-                        let empty = true;
+                        //let empty = true;
 
                         for(let j = 0; j < convertedInfo['templates'].length; j++){
 
                             if(convertedInfo['categories'][i].id_category == convertedInfo['templates'][j].category_id){
                                 cards += '<li class="dropdown-item">' + convertedInfo['templates'][j].name_template + '</li>';
-                                empty = false;
+                                //empty = false;
                             }
                         }
 
-                        if(empty){
-                            cards += '<li class="dropdown-item">Sin plantillas</li>';
-                        }
+                        cards += '<li class="dropdown-item" onclick="deleteCategory(' + convertedInfo['categories'][i].id_category + ')">Eliminar categoria</li>';
 
                     }                 
                     
@@ -322,6 +334,76 @@ function deleteCheck(id){
     loadTemplate();
 }
 
+function deleteCategory(id){
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: true
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Estás seguro de eliminar la categoría?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            var formData = {
+                id_category: id,
+                function: 'deleteCategory'
+            };
+
+            $.ajax({ 
+                url: '../../Controllers/Category/CategoryController.php', 
+                type: 'POST', 
+                data: formData, 
+                success: function (data){
+        
+                    var convertedInfo = JSON.parse(data);
+        
+                    if(convertedInfo['success']){
+        
+                        swalWithBootstrapButtons.fire({
+                            title: "Eliminada",
+                            text: "La categoría se eliminó correctamente",
+                            icon: "success"
+                        });
+
+                        loadCardsCategory();
+                        
+                    }else{
+
+                        swalWithBootstrapButtons.fire({
+                            title: "Cancelado",
+                            text: "La categoría no se eliminó",
+                            icon: "error"
+                          });
+                    }
+        
+                }, 
+                error: function (jqXHR, textStatus, errorThrown) { 
+                    alert('Error'); 
+                } 
+            });
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "La categoría no se eliminó",
+            icon: "error"
+          });
+        }
+      });
+}
+
 function storeTemplate(){
 
     $("#messageStatusTemplate").remove();
@@ -369,6 +451,10 @@ function storeTemplate(){
         } 
     });
     
+}
+
+function showChecks(){
+
 }
 
 //Formularios de los modales
