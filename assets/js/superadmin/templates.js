@@ -280,6 +280,65 @@ function loadTemplate(){
     }
 }
 
+function loadDeleteChecks(){
+
+    $("#tbodyDeleteChecksModal").remove();
+    $("#tableDeleteChecksModal").append('<tbody id="tbodyDeleteChecksModal"></tbody>');
+
+    var petition = {function: 'getChecks'};
+    
+    $.ajax({ 
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (response){
+
+            var convertedInfo = JSON.parse(response);
+
+            if(convertedInfo['success']){
+
+                let tbody = '';
+
+                for(let i = 0; i < convertedInfo['checks'].length; i++){
+
+                    let content_check = "'" + convertedInfo['checks'][i].content_check + "'";
+
+                    tbody +=    '<tr>' +
+                                    '<td style="padding: 10px;">' + convertedInfo['checks'][i].content_check + '</td>' +
+                                    '<td class="text-center" style="padding: 10px;">' +
+                                        '<button class="btn btn-danger" onclick="deleteCheckDB(' + convertedInfo['checks'][i].id_check + ', ' + content_check + ');">' +
+                                            '<i class="bi bi-trash-fill"></i>' +
+                                        '</button>' +
+                                    '</td>' +
+                                '</tr>';
+                }
+
+                $("#tbodyDeleteChecksModal").append(tbody);
+                
+            }else{
+
+                switch(convertedInfo['error']){
+                    case 'Error':
+                        $("#divMessageDeleteTableChecks").append(
+                            '<h5 id="errorDeleteTableChecks" class="text-danger">Error en la conexión con la base de datos.</h5>'
+                        );
+                        break;
+                    default:
+                        $("#divMessageDeleteTableChecks").append(
+                            '<h5 id="errorDeleteTableChecks" class="text-danger">Error desconocido.</h5>'
+                        );
+                        break;
+                }
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
+
 function addCheck(id, content){
 
     deleteMessageStatusAddTemplate()
@@ -332,6 +391,40 @@ function deleteCheck(id){
     template_content.splice(space, 1);
     
     loadTemplate();
+}
+
+function deleteCheckDB(id){
+
+    var formData = {
+        id_check: id,
+        function: 'deleteCheck'
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                location.reload();
+                
+            }else{
+
+                $("#divMessageDeleteStatusChecksModal").append(
+                    '<h5 class="text-danger fs-3">Ocurrió un error, el check no se eliminó</h5>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 }
 
 function deleteCategory(id){

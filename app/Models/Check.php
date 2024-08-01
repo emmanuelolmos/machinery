@@ -75,6 +75,16 @@ class Check{
         }
     }
 
+    function deleteCheck($id_check){
+
+        $query = "UPDATE checks SET status_check = '0' WHERE id_check = :id_check";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id_check', $id_check);
+
+        return $statement->execute();
+    }
+
     
 }
 

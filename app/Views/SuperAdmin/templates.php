@@ -81,6 +81,7 @@ $env = parse_ini_file('../../../.env');
                     <div class="d-flex">
                         <h4 class="mt-1">Checks</h4>
                         <button class="ms-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#showChecksModal" onclick="showChecks()">Mostrar</button>
+                        <button class="ms-2 btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCheckModal" onclick="loadDeleteChecks()"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
 
@@ -141,19 +142,17 @@ $env = parse_ini_file('../../../.env');
             </div>
 
             <!-- Segunda división -->
-            <div class="divChecks" style="width: 20%;">
+            <div class="divChecks" style="width: 35%;">
 
                 <div class="mt-2 me-3">
                     
-                    <div class="row">
+                    <div class="d-flex">
 
-                        <div class="col-12 col-sm-8">
-                            <h4 class="ms-2 fs-5 text-center">Checks</h4>
-                        </div>
-
-                        <div class="col-12 col-sm-4 text-start">
-                            <button class="btn btn-dark btn-sm ms-1 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#addCheckModal"><i class="bi bi-plus-circle"></i></button>
-                        </div>
+                        <h4 class="ms-2 fs-5">Checks</h4>
+                        
+                        <button class="btn btn-dark btn-sm ms-2 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#addCheckModal"><i class="bi bi-plus-circle"></i></button>
+                        
+                        <button class="btn btn-danger btn-sm ms-2 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#deleteCheckModal" onclick="loadDeleteChecks()"><i class="bi bi-dash-circle"></i></button>
 
                     </div>
 
@@ -191,6 +190,7 @@ $env = parse_ini_file('../../../.env');
         include 'Modals/addCategory.php';
         include 'Modals/showChecks.php';
         include 'Modals/addCheck.php';
+        include 'Modals/deleteCheck.php';
     ?>
 
     <!-- Scripts -->

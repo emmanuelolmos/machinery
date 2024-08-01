@@ -88,6 +88,24 @@ switch($function){
 
         break;
 
+    case 'deleteCheck':
+
+        $id_check = $_POST['id_check'];
+
+        $check = new Check();
+
+        $result = $check->deleteCheck($id_check);
+
+        if($result){
+            $response['success'] = true;
+        }else{
+            $response['success'] = false;
+        }
+
+        echo json_encode($response);
+
+        break;
+
     default:
 
         echo '
