@@ -27,7 +27,7 @@ class Check{
             if(!isset($checks[0]['id_check'])){
 
                 //No se encuentra en la bdd
-                $query = 'INSERT INTO checks (content_check) VALUES (:content_check)';
+                $query = "INSERT INTO checks (content_check, status_check) VALUES (:content_check, '1')";
 
                 $statement = $this->connection->prepare($query);
                 $statement->bindParam(':content_check', $content);
@@ -53,7 +53,7 @@ class Check{
     function getChecks(){
 
         //Se prepara el query
-        $query = 'SELECT * FROM checks ORDER BY content_check';
+        $query = "SELECT * FROM checks WHERE status_check = '1' ORDER BY content_check";
 
         $statement = $this->connection->prepare($query);
         

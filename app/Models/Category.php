@@ -56,7 +56,7 @@ class Category{
                 $name_image = $response;
 
                 //Se guarda la categoria
-                $query = 'INSERT INTO categories (name_category, image_category) VALUES (:name_category, :image_category)';
+                $query = "INSERT INTO categories (name_category, image_category, status_category) VALUES (:name_category, :image_category, '1')";
 
                 $statement = $this->connection->prepare($query);
                 $statement->bindParam(':name_category', $name);
@@ -83,7 +83,7 @@ class Category{
     function getCategories(){
 
         //Se prepara el query
-        $query = 'SELECT * FROM categories ORDER BY name_category';
+        $query = "SELECT * FROM categories WHERE status_category = '1' ORDER BY name_category";
 
         $statement = $this->connection->prepare($query);
         
