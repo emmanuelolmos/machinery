@@ -85,21 +85,32 @@ $env = parse_ini_file('../../../.env');
                 <!-- Titulo -->
                 <h3 class="mt-3 fs-4 text-center">Nueva plantilla</h3>
 
+                <div id="divStatusTemplate">
+
+                    <!-- Mensaje de estatus del registro de la plantilla --> 
+                    <!-- <h4 class="mt-2 fs-5 text-center text-success">Plantilla registrada</h4>-->
+                </div>
+
                 <!-- Abarca la tabla de la plantilla -->
                 <div class="mt-1 mb-5 mx-5">
 
-                    <div>
-                        <label class="form-label" for="">Categoria</label>
-                        <select class="form-select" name="" id="">
-                            <option value="1">Autos</option>
-                            <option value="2">Camiones</option>
-                            <option value="3">Trailes</option>
+                    <div id="divNameAddTemplate">
+                        <label class="form-label" for="inputNameAddTemplate">Nombre</label>
+                        <input class="form-control" type="text" name="inputNameAddTemplate" id="inputNameAddTemplate" placeholder="Ingresa el nombre de la plantilla">
+                    </div>
+
+                    <div id="divCategoryAddTemplate" class="mt-2">
+                        <label class="form-label" for="selectCategoryAddTemplate">Categoria</label>
+                        <select class="form-select" name="selectCategoryAddTemplate" id="selectCategoryAddTemplate">
+                            
+                            <!-- Categorias --> 
+
                         </select>
                     </div>
 
                     <div class="table-responsive mt-2">
 
-                        <table class="text-center" style="width:100%;">
+                        <table id="tableTemplate" class="text-center" style="width:100%;">
 
                             <thead>
                                 <tr>
@@ -108,39 +119,19 @@ $env = parse_ini_file('../../../.env');
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 10px;">Limpiar con trapo</td>
-                                    <td style="padding: 10px;">
-                                        <button class="btn btn-success" onclick="loadDataUser()" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                            <i class="bi bi-pencil-fill"></i>
-                                        </button>
-                                        <button class="btn btn-danger" onclick="removeUser()">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </td>
-                                    
-                                </tr>
+                            <!--<tbody id="tbodyTemplate">-->
 
-                                <tr>
-                                    <td style="padding: 10px;">Cambiar cartuchos</td>
-                                    <td style="padding: 10px;">
-                                        <button class="btn btn-success" onclick="loadDataUser()" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                            <i class="bi bi-pencil-fill"></i>
-                                        </button>
-                                        <button class="btn btn-danger" onclick="removeUser()">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </td>
-                                    
-                                </tr>
-                            </tbody>
+                                <!-- Contenido de la plantilla --> 
+
+                            <!--</tbody>-->
 
                         </table>
                     </div>
 
-                    <div class="mt-2 text-center">
-                        <button class="btn btn-primary">Registrar</button>
+                    <div id="divDownAddTemplate" class="mt-2 text-center">
+
+                        <!-- Se muestra el botón para registrar plantilla o mensaje --> 
+
                     </div>
 
                 </div>
