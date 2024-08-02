@@ -80,6 +80,18 @@ function loadCategories(){
 
 function loadTableChecks(){
 
+    $("#tbodyChecks").remove();
+
+    $("#tbodyChecksModal").remove();
+
+    $("#tableChecks").append(
+        '<tbody id="tbodyChecks"></tbody>'
+    );
+
+    $("#tableChecksModal").append(
+        '<tbody id="tbodyChecksModal"></tbody>'
+    );
+
     var petition = {function: 'getChecks'};
     
     $.ajax({ 
@@ -410,7 +422,8 @@ function deleteCheckDB(id){
 
             if(convertedInfo['success']){
 
-                location.reload();
+                loadTableChecks();
+                loadDeleteChecks();
                 
             }else{
 
@@ -576,7 +589,10 @@ $(document).ready(function () {
 
                 if(convertedInfo['success']){
 
-                    location.reload();
+                    loadTableChecks();
+                    $("#errorMessageAddCheckModal").append(
+                        '<h1 id="errorMessageContentAddCheckModal" class="text-success fw-bold fs-6 mb-3">Check registrado correctamente</h1>'
+                    );
                     
                 }else{
                     $("#errorMessageAddCheckModal").append(
