@@ -3,6 +3,7 @@
 session_start();
 
 require "../../Models/Template.php";
+require "../../Models/Check.php";
 
 //Se obtiene la función a realizar
 if(isset($_POST['function'])){
@@ -67,6 +68,93 @@ switch($function){
         }else{
             $response['success'] = true;
             $response['templates'] = $result;
+        }
+
+        echo json_encode($response);
+
+        break;
+
+    case 'getChecksOfTemplate':
+
+        //Se obtiene la variable id
+        $id_category = $_POST['id_template'];
+
+        //Se obtienen los modelos
+        $template = new Template();
+        $check = new Check();
+
+        //Se obtienen los registros
+        $checks_ids = $template->getChecksOfTemplate($id_category);
+        $checks = $check->getChecksAll();
+
+        if($checks == 'Empty' || $checks == 'Error' || $checks_ids == 'Error'){
+            $response['success'] = false;
+            $response['error'] = 'Error en las consulta de datos';
+        }else{
+            $response['success'] = true;
+            $response['checks_ids'] = $checks_ids;
+            $response['checks'] = $checks;
+        }
+
+        echo json_encode($response);
+
+        break;
+
+    case 'editTemplate':
+
+        //Se reciben los datos enviados
+        $id_template = $_POST['id_template'];
+        $name_template = isset($_POST['name_template']) ? $_POST['name_template'] : '';
+        $category_template = $_POST['category_template'];
+        $check_ids = $_POST['check_ids'];
+
+        if(empty($name_template)){
+
+            $error = 'Es necesario ingresar el nombre de la plantilla';
+
+        }else{
+
+            //Los datos son correctos, se mandan al modelo
+            $template = new Template();
+
+            $error = $template->updateTemplate($id_template, $name_template, $category_template, $check_ids);
+            
+        }
+
+        if(empty($error)){
+
+            $response['success'] = true;
+
+        }else{
+
+            $response['success'] = false;
+            $response['error'] = $error;
+    
+        }
+
+        echo json_encode($response);
+
+        break;
+
+    case 'deleteTemplate':
+
+        //Se recibe el id
+        $id_template = $_POST['id_template'];
+
+        //Los datos son correctos, se mandan al modelo
+        $template = new Template();
+
+        $error = $template->deleteTemplate($id_template);
+
+        if(empty($error)){
+
+            $response['success'] = true;
+
+        }else{
+
+            $response['success'] = false;
+            $response['error'] = $error;
+    
         }
 
         echo json_encode($response);

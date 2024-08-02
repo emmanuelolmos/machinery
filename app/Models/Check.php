@@ -75,6 +75,31 @@ class Check{
         }
     }
 
+    function getChecksAll(){
+
+        //Se prepara el query
+        $query = "SELECT * FROM checks ORDER BY content_check";
+
+        $statement = $this->connection->prepare($query);
+        
+        if($statement->execute()){
+
+            $checks = $statement->fetchAll();
+
+            //Se comprueba que no tenga datos vacíos
+            if(isset($checks[0]['id_check'])){
+
+                return $checks;
+
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+    }
+
     function deleteCheck($id_check){
 
         $query = "UPDATE checks SET status_check = '0' WHERE id_check = :id_check";

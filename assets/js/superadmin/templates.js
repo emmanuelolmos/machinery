@@ -15,6 +15,7 @@ function deleteMessageStatusAddTemplate(){
 
 //Funciones para cargar la información
 
+//Imprime las opciones del select de categorias en el espacio para crear una plantilla nueva
 function loadCategories(){
 
     //Se remueven las categorias en caso de haberlas agregado
@@ -78,6 +79,75 @@ function loadCategories(){
     }); 
 }
 
+//Es la misma función que la anterior con la diferencia de que está es para imprimir las opciones en el espacio para editar una plantilla
+function loadCategoriesEdit(id_category){
+
+    //Se remueven las categorias en caso de haberlas agregado
+    $("#selectCategoryAddTemplateEdit").remove();
+
+    var petition = {function: 'getCategories'};
+    
+    $.ajax({ 
+        url: '../../Controllers/Category/CategoryController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (response){
+
+            var convertedInfo = JSON.parse(response);
+
+            if(convertedInfo['success']){
+
+                //Se imprime el select
+                let selectCategories = '<select class="form-select" name="selectCategoryAddTemplateEdit" id="selectCategoryAddTemplateEdit"></select>';
+                $("#divCategoryAddTemplateEdit").append(selectCategories);
+
+                let optionsCategories = '';
+
+                for(let i = 0; i < convertedInfo['categories'].length; i++){
+
+                    if(convertedInfo['categories'][i].id_category == id_category){
+                        optionsCategories += '<option value="' + convertedInfo['categories'][i].id_category + '" selected>' + convertedInfo['categories'][i].name_category + '</option>';
+                    }else{
+                        optionsCategories += '<option value="' + convertedInfo['categories'][i].id_category + '">' + convertedInfo['categories'][i].name_category + '</option>';
+                    }
+                }
+
+                $("#selectCategoryAddTemplateEdit").append(optionsCategories);
+                
+            }else{
+
+                //Se imprime el select
+                let selectCategories = '<select class="form-select" name="selectCategoryAddTemplateEdit" id="selectCategoryAddTemplateEdit"></select>';
+                $("#divCategoryAddTemplateEdit").append(selectCategories);
+
+                switch(convertedInfo['error']){
+                    case 'Error':
+                        $("#selectCategoryAddTemplateEdit").append(
+                            '<option value="">No se cargaron correctamente las categorias</option>'
+                        );
+                        break;
+                    case 'Empty':
+                        $("#selectCategoryAddTemplateEdit").append(
+                            '<option value="">No hay categorias registradas</option>'
+                        );
+                        break;
+                    default:
+                        $("#selectCategoryAddTemplateEdit").append(
+                            '<option value="">Error desconocido</option>'
+                        );
+                        break;
+                }
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
+
+//Función para obtener los datos de la tabla checks e imprimirlos en una tabla gráfica
 function loadTableChecks(){
 
     $("#tbodyChecks").remove();
@@ -161,6 +231,7 @@ function loadTableChecks(){
     }); 
 }
 
+//Función para obtener las categorias e imprimirlas en forma de cards
 function loadCardsCategory(){
 
     $("#cardsCategories").remove();
@@ -196,7 +267,8 @@ function loadCardsCategory(){
                         for(let j = 0; j < convertedInfo['templates'].length; j++){
 
                             if(convertedInfo['categories'][i].id_category == convertedInfo['templates'][j].category_id){
-                                cards += '<li class="dropdown-item">' + convertedInfo['templates'][j].name_template + '</li>';
+                                let nameTemplate = "'" + convertedInfo['templates'][j].name_template + "'";
+                                cards += '<li class="dropdown-item" onclick="editTemplate(' + convertedInfo['templates'][j].id_template + ', ' + nameTemplate +', ' + convertedInfo['templates'][j].category_id + ')">' + convertedInfo['templates'][j].name_template + '</li>';
                                 //empty = false;
                             }
                         }
@@ -242,6 +314,7 @@ function loadCardsCategory(){
     }); 
 }
 
+//Función para imprimir la plantilla a partir de los arrays con los datos de los checks
 function loadTemplate(){
 
     if(template_id.length > 0){
@@ -292,6 +365,65 @@ function loadTemplate(){
     }
 }
 
+//Misma función que la anterior con la diferencia que esta función es para editar una plantilla ya registrada
+function loadTemplateEdit(){
+
+    if(template_id.length > 0){
+
+        //Se remueve el mensaje de plantilla vacía y se agrega el botón para registrar
+
+        $("#messageTemplateEmptyEdit").remove();
+        $("#messageTemplateErrorEdit").remove();
+        $("#btnAddTemplateEdit").remove();
+        $("#btnAddTemplateRestore").remove();
+        $("#btnAddTemplateDelete").remove();
+        $("#tbodyTemplateEdit").remove();
+
+        $("#tableTemplateEdit").append(
+            '<tbody id="tbodyTemplateEdit"></tbody>'
+        );
+
+        $("#divDownAddTemplateEdit").append(
+            '<button id="btnAddTemplateEdit" onclick="storeEditTemplate()" class="btn btn-success mb-1">Editar plantilla</button>' +
+            '<button id="btnAddTemplateRestore" onclick="restoreTemplate()" class="btn btn-primary ms-2 mb-1">Guardar como nuevo</button>' +
+            '<button id="btnAddTemplateDelete" onclick="deleteTemplate()" class="btn btn-danger ms-2 mb-1">Eliminar plantilla</button>'
+        );
+
+        let tbody = '';
+
+        //Se imprimen los checks
+        for(let i = 0; i < template_id.length; i++){
+            tbody +=    '<tr>' +
+                            '<td style="padding: 10px;">' + template_content[i] + '</td>' +
+                            '<td style="padding: 10px;">' +
+                                '<button class="btn btn-danger" onclick="deleteCheck(' + template_id[i] + ')">' +
+                                    '<i class="bi bi-trash-fill"></i>' +
+                                '</button>' +
+                            '</td>'
+                        '</tr>';
+        }
+
+        $("#tbodyTemplateEdit").append(tbody);
+        
+    }else{
+
+        $("#messageTemplateEmptyEdit").remove();
+        $("#btnAddTemplateEdit").remove();
+        $("#btnAddTemplateRestore").remove();
+        $("#btnAddTemplateDelete").remove();
+        $("#tbodyTemplateEdit").remove();
+
+        $("#tableTemplateEdit").append(
+            '<tbody id="tbodyTemplateEdit"></tbody>'
+        );
+
+        $("#divDownAddTemplateEdit").append(
+            '<h5 id="messageTemplateEmptyEdit" class="fs-4 mt-3">Agrega un check o comienza a partir de una plantilla</h5>'
+        );
+    }
+}
+
+//Función para cargar los cambios de los checks en caso de eliminar alguno
 function loadDeleteChecks(){
 
     $("#tbodyDeleteChecksModal").remove();
@@ -351,6 +483,7 @@ function loadDeleteChecks(){
     }); 
 }
 
+//Función para agregar los datos de un check en los arrays template
 function addCheck(id, content){
 
     deleteMessageStatusAddTemplate()
@@ -374,6 +507,8 @@ function addCheck(id, content){
         template_content.push(content);
         //alert(template);
         loadTemplate();
+        loadTemplateEdit()
+        
 
     }else{
 
@@ -387,6 +522,7 @@ function addCheck(id, content){
     
 }
 
+//Función para eliminar los datos de un check en los arrays template
 function deleteCheck(id){
 
     let space;
@@ -403,8 +539,10 @@ function deleteCheck(id){
     template_content.splice(space, 1);
     
     loadTemplate();
+    loadTemplateEdit()
 }
 
+//Función para eliminar un registro check de la base de datos
 function deleteCheckDB(id){
 
     var formData = {
@@ -440,6 +578,7 @@ function deleteCheckDB(id){
     });
 }
 
+//Función para eliminar una categoria de la base de datos
 function deleteCategory(id){
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -510,6 +649,7 @@ function deleteCategory(id){
       });
 }
 
+//Función para guardar los datos de una nueva plantilla
 function storeTemplate(){
 
     $("#messageStatusTemplate").remove();
@@ -559,9 +699,306 @@ function storeTemplate(){
     
 }
 
-function showChecks(){
+//Función para guardar los cambios hechos a una plantilla ya registrada
+function storeEditTemplate(){
+
+    $("#messageTemplateErrorEdit").remove();
+
+    //Se obtienen los datos ingresados
+
+    var formData = {
+        id_template: $("#inputIdAddTemplateEdit").val(),
+        name_template: $("#inputNameAddTemplateEdit").val(),
+        category_template: $("#selectCategoryAddTemplateEdit").val(),
+        check_ids: template_id,
+        function: 'editTemplate'
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Template/TemplateController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                $("#divStatusTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-5 mt-3 text-success text-center">Plantilla actualizada correctamente</h5>'
+                );
+
+                loadCardsCategory();
+                
+            }else{
+                
+                $("#divStatusTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-5 mt-3 text-danger text-center">' + convertedInfo['error'] + '</h5>'
+                );
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 
 }
+
+//Función para realizar un nuevo registro de plantilla a partir de una ya registrada
+function restoreTemplate(){
+
+    $("#messageTemplateErrorEdit").remove();
+
+    //Se obtienen los datos ingresados
+
+    var formData = {
+        name: $("#inputNameAddTemplateEdit").val(),
+        category: $("#selectCategoryAddTemplateEdit").val(),
+        checks: template_id,
+        function: 'storeTemplate'
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Template/TemplateController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                $("#divStatusTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-5 mt-3 text-success text-center">Nueva plantilla registrada correctamente</h5>'
+                );
+
+                loadCardsCategory();
+                
+            }else{
+                
+                $("#divStatusTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-5 mt-3 text-danger text-center">' + convertedInfo['error'] + '</h5>'
+                );
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+}
+
+//Función para eliminar una plantilla
+function deleteTemplate(){
+
+    $("#messageTemplateErrorEdit").remove();
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: true
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Estás seguro de eliminar la plantilla?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            var formData = {
+                id_template: $("#inputIdAddTemplateEdit").val(),
+                function: 'deleteTemplate'
+            };
+
+            $.ajax({ 
+                url: '../../Controllers/Template/TemplateController.php', 
+                type: 'POST', 
+                data: formData, 
+                success: function (data){
+        
+                    var convertedInfo = JSON.parse(data);
+        
+                    if(convertedInfo['success']){
+        
+                        swalWithBootstrapButtons.fire({
+                            title: "Eliminada",
+                            text: "La plantilla se eliminó correctamente",
+                            icon: "success"
+                        });
+
+                        newTemplate();
+                        
+                    }else{
+
+                        swalWithBootstrapButtons.fire({
+                            title: "Cancelado",
+                            text: "La plantilla no se eliminó",
+                            icon: "error"
+                          });
+                    }
+        
+                }, 
+                error: function (jqXHR, textStatus, errorThrown) { 
+                    alert('Error'); 
+                } 
+            });
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "La plantilla no se eliminó",
+            icon: "error"
+          });
+        }
+      });
+}
+
+//Función para imprimir el espacio para crear una nueva plantilla
+function newTemplate(){
+    template_id = [];
+    template_content = [];
+
+    $("#spaceTemplateAdd").remove();
+    $("#spaceTemplateEdit").remove();
+
+    $("#spaceTemplate").append(
+        '<div id="spaceTemplateAdd">' +
+            '<h3 class="mt-3 fs-4 text-center">Nueva plantilla</h3>' +
+            '<div id="divStatusTemplate"></div>' +
+            '<div class="mt-1 mb-5 mx-5">' +
+                '<div id="divNameAddTemplate">' +
+                    '<label class="form-label" for="inputNameAddTemplate">Nombre</label>' +
+                    '<input class="form-control" type="text" name="inputNameAddTemplate" id="inputNameAddTemplate" placeholder="Ingresa el nombre de la plantilla">' +
+                '</div>' +
+                '<div id="divCategoryAddTemplate" class="mt-2">' +
+                    '<label class="form-label" for="selectCategoryAddTemplate">Categoria</label>' +
+                    '<select class="form-select" name="selectCategoryAddTemplate" id="selectCategoryAddTemplate"></select>' +
+                '</div>' +
+                '<div class="table-responsive mt-2">' +
+                    '<table id="tableTemplate" class="text-center" style="width:100%;">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>' +
+                                '<th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                    '</table>' +
+                '</div>' +
+                '<div id="divDownAddTemplate" class="mt-2 text-center"></div>' +
+            '</div>' +
+        '</div>'
+    );
+
+    $("#divDownAddTemplate").append(
+        '<h5 id="messageTemplateEmpty" class="fs-4 mt-3">Agrega un check o comienza a partir de una plantilla</h5>'
+    );
+
+    loadCategories();
+
+}
+
+//Función para imprimir el espacio para editar una plantilla
+function editTemplate(id, name, category){
+
+    $("#spaceTemplateAdd").remove();
+    $("#spaceTemplateEdit").remove();
+
+    $("#spaceTemplate").append(
+        '<div id="spaceTemplateEdit">' +
+            '<button class="btn btn-primary ms-5 mt-3" onclick="newTemplate()">Nueva plantilla</button>' +
+            '<h3 class="mt-2 fs-4 text-center">Plantilla: ' + name + '</h3>' +
+            '<div id="divStatusTemplateEdit"></div>' +
+            '<div class="mt-1 mb-5 mx-5">' +
+                '<input class="form-control" id="inputIdAddTemplateEdit" name="inputIdAddTemplateEdit" type="hidden" value="' + id + '">' +
+                '<div id="divNameAddTemplateEdit">' +
+                    '<label class="form-label" for="inputNameAddTemplateEdit">Nombre</label>' +
+                    '<input class="form-control" type="text" name="inputNameAddTemplateEdit" id="inputNameAddTemplateEdit" placeholder="Ingresa el nombre de la plantilla" value="' + name + '">' +
+                '</div>' +
+                '<div id="divCategoryAddTemplateEdit" class="mt-2">' +
+                    '<label class="form-label" for="selectCategoryAddTemplateEdit">Categoria</label>' +
+                    '<select class="form-select" name="selectCategoryAddTemplateEdit" id="selectCategoryAddTemplateEdit"></select>' +
+                '</div>' +
+                '<div class="table-responsive mt-2">' +
+                    '<table id="tableTemplateEdit" class="text-center" style="width:100%;">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>' +
+                                '<th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                    '</table>' +
+                '</div>' +
+                '<div id="divDownAddTemplateEdit" class="mt-2 text-center"></div>' +
+            '</div>' +
+        '</div>'
+    );
+
+    loadCategoriesEdit(category);
+
+    var formData = {
+        id_template: id,
+        function: 'getChecksOfTemplate' 
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Template/TemplateController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                //alert(convertedInfo['checks_ids'].length);
+                template_id = [];
+                template_content = [];
+
+                let cont = 0;
+
+                //alert(convertedInfo['checks_ids'][0].check_id);
+
+                for(let i = 0; i < convertedInfo['checks_ids'].length; i++){
+                    
+                    for(let j = 0; j < convertedInfo['checks'].length; j++){
+                        
+                        if(convertedInfo['checks_ids'][i].check_id == convertedInfo['checks'][j].id_check){
+                            template_id.push(convertedInfo['checks'][j].id_check);
+                            template_content.push(convertedInfo['checks'][j].content_check);
+                        }
+                    }
+                }
+
+                loadTemplateEdit();
+                
+            }else{
+                
+                $("#divDownAddTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-4 mt-3 text-danger">' + convertedInfo['error'] + '</h5>'
+                );
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+    
+}
+
 
 //Formularios de los modales
 

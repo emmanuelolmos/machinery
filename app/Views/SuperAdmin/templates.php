@@ -85,56 +85,60 @@ $env = parse_ini_file('../../../.env');
                     </div>
                 </div>
 
-                <!-- Titulo -->
-                <h3 class="mt-3 fs-4 text-center">Nueva plantilla</h3>
+                <div id="spaceTemplate">
 
-                <div id="divStatusTemplate">
+                    <div id="spaceTemplateAdd">
 
-                    <!-- Mensaje de estatus del registro de la plantilla --> 
-                    <!-- <h4 class="mt-2 fs-5 text-center text-success">Plantilla registrada</h4>-->
-                </div>
+                        <!-- Titulo -->
+                        <h3 class="mt-3 fs-4 text-center">Nueva plantilla</h3>
 
-                <!-- Abarca la tabla de la plantilla -->
-                <div class="mt-1 mb-5 mx-5">
+                        <div id="divStatusTemplate">
+                            <!-- Mensaje de estatus del registro de la plantilla --> 
+                        </div>
 
-                    <div id="divNameAddTemplate">
-                        <label class="form-label" for="inputNameAddTemplate">Nombre</label>
-                        <input class="form-control" type="text" name="inputNameAddTemplate" id="inputNameAddTemplate" placeholder="Ingresa el nombre de la plantilla">
-                    </div>
+                        <!-- Abarca la tabla de la plantilla -->
+                        <div class="mt-1 mb-5 mx-5">
 
-                    <div id="divCategoryAddTemplate" class="mt-2">
-                        <label class="form-label" for="selectCategoryAddTemplate">Categoria</label>
-                        <select class="form-select" name="selectCategoryAddTemplate" id="selectCategoryAddTemplate">
-                            
-                            <!-- Categorias --> 
+                            <div id="divNameAddTemplate">
+                                <label class="form-label" for="inputNameAddTemplate">Nombre</label>
+                                <input class="form-control" type="text" name="inputNameAddTemplate" id="inputNameAddTemplate" placeholder="Ingresa el nombre de la plantilla">
+                            </div>
 
-                        </select>
-                    </div>
+                            <div id="divCategoryAddTemplate" class="mt-2">
+                                <label class="form-label" for="selectCategoryAddTemplate">Categoria</label>
+                                <select class="form-select" name="selectCategoryAddTemplate" id="selectCategoryAddTemplate">
+                                    <!-- Categorias --> 
+                                </select>
+                            </div>
 
-                    <div class="table-responsive mt-2">
+                            <div class="table-responsive mt-2">
 
-                        <table id="tableTemplate" class="text-center" style="width:100%;">
+                                <table id="tableTemplate" class="text-center" style="width:100%;">
 
-                            <thead>
-                                <tr>
-                                    <th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>
-                                    <th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>
-                                </tr>
-                            </thead>
+                                    <thead>
+                                        <tr>
+                                            <th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>
+                                            <th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>
+                                        </tr>
+                                    </thead>
 
-                            <!--<tbody id="tbodyTemplate">-->
+                                    <!--<tbody id="tbodyTemplate">-->
 
-                                <!-- Contenido de la plantilla --> 
+                                        <!-- Contenido de la plantilla --> 
 
-                            <!--</tbody>-->
+                                    <!--</tbody>-->
 
-                        </table>
-                    </div>
+                                </table>
+                            </div>
 
-                    <div id="divDownAddTemplate" class="mt-2 text-center">
+                            <div id="divDownAddTemplate" class="mt-2 text-center">
 
-                        <!-- Se muestra el botón para registrar plantilla o mensaje --> 
+                                <!-- Se muestra el botón para registrar plantilla o mensaje --> 
 
+                            </div>
+
+                        </div>
+                        
                     </div>
 
                 </div>
