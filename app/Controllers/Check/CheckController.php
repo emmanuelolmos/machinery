@@ -18,6 +18,26 @@ if(isset($_REQUEST['function'])){
 $response = [];
 
 switch($function){
+
+    case 'verifyCheckListRegister':
+
+        $id_machine = $_POST['id_machine'];
+
+        $check = new Check();
+        $verify = $check->verifyCheckListRegister($id_machine);
+
+        if($verify == 'NotFound' || $verify == 'Error'){
+            $response['success'] = false;
+            $response['error'] = $verify;
+        }else{
+            $response['success'] = true;
+            $response['checks'] = $verify;
+        }
+
+        echo json_encode($response);
+
+        break;
+
     case 'insertCheck':
 
         //Se obtiene el check ingresado
@@ -69,10 +89,11 @@ switch($function){
         //Se reciben las variables
         $id_machine = $_POST['id_machine'];
         $check_ids = $_POST['check_ids'];
+        $check_contents = $_POST['check_contents'];
 
         //Se manda al modelo
         $check = new Check();
-        $error = $check->insertCheckList($id_machine, $check_ids);
+        $error = $check->insertCheckList($id_machine, $check_ids, $check_contents);
 
         //Si hay un error se manda por la variable data
         if(empty($error)){

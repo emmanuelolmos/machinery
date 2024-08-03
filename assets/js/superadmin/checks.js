@@ -34,6 +34,79 @@ function deleteMessageStatusAddTemplate(){
 
 //Funciones para cargar la información
 
+//Función para verificar que el usuario no hay 
+function verifyCheckListRegister(){
+    var petition = {
+        id_machine: id_machine,
+        function: 'verifyCheckListRegister'
+    };
+
+    $.ajax({
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (response){
+
+            var convertedInfo = JSON.parse(response);
+
+            if(convertedInfo['success']){
+
+                $("#divCheckListNew").remove();
+
+                let checklist = 
+                '<div id="divShowCheckList" class="card shadow mt-4 mb-5 mx-5">' +
+                    '<div class="mt-4">' +
+                        '<h1 class="fs-2 text-center">Checks asignados</h1>' +
+                        '<button class="btn btn-primary mt-4 ms-5" onclick="redirectToEDitChecks()">Editar checks</button>' +
+                    '</div>' +
+                    '<div class="mt-1 mb-5 mx-5">' +
+                        '<div class="table-responsive mt-4 d-flex justify-content-center">' +
+                            '<table id="tableCheckList" class="text-center table table-bordered" style="width:80%;">' +
+                                '<thead>' +
+                                    '<tr>' +
+                                        '<th class="col-8 p-2 bg-success text-white" scope="col">CHECKS</th>' +
+                                    '</tr>' +
+                                '</thead>' +
+                                '<tbody>';
+
+                for(let i = 0; i < convertedInfo['checks'].length; i++){
+                    checklist +=    '<tr>' +
+                                        '<td style="padding: 10px;">' + convertedInfo['checks'][i].content_assigned_check + '</td>' +
+                                    '</tr>';
+                }
+
+                checklist +=    '</tbody>'+
+                            '</table>' +
+                        '</div>' +
+                        '<div id="divDownAddTemplate" class="mt-2 text-center"></div>' +
+                    '</div>' +
+                '</div>'
+
+                $("#divPrimary").append(checklist);
+
+                loadListChecks();
+
+            }else{
+
+                switch(convertedInfo['error']){
+                    case 'Error':
+                        alert('Error en la consulta de checks registrados');
+                        break;
+                }
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
+
+function loadListChecks(){
+
+}
+
 //Función para obtener las categorias e imprimirlas en forma de cards
 function loadCardsCategory(){
 
@@ -496,6 +569,7 @@ function storeCheckList(state){
 
         id_machine: id_machine,
         check_ids: template_id,
+        check_contents: template_content, 
         function: 'storeCheckList'
 
     };
@@ -510,7 +584,7 @@ function storeCheckList(state){
 
             if(convertedInfo['success']){
 
-               
+               location.reload();
                 
             }else{
                 
@@ -531,6 +605,10 @@ function storeCheckList(state){
             alert('Error'); 
         } 
     });
+}
+
+function redirectToEDitChecks(){
+    location.href = 'editChecks.php?id_machine=' + id_machine;
 }
 
 
@@ -582,6 +660,7 @@ $(document).ready(function () {
 
 //Ejecución de métodos
 obtenerId_machine();
+verifyCheckListRegister();
 loadCardsCategory();
 loadTableChecks();
 loadTemplate();

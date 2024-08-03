@@ -44,7 +44,9 @@
         include 'Components/navbar.php';
     ?>
 
-<div class="card shadow mt-4 mb-5 mx-5">
+    <div id="divPrimary">
+
+    <div id="divCheckListNew" class="card shadow mt-4 mb-5 mx-5">
         
         <div class="text-center mt-3">
             <h1 class="fs-2">Selección de checks</h1>
@@ -173,6 +175,8 @@
 
         </div>
         
+    </div>
+
     </div>
 
     <!-- Modales -->
