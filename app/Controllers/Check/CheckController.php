@@ -64,6 +64,32 @@ switch($function){
 
         break;
 
+    case 'storeCheckList':
+
+        //Se reciben las variables
+        $id_machine = $_POST['id_machine'];
+        $check_ids = $_POST['check_ids'];
+
+        //Se manda al modelo
+        $check = new Check();
+        $error = $check->insertCheckList($id_machine, $check_ids);
+
+        //Si hay un error se manda por la variable data
+        if(empty($error)){
+
+            $response['success'] = true;
+
+        }else{
+
+            $response['success'] = false;
+            $response['error'] = $error;
+
+        }
+
+        echo json_encode($response);
+
+        break;
+
     case 'getChecks':
 
         //Se manda al modelo

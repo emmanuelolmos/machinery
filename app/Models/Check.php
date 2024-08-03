@@ -50,6 +50,10 @@ class Check{
         
     }
 
+    function insertCheckList($id_machine, $check_ids){
+
+    }
+
     function getChecks(){
 
         //Se prepara el query
