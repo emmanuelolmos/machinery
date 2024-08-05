@@ -205,8 +205,6 @@ function loadChecksAssigned(){
                     template_content.push(convertedInfo['checks'][i].content_assigned_check);
                 }
 
-                //alert('Array de ids: ' + template_id + '/nArray de contents: ' + template_content);
-
                 loadTemplate();
                 
             }else{
@@ -536,9 +534,11 @@ function addCheck(id, content){
     }else{
 
         Swal.fire({
-            title: "Error",
+            title: "Advertencia",
             text: "Ya ingresaste el check",
-            icon: "error"
+            icon: "warning",
+            iconColor: "#ffdb00",
+            confirmButtonColor: '#0d6efd'
           });
 
     }

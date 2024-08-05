@@ -513,9 +513,11 @@ function addCheck(id, content){
     }else{
 
         Swal.fire({
-            title: "Error",
+            title: "Advertencia",
             text: "Ya ingresaste el check",
-            icon: "error"
+            icon: "warning",
+            iconColor: "#ffdb00",
+            confirmButtonColor: '#0d6efd'
           });
 
     }

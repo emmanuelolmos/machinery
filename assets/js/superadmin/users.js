@@ -263,6 +263,7 @@ function removeUser(id){
       swalWithBootstrapButtons.fire({
         title: "Estás seguro de eliminar al usuario?",
         icon: "warning",
+        iconColor: "#ffdb00",
         showCancelButton: true,
         confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
@@ -327,7 +328,7 @@ function removeUser(id){
           swalWithBootstrapButtons.fire({
             title: "Cancelado",
             text: "No se borró al usuario",
-            icon: "error"
+            icon: "success"
           });
         }
       });
