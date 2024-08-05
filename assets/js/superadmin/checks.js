@@ -52,12 +52,13 @@ function verifyCheckListRegister(){
             if(convertedInfo['success']){
 
                 $("#divCheckListNew").remove();
+                $("#divCheckListEdit").remove();
 
                 let checklist = 
                 '<div id="divShowCheckList" class="card shadow mt-4 mb-5 mx-5">' +
                     '<div class="mt-4">' +
                         '<h1 class="fs-2 text-center">Checks asignados</h1>' +
-                        '<button class="btn btn-primary mt-4 ms-5" onclick="redirectToEDitChecks()">Editar checks</button>' +
+                        '<button class="btn btn-primary mt-4 ms-5" onclick="loadViewEditChecks()">Editar checks</button>' +
                     '</div>' +
                     '<div class="mt-1 mb-5 mx-5">' +
                         '<div class="table-responsive mt-4 d-flex justify-content-center">' +
@@ -84,8 +85,6 @@ function verifyCheckListRegister(){
 
                 $("#divPrimary").append(checklist);
 
-                loadListChecks();
-
             }else{
 
                 switch(convertedInfo['error']){
@@ -103,8 +102,126 @@ function verifyCheckListRegister(){
     }); 
 }
 
-function loadListChecks(){
+function loadViewEditChecks(){
 
+    $("#divShowCheckList").remove();
+
+    let divEdit = 
+    '<div id="divCheckListEdit" class="card shadow mt-4 mb-5 mx-5">' +
+        '<div class="mt-3">' +
+            '<h1 class="fs-2 text-center">Editar lista de checks</h1>' +
+            '<button class="btn btn-primary mt-4 ms-5" onclick="verifyCheckListRegister()">Regresar</button>' +
+        '</div>' +
+        '<div class="d-flex">' +
+            '<div class="divCategories" style="width: 100%;">' +
+                '<div class="mt-2 mx-5">' +
+                    '<div class="d-flex">' +
+                        '<h2 class="fs-4 mt-1">Categorias</h2>' +
+                    '</div>' +
+                    '<div id="divCardsCategories">' +
+                        '<div id="cardsCategories" class="card-container"></div>' +
+                    '</div>' +
+                    '<div id="divMessageCardsCategories" class="text-danger"></div>' +
+                '</div>' +
+                '<div class="divShowChecks mt-3 mx-5">' +
+                    '<div class="d-flex">' +
+                        '<h4 class="mt-1">Checks</h4>' +
+                        '<button class="ms-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#showChecksModal" onclick="showChecks()">Mostrar</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div id="spaceTemplate">' +
+                    '<div id="spaceTemplateAdd">' +
+                        '<h3 class="mt-3 fs-4 text-center">Checks seleccionados</h3>' +
+                        '<div id="divStatusTemplate"></div>' +
+                        '<div class="mt-1 mb-5 mx-5">' +
+                            '<div class="table-responsive mt-2">' +
+                                '<table id="tableTemplate" class="text-center" style="width:100%;">' +
+                                    '<thead>' +
+                                        '<tr>' +
+                                            '<th class="col-8 p-2 bg-secondary text-white" scope="col">CHECKS</th>' +
+                                            '<th class="col-4 p-2 bg-secondary text-white" scope="col">OPCIONES</th>' +
+                                        '</tr>' +
+                                    '</thead>' +
+                                '</table>' +
+                            '</div>' +
+                            '<div id="divDownAddTemplate" class="mt-2 text-center"></div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="divChecks" style="width: 35%;">' +
+                '<div class="mt-2 me-3">' +
+                    '<div class="d-flex">' +
+                        '<h4 class="ms-2 fs-5">Checks</h4>' +
+                        '<button class="btn btn-dark btn-sm ms-2 mb-1" type="button" data-bs-toggle="modal" data-bs-target="#addCheckModal"><i class="bi bi-plus-circle"></i></button>' +
+                    '</div>' +
+                    '<div class="table-responsive">' +
+                        '<table id="tableChecks" class="text-center" style="width:100%;">' +
+                            '<thead>' +
+                                '<tr>' +
+                                    '<th class="col-8 p-2 bg-black text-white" scope="col">CHECK</th>' +
+                                    '<th class="col-4 p-2 bg-black text-white" scope="col">AGREGAR</th>' +
+                                '</tr>' +
+                           '</thead>' +
+                            '<tbody id="tbodyChecks"></tbody>' +
+                        '</table>' +
+                        '<div id="divMessageTableChecks" class="mt-2 text-center text-danger"></div>' +      
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' + 
+    '</div>';
+
+    $("#divPrimary").append(divEdit);
+
+    loadCardsCategory();
+    loadTableChecks();
+    loadTemplate();
+    loadChecksAssigned()
+}
+
+function loadChecksAssigned(){
+    var formData = {
+        id_machine: id_machine,
+        function: 'getChecksAssigned' 
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                template_id = [];
+                template_content = [];
+
+                for(let i = 0; i < convertedInfo['checks'].length; i++){
+                    
+                    template_id.push(convertedInfo['checks'][i].check_id);
+                    template_content.push(convertedInfo['checks'][i].content_assigned_check);
+                }
+
+                //alert('Array de ids: ' + template_id + '/nArray de contents: ' + template_content);
+
+                loadTemplate();
+                
+            }else{
+                
+                $("#divDownAddTemplateEdit").append(
+                    '<h5 id="messageTemplateErrorEdit" class="fs-4 mt-3 text-danger">' + convertedInfo['error'] + '</h5>'
+                );
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 }
 
 //Función para obtener las categorias e imprimirlas en forma de cards
@@ -524,13 +641,10 @@ function editTemplate(id, name, category){
 
             if(convertedInfo['success']){
 
-                //alert(convertedInfo['checks_ids'].length);
                 template_id = [];
                 template_content = [];
 
                 let cont = 0;
-
-                //alert(convertedInfo['checks_ids'][0].check_id);
 
                 for(let i = 0; i < convertedInfo['checks_ids'].length; i++){
                     

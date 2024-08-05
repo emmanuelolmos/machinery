@@ -15,7 +15,7 @@ class Check{
     function verifyCheckListRegister($id_machine){
 
         //Se comprueba que no haya checks 
-        $query = "SELECT content_assigned_check FROM assigned_checks WHERE machine_id = :machine_id";
+        $query = "SELECT content_assigned_check FROM assigned_checks WHERE machine_id = :machine_id AND active_assigned_check = '1' ORDER BY content_assigned_check";
 
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':machine_id', $id_machine);
@@ -84,29 +84,32 @@ class Check{
 
         if($statement->execute()){
             $checks = $statement->fetchAll();
-            
-            if(!isset($checks[0])){
-                
-                //No hay checks anteriores
 
-                //Se guardan los checks
-                for($i = 0; $i < count($check_ids); $i++){
+            if(isset($checks[0])){
 
-                    $query = "INSERT INTO assigned_checks (content_assigned_check, active_assigned_check, status_assigned_check, check_id, machine_id) VALUES (:content_assigned_check, '1', '0', :check_id, :machine_id)";
+                $query = "UPDATE assigned_checks SET active_assigned_check = '0' WHERE machine_id = :machine_id";
 
-                    $statement = $this->connection->prepare($query);
-                    $statement->bindParam(':content_assigned_check', $check_contents[$i]);
-                    $statement->bindParam(':check_id', $check_ids[$i]);
-                    $statement->bindParam(':machine_id', $id_machine);
+                $statement = $this->connection->prepare($query);
+                $statement->bindParam(':machine_id', $id_machine);
+                $statement->execute();
 
-                    $statement->execute();
-                }
-
-                return '';
-
-            }else{
-                return 'Ya se encuentran checks asignados a esta máquina';
             }
+
+            //Se guardan los checks
+            for($i = 0; $i < count($check_ids); $i++){
+
+                $query = "INSERT INTO assigned_checks (content_assigned_check, active_assigned_check, status_assigned_check, check_id, machine_id) VALUES (:content_assigned_check, '1', '0', :check_id, :machine_id)";
+
+                $statement = $this->connection->prepare($query);
+                $statement->bindParam(':content_assigned_check', $check_contents[$i]);
+                $statement->bindParam(':check_id', $check_ids[$i]);
+                $statement->bindParam(':machine_id', $id_machine);
+
+                $statement->execute();
+            }
+
+            return '';
+
         }else{
             return 'Error';
         }
@@ -135,6 +138,32 @@ class Check{
         }else{
             return 'Error';
         }
+    }
+
+    function getChecksAssigned($id_machine){
+
+        $query = "SELECT * FROM assigned_checks WHERE machine_id = :machine_id AND active_assigned_check = '1' ORDER BY content_assigned_check";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $id_machine);
+        
+        if($statement->execute()){
+
+            $checks = $statement->fetchAll();
+
+            //Se comprueba que no tenga datos vacíos
+            if(isset($checks[0]['id_assigned_check'])){
+
+                return $checks;
+
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+
     }
 
     function getChecksAll(){

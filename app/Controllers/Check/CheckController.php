@@ -135,6 +135,30 @@ switch($function){
 
         break;
 
+    case 'getChecksAssigned':
+
+        $id_machine = $_POST['id_machine'];
+
+        $check = new Check();
+
+        $checks = $check->getChecksAssigned($id_machine);
+
+        if($checks != 'Empty' && $checks != 'Error'){
+
+            $response['success'] = true;
+            $response['checks'] = $checks;
+
+        }else{
+
+            $response['success'] = false;
+            $response['error'] = $checks;
+
+        }
+
+        echo json_encode($response);
+
+        break;
+
     case 'deleteCheck':
 
         $id_check = $_POST['id_check'];
