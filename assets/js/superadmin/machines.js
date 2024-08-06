@@ -467,7 +467,14 @@ function redirectChecks(id){
 //Función para mostrar el contenido del modal Maintenance de acuerdo a si ya se había establecido o no
 function loadMaintenance(id){
 
+    $("#inputIdAddMaintenanceModal").remove();
+    $("#selectEditMaintenanceModal").remove();
+    $("#inputNumberEditMaintenanceModal").remove();
+    $("#inputIdEditMaintenanceModal").remove();
+    $("#inputDateInitEditMaintenanceModal").remove();
+    $("#h1DateNextEditMaintenanceModal").remove();
     $("#errorMessageContentMaintenanceModal").remove();
+    $("#errorMessageContentEditMaintenanceModal").remove();
 
     var petition = {
         id_machine: id,
@@ -494,7 +501,47 @@ function loadMaintenance(id){
                     $('#addMaintenanceModal').modal('show');
 
                 }else{
+
+                    //Se obtiene el componente select
+                    let select = '<select class="form-select" id="selectEditMaintenanceModal" name="selectEditMaintenanceModal">';
+
+                    let types = ['days', 'weeks', 'years'];
+                    let tipos = ['Dia(s)', 'Semana(s)', 'Mes(es)'];
+
+                    for(let i = 0; i < 3; i++){
+                        if(convertedInfo['result'][0].type_maintenance == types[i]){
+                            select += '<option value="' + types[i] + '" selected>' + tipos[i] + '</option>';
+                        }else{
+                            select += '<option value="' + types[i] + '">' + tipos[i] + '</option>';
+                        }
+                    }
+
+                    select += '</select>';
+
+                    $('#divSelectEditMaintenanceModal').append(select);
+
+                    //Se obtiene el number
+                    $('#divInputNumberEditMaintenanceModal').append(
+                        '<input class="form-control" id="inputNumberEditMaintenanceModal" name="inputNumberEditMaintenanceModal" type="number" min="1" value="' + convertedInfo['result'][0].number_maintenance + '">'
+                    );
+
+                    //Se coloca el id
+                    $('#formEditMaintenanceModal').append(
+                        '<input class="form-control" id="inputIdEditMaintenanceModal" name="inputIdEditMaintenanceModal" type="hidden" value="' + id + '">'
+                    );
+
+                    //Se coloca la fecha inicial
+                    $('#formEditMaintenanceModal').append(
+                        '<input class="form-control" id="inputDateInitEditMaintenanceModal" name="inputDateInitEditMaintenanceModal" type="hidden" value="' + convertedInfo['result'][0].dateInit_maintenance + '">'
+                    );
+
+                    //Se coloca la fecha del próximo mantenimiento
+                    $('#divDateNextEditMaintenanceModal').append(
+                        '<h1 id="h1DateNextEditMaintenanceModal" class="fs-5">Próxima fecha de mantenimiento: ' + convertedInfo['result'][0].dateNext_maintenance + '</h1>'
+                    );
+
                     $('#editMaintenanceModal').modal('show');
+
                 }
                 
             }else{
@@ -599,7 +646,6 @@ $(document).ready(function () {
         $("#errorMessageContentMaintenanceModal").remove();
 
         formData = new FormData(this);
-        //formData.append("function", 'updateMachine');
         formData.append("function", "assignDateMaintenance")
 
         $.ajax({
@@ -620,6 +666,46 @@ $(document).ready(function () {
                 }else{
                     $("#errorMessageMaintenanceModal").append(
                         '<h1 id="errorMessageContentMaintenanceModal" class="text-danger fw-bold fs-6 mb-3">' + convertedInfo['error'] + '</h1>'
+                    );
+                }
+
+            }, 
+            error: function (jqXHR, textStatus, errorThrown) { 
+                alert('Error'); 
+            } 
+        });
+    }); 
+}); 
+
+//Editar la frecuencia de mantenimiento
+$(document).ready(function () { 
+    $('#formEditMaintenanceModal').submit(function (e) { 
+        e.preventDefault(); 
+
+        //Para el caso que el usuario haya enviado el form con datos erróneos
+        $("#errorMessageContentEditMaintenanceModal").remove();
+
+        formData = new FormData(this);
+        formData.append("function", "reassignDateMaintenance")
+
+        $.ajax({
+            url: '../../Controllers/Maintenance/MaintenanceController.php', 
+            type: 'POST', 
+            data: formData, 
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data){
+
+                var convertedInfo = JSON.parse(data);
+
+                if(convertedInfo['success']){
+
+                    location.reload();
+                    
+                }else{
+                    $("#errorMessageEditMaintenanceModal").append(
+                        '<h1 id="errorMessageContentEditMaintenanceModal" class="text-danger fw-bold fs-6 mb-3">' + convertedInfo['error'] + '</h1>'
                     );
                 }
 

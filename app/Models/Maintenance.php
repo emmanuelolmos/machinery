@@ -25,7 +25,7 @@ class Maintenance{
 
             if(isset($maintenance[0]['id_maintenance'])){
 
-                return '';
+                return $maintenance;
 
             }else{
                 return 'Empty';
@@ -54,6 +54,47 @@ class Maintenance{
             return 'Error';
         }
 
+    }
+
+    function reassignMaintenance($id_maintenance, $number, $type, $dateNext){
+
+        $query = "UPDATE maintenance SET number_maintenance = :number_maintenance, type_maintenance = :type_maintenance, dateNext_maintenance = :dateNext_maintenance WHERE id_maintenance = :id_maintenance";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':number_maintenance', $number);
+        $statement->bindParam(':type_maintenance', $type);
+        $statement->bindParam(':dateNext_maintenance', $dateNext);
+        $statement->bindParam(':id_maintenance', $id_maintenance);
+
+        if($statement->execute()){
+            return '';
+        }else{
+            return 'Error';
+        }
+    }
+
+    function getMaintenance($id_machine){
+
+        $query = "SELECT * FROM maintenance WHERE machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $id_machine);
+        
+        if($statement->execute()){
+
+            $maintenance = $statement->fetchAll();
+
+            if(isset($maintenance[0]['id_maintenance'])){
+
+                return $maintenance;
+
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
     }
 
     

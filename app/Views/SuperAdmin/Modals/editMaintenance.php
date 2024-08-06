@@ -11,7 +11,7 @@
         <!-- Formulario --> 
         <form id="formEditMaintenanceModal" enctype="multipart/form-data">
 
-            <div id="errorMessageMaintenanceModal" class="text-center">
+            <div id="errorMessageEditMaintenanceModal" class="text-center">
                 <!--Mensaje de error-->
             </div>
 
@@ -19,16 +19,16 @@
 
             <!-- Input y select --> 
             <div class="d-flex">
-                <div style="width: 35%;">
-                    <input class="form-control" id="inputNumberEditMaintenanceModal" name="inputNumberEditMaintenanceModal" type="number" min="1" value="1">
+                <div id="divInputNumberEditMaintenanceModal" style="width: 35%;">
+                    <!-- Number -->
                 </div>
-                <div style="width: 65%;">
-                    <select class="form-select" id="selectEditMaintenanceModal" name="selectEditMaintenanceModal">
-                        <option value="1">Dia(s)</option>
-                        <option value="2">Semana(s)</option>
-                        <option value="3">Mes(es)</option>
-                    </select>
+                <div id="divSelectEditMaintenanceModal" style="width: 65%;">
+                    <!-- Type -->
                 </div>
+            </div>
+
+            <div id="divDateNextEditMaintenanceModal" class="mt-3">
+                <!-- Próxima fecha --> 
             </div>
 
             <div class="text-center mt-3">
