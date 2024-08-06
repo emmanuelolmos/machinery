@@ -1,64 +1,9 @@
 //Funciones a utilizar
 
-/*
-function loadData(){
-    
-    var petition = {
-        function: 'getCompany'
-    };
-    
-    $.ajax({ 
-        url: '../../Controllers/SuperAdmin/MachineController.php', 
-        type: 'POST', 
-        data: petition, 
-        success: function (response){
-
-            var convertedInfo = JSON.parse(response);
-
-            if(convertedInfo['success']){
-
-                $("#hNameCompany").remove();
-
-                $("#divNameCompany").append(
-                    '<h1 id="hNameCompany" class="fs-3 ">Empresa: ' + convertedInfo['company'].name_company + '</h1>'
-                );
-                
-            }else{
-
-                $("#divRowTable").remove();
-
-                switch(convertedInfo['error']){
-                    case 'Error':
-                        $("#divPrincipalTable").append(
-                            '<h1 id="error" class="error text-center text-danger fw-bold mt-1 mb-5 fs-2">Error en la conexión con la base de datos.</h3>'
-                        );
-                        break;
-                    case 'Empty':
-                        $("#divPrincipalTable").append(
-                            '<h1 id="error" class="error text-center text-danger fw-bold mt-1 mb-5 fs-2">Sin registros.</h3>'
-                        );
-                        break;
-                    default:
-                        $("#divPrincipalTable").append(
-                            '<h1 id="error" class="error text-center text-danger fw-bold mt-1 mb-5 fs-2">Error desconocido.</h3>'
-                        );
-                        break;
-                }
-
-            }
-
-        }, 
-        error: function (jqXHR, textStatus, errorThrown) { 
-            alert('Error'); 
-        } 
-    }); 
-}*/
-
+//Función para cargar los datos de compañias al modal addMachine
 function loadCompaniesAddMachine(){
     
-    var petition = {
-        function : 'getCompanies'
-    };
+    var petition = {function : 'getCompanies'};
     
     $.ajax({ 
         url: '../../Controllers/SuperAdmin/MachineController.php', 
@@ -81,23 +26,17 @@ function loadCompaniesAddMachine(){
                 let optionsCompanies = '';
 
                 for(let i = 0; i < convertedInfo['companies'].length; i++){
-
                     optionsCompanies += '<option value="' + convertedInfo['companies'][i].id_company + '">' + convertedInfo['companies'][i].name_company + '</option>';
-
                 }
 
                 //Se imprime la información
-
                 $("#selectCompanyAddMachine").append(
                     optionsCompanies
                 );
                 
             }else{
-
                 alert('Error');
-
             }
-
         }, 
         error: function (jqXHR, textStatus, errorThrown) { 
             alert('Error'); 
@@ -105,11 +44,10 @@ function loadCompaniesAddMachine(){
     }); 
 }
 
+//Función para cargar los items de las maquinas registradas
 function loadMachines(){
 
-    var petition = {
-        function: 'getMachines'
-    };
+    var petition = {function: 'getMachines'};
 
     $.ajax({ 
         url: '../../Controllers/SuperAdmin/MachineController.php', 
@@ -121,7 +59,6 @@ function loadMachines(){
 
             if(convertedInfo['success']){
 
-                //alert(convertedInfo['machinery']['0'].marca);
                 let cards = '';
 
                 //Se llena con el siguiente ciclo
@@ -147,7 +84,7 @@ function loadMachines(){
                                             '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
                                             '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
-                                                '<li class="dropdown-item" onclick="redirectMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
+                                                '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
                                                 '<li class="dropdown-item">Generar revisiones</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
@@ -209,9 +146,9 @@ function loadMachines(){
             alert('Error'); 
         } 
     }); 
-
 }
 
+//Función para buscar una maquina especifica
 function findMachine(){
 
     var petitionData = {
@@ -239,7 +176,6 @@ function findMachine(){
 
             if(convertedInfo['success']){
 
-                //alert(convertedInfo['machinery']['0'].marca);
                 let cards = '';
 
                 //Se llena con el siguiente ciclo
@@ -265,7 +201,7 @@ function findMachine(){
                                             '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
                                             '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
-                                                '<li class="dropdown-item" onclick="redirectMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
+                                                '<li class="dropdown-item" data-bs-toggle="modal" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')" data-bs-target="#maintenanceModal">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
                                                 '<li class="dropdown-item">Generar revisiones</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
@@ -297,6 +233,7 @@ function findMachine(){
                 }
 
                 $("#divRowTable").append(cards);
+
                 $("#divPrincipalTable").append('<br id="brCards">');
                 
             }else{
@@ -337,6 +274,7 @@ function findMachine(){
     }); 
 }
 
+//Función para obtener los datos de la maquina para el modal editMachine
 function loadDataMachine(id){
 
     var petition = {
@@ -442,17 +380,9 @@ function loadDataMachine(id){
             alert('Error'); 
         } 
     }); 
-
 }
 
-function redirectChecks(id){
-    location.href = 'checks.php?id_machine=' + id;
-}
-
-function redirectMaintenance(id){
-    location.href = 'maintenance.php?id_machine=' + id;
-}
-
+//Función para eliminar una maquina
 function deleteMachine(id){
     
     //Alerta de SweetAlert
@@ -529,6 +459,54 @@ function deleteMachine(id){
       });
 }
 
+//Función para redirigir a la vista de checks junto con el id de la maquina
+function redirectChecks(id){
+    location.href = 'checks.php?id_machine=' + id;
+}
+
+//Función para mostrar el contenido del modal Maintenance de acuerdo a si ya se había establecido o no
+function loadMaintenance(id){
+
+    $("#errorMessageContentMaintenanceModal").remove();
+
+    var petition = {
+        id_machine: id,
+        function: 'verifyMaintenance'
+    }
+
+    $.ajax({ 
+        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                //Se muestra el modal en base a si la frecuencia ya fue registrada o no
+                if(convertedInfo['result'] == 'Empty'){
+
+                    $('#formAddMaintenanceModal').append(
+                        '<input class="form-control" id="inputIdAddMaintenanceModal" name="inputIdAddMaintenanceModal" type="hidden" value="' + id + '">'
+                    );
+
+                    $('#addMaintenanceModal').modal('show');
+
+                }else{
+                    $('#editMaintenanceModal').modal('show');
+                }
+                
+            }else{
+                alert('Error');
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
 
 //Formularios de los modales
 
@@ -612,7 +590,45 @@ $(document).ready(function () {
     }); 
 }); 
 
+//Establecer frecuencia de mantenimiento
+$(document).ready(function () { 
+    $('#formAddMaintenanceModal').submit(function (e) { 
+        e.preventDefault(); 
 
+        //Para el caso que el usuario haya enviado el form con datos erróneos
+        $("#errorMessageContentMaintenanceModal").remove();
 
-//loadData();
+        formData = new FormData(this);
+        //formData.append("function", 'updateMachine');
+        formData.append("function", "assignDateMaintenance")
+
+        $.ajax({
+            url: '../../Controllers/Maintenance/MaintenanceController.php', 
+            type: 'POST', 
+            data: formData, 
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data){
+
+                var convertedInfo = JSON.parse(data);
+
+                if(convertedInfo['success']){
+
+                    location.reload();
+                    
+                }else{
+                    $("#errorMessageMaintenanceModal").append(
+                        '<h1 id="errorMessageContentMaintenanceModal" class="text-danger fw-bold fs-6 mb-3">' + convertedInfo['error'] + '</h1>'
+                    );
+                }
+
+            }, 
+            error: function (jqXHR, textStatus, errorThrown) { 
+                alert('Error'); 
+            } 
+        });
+    }); 
+}); 
+
 loadMachines();

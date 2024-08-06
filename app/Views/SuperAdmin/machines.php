@@ -68,6 +68,8 @@
     <?php
         include 'Modals/addMachine.php';
         include 'Modals/editMachine.php';
+        include 'Modals/addMaintenance.php';
+        include 'Modals/editMaintenance.php';
     ?>
 
     <!-- Scripts -->
