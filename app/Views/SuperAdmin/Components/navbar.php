@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Api</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/SuperAdmin/maintenance.php'; ?>">Mantenimiento</a>
         </li>
 
       </ul>

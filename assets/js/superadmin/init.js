@@ -9,3 +9,7 @@ function redirectMachinesPanel(){
 function redirectTemplatesPanel(){
     location.href = 'templates.php';
 }
+
+function redirectMaintenancePanel(){
+    location.href = 'maintenance.php';
+}

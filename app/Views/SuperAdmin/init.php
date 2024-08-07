@@ -100,6 +100,25 @@
 
                 </div>
 
+                <div class="col-md-4 mt-3 mb-3 mb-sm-0">
+
+                    <div class="card">
+
+                        <div class="card-header fs-5 text-white bg-primary text">Mantenimiento</div>
+
+                        <div class="card-body text-center fs-1">
+
+                            <div class="row mx-4">
+                                <i class="bi bi-tools"></i>
+                                <button onclick="redirectMaintenancePanel()" class="btn btn-primary mt-2">Ir al panel</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
