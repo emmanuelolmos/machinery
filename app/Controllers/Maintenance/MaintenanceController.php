@@ -4,6 +4,7 @@ session_start();
 
 require "../../Models/Check.php";
 require "../../Models/Maintenance.php";
+require "../../Models/Machine.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){
@@ -114,6 +115,31 @@ switch($function){
         }else{
             $response['success'] = true;
             $response['maintenance'] = $result;
+        }
+
+        echo json_encode($response);
+
+        break;
+
+    case 'getListMaintenance':
+
+        //Llamadas a los modelos
+
+        $maintenance = new Maintenance();
+        $machine = new Machine();
+
+        $machines = $machine->getMachinesSA();
+        $maintenances = $maintenance->getAllMaintenances();
+
+        //Se preparan los datos obtenidos
+        if($machines == 'Error' || $machines == 'Empty' || $maintenances == 'Error' || $maintenances == 'Empty'){
+            $response['success'] = false;
+            $response['machines'] = $machines;
+            $response['maintenances'] = $maintenances; 
+        }else{
+            $response['success'] = true;
+            $response['machines'] = $machines;
+            $response['maintenances'] = $maintenances;
         }
 
         echo json_encode($response);

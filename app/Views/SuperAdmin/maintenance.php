@@ -172,51 +172,13 @@ $env = parse_ini_file('../../../.env');
                                         <th class="p-2" style="width: 20%;">Checks</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr style="border: 1px solid black;">
-                                        <td>
-                                            <div class="col-12">
-                                                <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                            </div>
-                                            Maquina
-                                        </td>
-                                        <td>2024-08-07</td>
-                                        <td>
-                                            <button class="btn btn-dark">
-                                                <i class="bi bi-card-checklist"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td>
-                                            <div class="col-12">
-                                                <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                            </div>
-                                            Maquina
-                                        </td>
-                                        <td>2024-08-07</td>
-                                        <td>
-                                            <button class="btn btn-dark">
-                                                <i class="bi bi-card-checklist"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr style="border: 1px solid black;">
-                                        <td>
-                                            <div class="col-12">
-                                                <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                            </div>
-                                            Maquina
-                                        </td>
-                                        <td>2024-08-07</td>
-                                        <td>
-                                            <button class="btn btn-dark">
-                                                <i class="bi bi-card-checklist"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                
+                                <!-- tbody --> 
                             </table>
+                        </div>
+
+                        <div id="divMessageEmptyListMaintenance">
+                            <!-- Mensaje de vacío --> 
                         </div>
                     </div>
                 </div>
