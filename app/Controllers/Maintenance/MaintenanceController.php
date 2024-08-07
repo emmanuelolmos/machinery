@@ -146,6 +146,31 @@ switch($function){
 
         break;
 
+    case 'getListNextMaintenance':
+
+
+        //Llamadas a los modelos
+        $maintenance = new Maintenance();
+        $machine = new Machine();
+
+        $machines = $machine->getMachinesSA();
+        $maintenances = $maintenance->getAllNextMaintenances();
+
+        //Se preparan los datos obtenidos
+        if($machines == 'Error' || $machines == 'Empty' || $maintenances == 'Error' || $maintenances == 'Empty'){
+            $response['success'] = false;
+            $response['machines'] = $machines;
+            $response['maintenances'] = $maintenances; 
+        }else{
+            $response['success'] = true;
+            $response['machines'] = $machines;
+            $response['maintenances'] = $maintenances;
+        }
+
+        echo json_encode($response);
+
+        break;
+
     default:
 
         echo '

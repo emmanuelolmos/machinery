@@ -125,6 +125,33 @@ class Maintenance{
 
     }
 
+    function getAllNextMaintenances(){
+
+        $currentDate = date('Y-m-d');
+
+        $query = "SELECT * FROM maintenance WHERE dateNext_maintenance > :dateNext_maintenance ORDER BY dateNext_maintenance";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':dateNext_maintenance', $currentDate);
+
+        if($statement->execute()){
+
+            $maintenances = $statement->fetchAll();
+
+            //Se comprueba que haya registros
+            if(isset($maintenances[0]['id_maintenance'])){
+
+                return $maintenances;
+
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+    }
+
     
 }
 

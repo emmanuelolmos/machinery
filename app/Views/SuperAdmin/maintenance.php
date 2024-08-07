@@ -185,13 +185,13 @@ $env = parse_ini_file('../../../.env');
 
             </div>
 
-            <div id="divMoreAlarms" class="divMoreAlarms mx-3" style="width: 50%;">
+            <div id="divNextMaintenance" class="divNextMaintenance mx-3" style="width: 50%;">
                 <div>
                     <br>
                     <h3 class="text-center mt-5 fs-4">Próximos</h3>
 
                     <div class="table-responsive text-center mt-4" style="max-height: 650px; overflow-y: auto;">
-                        <table id="tableReportsMaintenance" class="" style="width: 100%;">
+                        <table id="tableNextMaintenance" style="width: 100%;">
                             <thead class="bg-success text-white">
                                 <tr>
                                     <th class="p-2" style="width: 60%;">Maquinas</th>
@@ -199,107 +199,13 @@ $env = parse_ini_file('../../../.env');
                                     <th class="p-2" style="width: 15%;">Mostrar</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="col-12">
-                                            <img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/533d5cd90ef052040ffb720b34a5da32.jpg" alt="" style="width: 150px; height: 100px;">
-                                        </div>
-                                        Maquina
-                                    </td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            
+                            <!-- tbody --> 
                         </table>
+                    </div>
+
+                    <div id="divMessageEmptyNextMaintenance">
+                        <!-- Mensaje de vacío -->
                     </div>
                 </div>
             </div>
