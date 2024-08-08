@@ -159,6 +159,26 @@ switch($function){
 
         break;
 
+    case 'changeStatusOfCheck':
+
+        $id_assigned_check = $_POST['id_assigned_check'];
+        $status_assigned_check = $_POST['status_assigned_check'];
+
+        //Se llama al modelo
+        $check = new Check;
+
+        $result = $check->changeStatusOfCheck($id_assigned_check, $status_assigned_check);
+
+        if($result){
+            $response['success'] = true;
+        }else{
+            $response['success'] = false;
+        }
+
+        echo json_encode($response);
+
+        break;
+
     case 'deleteCheck':
 
         $id_check = $_POST['id_check'];

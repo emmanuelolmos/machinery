@@ -51,7 +51,7 @@ function showListMaintenance(){
                                             '</td>' +
                                             '<td>' + maintenances[i].dateNext_maintenance + '</td>' +
                                             '<td>' +
-                                                '<button class="btn btn-dark">' +
+                                                '<button class="btn btn-dark" onclick="loadDataListMaintenance(' + machines[j].id_machine + ')">' +
                                                     '<i class="bi bi-card-checklist"></i>' +
                                                 '</button>' +
                                             '</td>' +
@@ -171,7 +171,121 @@ function showListNextMaintenance(){
             alert('Error'); 
         } 
     }); 
+}
 
+//Funciones para cargar la información de los modales
+function loadDataListMaintenance(id){
+
+    $("#tbodyTableNextMaintenance").remove();
+    $("#messageEmptyShowListMaintenanceModal").remove();
+
+
+    //Se obtienen la información de los checks asignados a la maquina
+    var petition = {
+        id_machine: id,
+        function: 'getChecksAssigned'
+    };
+    
+    $.ajax({ 
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let checks = convertedInfo['checks'];
+
+                //Se imprime la lista de maquinas con mantenimiento pendientes
+
+                let tbody = '<tbody id="tbodyTableNextMaintenance">';
+
+                for(let i = 0; i < checks.length; i++){
+                    tbody +=    '<tr>' +
+                                    '<td>' + checks[i].content_assigned_check + '</td>' +
+                                    '<td>';
+
+                    if(checks[i].status_assigned_check == '1'){
+                        //Check completo
+                        tbody += '<button type="button" class="btn text-success" onclick="changeStatusOfCheck(' + id + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-check-circle-fill"></i></button>';
+                    }else{
+                        //Check incompleto
+                        tbody += '<button type="button" class="btn" onclick="changeStatusOfCheck(' + id + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-circle"></i></button>';
+                    }
+
+                    tbody +=        '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableShowListMaintenanceModal").append(tbody);
+
+            }else{
+
+                let error = convertedInfo['error'];
+
+                //Se muestran mensajes
+
+                if(error == 'Error'){
+                    alert('Ocurrió un problema en la consulta de datos.');
+                }else{
+                    $("#divMessageEmptyShowListMaintenanceModal").append(
+                        '<h5 id="messageEmptyShowListMaintenanceModal" class="text-center mt-5 fs-3">No hay checks asignados</h5>'
+                    );
+                }
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+
+    $('#showListMaintenanceModal').modal('show');
+}
+
+//Función para cambiar el estatus de un check
+function changeStatusOfCheck(id_machine, id_assigned_check, status_assigned_check){
+
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    
+    //Se manda al controlador
+    var petition = {
+        id_assigned_check: id_assigned_check,
+        status_assigned_check: status_assigned_check,
+        function: 'changeStatusOfCheck'
+    };
+
+    $.ajax({ 
+        url: '../../Controllers/Check/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            loadDataListMaintenance(id_machine);
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-success">Se registró correctamente el cambio</h4>'
+                );
+
+            }else{
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-danger">No se registró correctamente el cambio</h4>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
 }
 
 //Llamada a las funciones

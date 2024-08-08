@@ -191,6 +191,24 @@ class Check{
         }
     }
 
+    function changeStatusOfCheck($id_assigned_check, $status_assigned_check){
+
+        //Condición para verificar el estatus
+        if($status_assigned_check == '0'){
+            $newStatus = '1';
+        }else{
+            $newStatus = '0';
+        }
+
+        $query = 'UPDATE assigned_checks SET status_assigned_check = :status_assigned_check WHERE id_assigned_check = :id_assigned_check';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':status_assigned_check', $newStatus);
+        $statement->bindParam(':id_assigned_check', $id_assigned_check);
+
+        return $statement->execute();
+    }
+
     function deleteCheck($id_check){
 
         $query = "UPDATE checks SET status_check = '0' WHERE id_check = :id_check";
