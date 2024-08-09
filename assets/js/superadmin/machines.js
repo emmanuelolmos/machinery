@@ -86,7 +86,6 @@ function loadMachines(){
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
                                                 '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
-                                                '<li class="dropdown-item">Generar revisiones</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
@@ -203,7 +202,6 @@ function findMachine(){
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
                                                 '<li class="dropdown-item" data-bs-toggle="modal" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')" data-bs-target="#maintenanceModal">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
-                                                '<li class="dropdown-item">Generar revisiones</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
