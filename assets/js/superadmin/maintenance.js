@@ -128,6 +128,9 @@ function showListNextMaintenance(){
 
                         if(maintenances[i].machine_id == machines[j].id_machine){
 
+                            let date = "'" + maintenances[i].dateNext_maintenance + "'";
+                            let machine = "'" + machines[j].name_machine + "'";
+
                             //Se imprime la información de la maquina encontrada
                             tbody +=    '<tr>' +
                                             '<td>' +
@@ -138,7 +141,7 @@ function showListNextMaintenance(){
                                             '</td>' +
                                             '<td>' + maintenances[i].dateNext_maintenance + '</td>' +
                                             '<td>' +
-                                                '<button class="btn btn-primary">' +
+                                                '<button class="btn btn-dark" onclick="loadDataListMaintenance(' + machines[j].id_machine + ', ' + date + ', ' + machine + ')">' +
                                                     '<i class="bi bi-card-checklist"></i>' +
                                                 '</button>' +
                                             '</td>' +
