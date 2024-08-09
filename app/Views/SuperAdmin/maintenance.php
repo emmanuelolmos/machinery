@@ -159,7 +159,7 @@ $env = parse_ini_file('../../../.env');
                                 <button class="btn btn-primary">Reportes</button>
                             </div>
                             <div class="divButtonsRP ms-5">
-                                <button class="btn btn-primary">Próximos</button>
+                                <button onclick="showNextMaintenancesModal()" class="btn btn-primary">Próximos</button>
                             </div>
                         </div>
 
@@ -217,6 +217,7 @@ $env = parse_ini_file('../../../.env');
     <!-- Modales -->
     <?php
         include 'Modals/showListMaintenance.php';
+        include 'Modals/showNextMaintenance.php'
     ?>
 
     <!-- Scripts -->
