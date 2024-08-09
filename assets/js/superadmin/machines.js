@@ -494,11 +494,25 @@ function loadMaintenance(id){
                 //Se muestra el modal en base a si la frecuencia ya fue registrada o no
                 if(convertedInfo['result'] == 'Empty'){
 
-                    $('#formAddMaintenanceModal').append(
-                        '<input class="form-control" id="inputIdAddMaintenanceModal" name="inputIdAddMaintenanceModal" type="hidden" value="' + id + '">'
-                    );
+                    if(convertedInfo['checks']){
 
-                    $('#addMaintenanceModal').modal('show');
+                        $('#formAddMaintenanceModal').append(
+                            '<input class="form-control" id="inputIdAddMaintenanceModal" name="inputIdAddMaintenanceModal" type="hidden" value="' + id + '">'
+                        );
+    
+                        $('#addMaintenanceModal').modal('show');
+
+                    }else{
+
+                        Swal.fire({
+                            title: "Sin checks asignados",
+                            text: "Para establecer la frecuencia del mantenimiento es necesario ingresar la lista de checks a la maquina.",
+                            icon: "warning",
+                            iconColor: "#ffdb00",
+                            confirmButtonColor: '#0d6efd'
+                          });
+
+                    }
 
                 }else{
 

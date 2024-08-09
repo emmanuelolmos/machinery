@@ -191,6 +191,21 @@ class Check{
         }
     }
 
+    function verifyChecksAssigned($id_machine){
+
+        $query = "SELECT * FROM assigned_checks WHERE active_assigned_check = '1' AND machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $id_machine);
+
+        $statement->execute();
+
+        $checks_found = $statement->fetchAll();
+
+        return isset($checks_found[0]['id_assigned_check']);
+        
+    }
+
     function comprobateStatusChecksAssigned($id_machine){
 
         $query = "SELECT * FROM assigned_checks WHERE active_assigned_check = '1' AND machine_id = :machine_id";

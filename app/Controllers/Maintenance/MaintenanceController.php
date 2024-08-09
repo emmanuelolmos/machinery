@@ -31,6 +31,11 @@ switch($function){
         
         $result = $maintenance->verifyMaintenance($id_machine);
 
+        //Se verifica que se tengan checks asignados
+        $check = new Check();
+
+        $verifyCheck = $check->verifyChecksAssigned($id_machine);
+
         switch($result){
             case 'Error':
                 $response['success'] = false;
@@ -39,6 +44,7 @@ switch($function){
             case 'Empty':
                 $response['success'] = true;
                 $response['result'] = 'Empty';
+                $response['checks'] = $verifyCheck;
                 break;
 
             default:
