@@ -73,6 +73,41 @@ class Maintenance{
         }
     }
 
+    function rebootMaintenance($id_machine){
+
+        //Primero se obtienen los datos del registro de mantenimiento
+
+        $query = "SELECT * FROM maintenance WHERE machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $id_machine);
+
+        $statement->execute();
+
+        $maintenance_found = $statement->fetchAll();
+
+        $dateInit = date('Y-m-d');
+        $number = $maintenance_found[0]['number_maintenance'];
+        $type = $maintenance_found[0]['type_maintenance'];
+        $dateNext = date('Y-m-d', strtotime($dateInit.' + '.$number.' '.$type));
+
+        //Se actualiza la fecha 
+
+        $query = "UPDATE maintenance SET dateInit_maintenance = :dateInit_maintenance, dateNext_maintenance = :dateNext_maintenance WHERE machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':dateInit_maintenance', $dateInit);
+        $statement->bindParam(':dateNext_maintenance', $dateNext);
+        $statement->bindParam(':machine_id', $id_machine);
+
+        if($statement->execute()){
+            return '';
+        }else{
+            return 'Las fechas del próximo mantenimiento no se actualizaron correctamente';
+        }
+
+    }
+
     function getMaintenance($id_machine){
 
         $query = "SELECT * FROM maintenance WHERE machine_id = :machine_id";

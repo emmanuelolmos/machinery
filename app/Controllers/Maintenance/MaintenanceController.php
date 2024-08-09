@@ -5,6 +5,8 @@ session_start();
 require "../../Models/Check.php";
 require "../../Models/Maintenance.php";
 require "../../Models/Machine.php";
+require "../../Models/Report.php";
+require "../../Models/Image.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){
@@ -148,7 +150,6 @@ switch($function){
 
     case 'getListNextMaintenance':
 
-
         //Llamadas a los modelos
         $maintenance = new Maintenance();
         $machine = new Machine();
@@ -167,6 +168,116 @@ switch($function){
             $response['maintenances'] = $maintenances;
         }
 
+        echo json_encode($response);
+
+        break;
+    
+    case 'storeReport':
+
+        //Se obtienen los datos
+        $machine_id = $_POST['id_machine'];
+        $establishedDate = $_POST['establishedDate'];
+        $images = $_FILES['inputImageShowListMaintenanceModal'];
+
+        //Se verifica que no esté vacía
+        if(empty($images['name'][0])){
+
+            $response['success'] = false;
+            $response['error'] = 'Es necesario ingresar las imagenes de evidencia';
+
+        }else{
+            
+            //Se crea el reporte
+            $report = new Report();
+            $id_report = $report->insertReport($establishedDate, $machine_id);
+
+            if($id_report == 'Error'){
+                
+                $response['success'] = false;
+                $response['error'] = $report_register;
+
+            }else{
+
+                //Ya generado el reporte se suben las imagenes
+                $image = new Image();
+                $confirmSendImages = $image->sendEvidenceImages($id_report, $images);
+
+                if(!empty($confirmSendImages)){
+
+                    $response['success'] = false;
+                    $response['error'] = $confirmSendImages;
+
+                }else{
+
+                    //Las imagenes se subieron correctemente
+
+                    //Ahora se reinician las horas del registro de mantenimiento
+                    $maintenance = new Maintenance();
+                    $maintenance_reboot = $maintenance->rebootMaintenance($machine_id);
+
+                    if(!empty($maintenance_reboot)){
+
+                        $response['success'] = false;
+                        $response['error'] = $maintenance_reboot;
+
+                    }else{
+
+                        //Se reinician los estatus de los checks
+
+                        $check = new Check();
+                        $checks_reboot = $check->rebootStatusChecks($machine_id);
+
+                        if(!empty($checks_reboot)){
+
+                            $response['success'] = false;
+                            $response['error'] = $checks_reboot;
+
+                        }else{
+
+                            $response['success'] = true;
+
+                        }
+
+                    }
+
+                }
+
+            }
+            
+        }
+
+        echo json_encode($response);
+
+        break;
+
+    case 'sendImagesOfMaintenance':
+
+        //Se reciben los datos
+        $images = $_FILES['inputImageShowListMaintenanceModal'];
+
+        //Se verifica que no esté vacía
+        if(empty($images['name'][0])){
+            $error = 'Sin imagenes para guardar';
+        }else{
+            
+            //Se guardan las imagenes
+            
+        }
+
+        //Se comprueban las imagenes
+
+        //$images = $_FILES['inputImageShowListMaintenanceModal'];
+
+        //$response['success'] = true;
+        //$response['message'] = $message; //$images['name'][0];
+
+        if(empty($error)){
+            $response['success'] = true;
+        }else{
+            $response['success'] = false;
+            $response['error'] = $error;
+        }
+        
         echo json_encode($response);
 
         break;

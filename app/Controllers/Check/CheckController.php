@@ -3,6 +3,7 @@
 session_start();
 
 require "../../Models/Check.php";
+require "../../Models/Report.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){
@@ -138,15 +139,19 @@ switch($function){
     case 'getChecksAssigned':
 
         $id_machine = $_POST['id_machine'];
+        $establishedDate_report = $_POST['establishedDate_report'];
 
         $check = new Check();
 
         $checks = $check->getChecksAssigned($id_machine);
 
+        $result = $check->comprobateStatusChecksAssigned($id_machine);
+
         if($checks != 'Empty' && $checks != 'Error'){
 
             $response['success'] = true;
             $response['checks'] = $checks;
+            $response['checksready'] = $result;
 
         }else{
 
@@ -168,6 +173,8 @@ switch($function){
         $check = new Check;
 
         $result = $check->changeStatusOfCheck($id_assigned_check, $status_assigned_check);
+
+        //Se comprueba que los checks estén completos para realizar el reporte
 
         if($result){
             $response['success'] = true;

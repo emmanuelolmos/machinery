@@ -191,6 +191,31 @@ class Check{
         }
     }
 
+    function comprobateStatusChecksAssigned($id_machine){
+
+        $query = "SELECT * FROM assigned_checks WHERE active_assigned_check = '1' AND machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $id_machine);
+
+        $query2 = "SELECT * FROM assigned_checks WHERE active_assigned_check = '1' AND status_assigned_check = '1' AND machine_id = :machine_id";
+
+        $statement2 = $this->connection->prepare($query2);
+        $statement2->bindParam(':machine_id', $id_machine);
+
+        $statement->execute();
+        $statement2->execute();
+
+        $checksassigned = $statement->fetchAll();
+        $checksready = $statement2->fetchAll();
+
+        if(count($checksassigned) == count($checksready)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     function changeStatusOfCheck($id_assigned_check, $status_assigned_check){
 
         //Condición para verificar el estatus
@@ -207,6 +232,21 @@ class Check{
         $statement->bindParam(':id_assigned_check', $id_assigned_check);
 
         return $statement->execute();
+    }
+
+    function rebootStatusChecks($machine_id){
+
+        $query = "UPDATE assigned_checks SET status_assigned_check = '0' WHERE machine_id = :machine_id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':machine_id', $machine_id);
+
+        if($statement->execute()){
+            return '';
+        }else{
+            return 'Los checks no se reiniciaron correctamente';
+        }
+
     }
 
     function deleteCheck($id_check){

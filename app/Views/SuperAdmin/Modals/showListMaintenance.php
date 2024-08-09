@@ -10,12 +10,16 @@
         <!-- Formulario --> 
         <form id="formShowListMaintenanceModal" enctype="multipart/form-data">
 
+            <div id="divInputIdShowListMaintenanceModal">
+                <!-- Id de la maquina --> 
+            </div>
+
             <div id="errorMessageShowListMaintenanceModal" class="text-center">
                 <!--Mensaje de error-->
             </div>
 
             <div id="divTitleShowListMaintenanceModal">
-                <h1 id="titleShowListMaintenanceModal" class="fs-5 text-center">Maquina 1</h1>
+                <!-- Nombre de la maquina --> 
             </div>
 
             <div class="table-responsive text-center mt-3">
@@ -32,8 +36,8 @@
                 </table>
             </div>
 
-            <div id="divImageShowListMaintenanceModal">
-
+            <div id="spacedivImageShowListMaintenanceModal">
+                <!-- Input para subir imagenes de evidencia --> 
             </div>
 
             <div id="divMessageEmptyShowListMaintenanceModal">
@@ -41,7 +45,7 @@
             </div>
 
             <div class="text-center mt-3">
-                <button type="submit" type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Salir</button>
+                <button type="button" type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Salir</button>
             </div>
 
         </form>

@@ -41,6 +41,9 @@ function showListMaintenance(){
 
                         if(maintenances[i].machine_id == machines[j].id_machine){
 
+                            let date = "'" + maintenances[i].dateNext_maintenance + "'";
+                            let machine = "'" + machines[j].name_machine + "'";
+
                             //Se imprime la información de la maquina encontrada
                             tbody +=    '<tr style="border: 1px solid black;">' +
                                             '<td>' +
@@ -51,7 +54,7 @@ function showListMaintenance(){
                                             '</td>' +
                                             '<td>' + maintenances[i].dateNext_maintenance + '</td>' +
                                             '<td>' +
-                                                '<button class="btn btn-dark" onclick="loadDataListMaintenance(' + machines[j].id_machine + ')">' +
+                                                '<button class="btn btn-dark" onclick="loadDataListMaintenance(' + machines[j].id_machine + ', ' + date + ', ' + machine + ')">' +
                                                     '<i class="bi bi-card-checklist"></i>' +
                                                 '</button>' +
                                             '</td>' +
@@ -174,15 +177,28 @@ function showListNextMaintenance(){
 }
 
 //Funciones para cargar la información de los modales
-function loadDataListMaintenance(id){
+function loadDataListMaintenance(id, establishedDate, name){
 
-    $("#tbodyTableNextMaintenance").remove();
+    $("#tbodyTableShowListMaintenanceModal").remove();
     $("#messageEmptyShowListMaintenanceModal").remove();
+    $("#inputIdShowListMaintenanceModal").remove();
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    $("#divImageShowListMaintenanceModal").remove();
+    $("#titleShowListMaintenanceModal").remove();
 
+    $("#divInputIdShowListMaintenanceModal").append(
+        '<input id="inputIdShowListMaintenanceModal" value="' + id + '" hidden></input>'
+    );
+
+    //Se coloca el nombre de la maquina
+    $("#divTitleShowListMaintenanceModal").append(
+        '<h1 id="titleShowListMaintenanceModal" class="fs-5 text-center">' + name + '</h1>'
+    );
 
     //Se obtienen la información de los checks asignados a la maquina
     var petition = {
         id_machine: id,
+        establishedDate_report: establishedDate,
         function: 'getChecksAssigned'
     };
     
@@ -197,10 +213,12 @@ function loadDataListMaintenance(id){
             if(convertedInfo['success']){
 
                 let checks = convertedInfo['checks'];
+                let date = "'" + establishedDate + "'";
+                let machine_name = "'" + name + "'";
 
                 //Se imprime la lista de maquinas con mantenimiento pendientes
 
-                let tbody = '<tbody id="tbodyTableNextMaintenance">';
+                let tbody = '<tbody id="tbodyTableShowListMaintenanceModal">';
 
                 for(let i = 0; i < checks.length; i++){
                     tbody +=    '<tr>' +
@@ -209,10 +227,10 @@ function loadDataListMaintenance(id){
 
                     if(checks[i].status_assigned_check == '1'){
                         //Check completo
-                        tbody += '<button type="button" class="btn text-success" onclick="changeStatusOfCheck(' + id + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-check-circle-fill"></i></button>';
+                        tbody += '<button type="button" class="btn text-success" onclick="changeStatusOfCheck(' + id + ', ' + machine_name + ', ' + date + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-check-circle-fill"></i></button>';
                     }else{
                         //Check incompleto
-                        tbody += '<button type="button" class="btn" onclick="changeStatusOfCheck(' + id + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-circle"></i></button>';
+                        tbody += '<button type="button" class="btn" onclick="changeStatusOfCheck(' + id + ', ' + machine_name + ', ' + date + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-circle"></i></button>';
                     }
 
                     tbody +=        '</td>' +
@@ -222,6 +240,23 @@ function loadDataListMaintenance(id){
                 tbody += '</tbody>';
 
                 $("#tableShowListMaintenanceModal").append(tbody);
+
+                //checksready es una comprobación de que todos los checks fueron completados
+                if(convertedInfo['checksready']){
+                    $("#spacedivImageShowListMaintenanceModal").append(
+                        '<div id="divImageShowListMaintenanceModal">' +
+                            '<label class="form-label mt-2" for="inputImageShowListMaintenanceModal">Imagenes de evidencia</label>' +
+                            '<div class="d-flex">' +
+                                '<div style="width: 90%;">' +
+                                    '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
+                                '</div>' +
+                                '<div style="width: 10%;">' +
+                                    '<button onclick="sendImagesOfMaintenance(' + id + ', ' + date + ')" class="btn btn-dark ms-1" type="button"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>'
+                    );
+                }
 
             }else{
 
@@ -249,7 +284,7 @@ function loadDataListMaintenance(id){
 }
 
 //Función para cambiar el estatus de un check
-function changeStatusOfCheck(id_machine, id_assigned_check, status_assigned_check){
+function changeStatusOfCheck(id_machine, name, establishedDate, id_assigned_check, status_assigned_check){
 
     $("#errorMessageContentShowListMaintenanceModal").remove();
     
@@ -266,7 +301,7 @@ function changeStatusOfCheck(id_machine, id_assigned_check, status_assigned_chec
         data: petition, 
         success: function (data){
 
-            loadDataListMaintenance(id_machine);
+            loadDataListMaintenance(id_machine, establishedDate, name);
 
             var convertedInfo = JSON.parse(data);
 
@@ -286,6 +321,47 @@ function changeStatusOfCheck(id_machine, id_assigned_check, status_assigned_chec
             alert('Error'); 
         } 
     }); 
+}
+
+//Función para subir imagenes del mantenimiento
+function sendImagesOfMaintenance(id_machine, establishedDate){
+
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    
+    //Se manda la información del formulario
+    var formElement = document.getElementById("formShowListMaintenanceModal");
+
+    formData = new FormData(formElement);
+    formData.append("id_machine", id_machine);
+    formData.append("establishedDate", establishedDate);
+    formData.append("function", 'storeReport');
+
+    $.ajax({
+        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        type: 'POST', 
+        data: formData, 
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+                
+                location.reload();
+
+            }else{
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-danger">' + convertedInfo['error'] + '</h4>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 }
 
 //Llamada a las funciones
