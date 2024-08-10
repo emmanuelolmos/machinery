@@ -38,7 +38,7 @@
                     <label class="form-label" for="inputDateEditMachineModal">Fecha de compra:</label>
                     <!--<input id="inputDateEditMachineryModal" name="inputDateEditMachineryModal" type="date" required pattern="\d{4}-\d{2}-\d{2}" style="margin-left: 8px; width: 250px;">-->
                 </div>
-                <div class="mt-4">
+                <div class="mt-3">
                     <label class="form-label" for="inputImageEditMachineModal">Imagen:</label>
                     <input class="form-control" id="inputImageEditMachineModal" name="inputImageEditMachineModal" type="file" accept="image/*">
                 </div>

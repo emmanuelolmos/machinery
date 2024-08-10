@@ -72,12 +72,14 @@
     <?php
         include 'Modals/addMachine.php';
         include 'Modals/editMachine.php';
+        include 'Modals/addMaintenance.php';
+        include 'Modals/editMaintenance.php';
     ?>
 
     <!-- Scripts -->
     <script src="../../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../../assets/js/bootstrap/bootstrap.bundle.js"></script>
-    <script src="../../../assets/js/technical/machines.js"></script>
+    <script src="../../../assets/js/user/machines.js"></script>
     <!--<script src="../../../assets/js/admin/machinery.js"></script>-->
 
 </body>
