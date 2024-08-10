@@ -190,6 +190,6 @@
     <!-- Scripts -->
     <script src="../../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../../assets/js/bootstrap/bootstrap.bundle.js"></script>
-    <script src="../../../assets/js/superadmin/checks.js"></script>
+    <script src="../../../assets/js/superuser/checks.js"></script>
 </body>
 </html>

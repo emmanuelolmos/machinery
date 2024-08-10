@@ -2,8 +2,9 @@
 
 session_start();
 
-require "../../Models/User.php";
-require "../../Models/Company.php";
+require "../../Models/SuperUser/User.php";
+require "../../Models/SuperUser/Company.php";
+require "../../Models/SuperUser/Role.php";
 
 if(isset($_POST['function'])){
     $function = $_POST['function'];
@@ -23,12 +24,11 @@ switch($function){
         $user = new User();
 
         //Obtención de usuarios
-        $users = $user->getUsersAdmin();
+        $users = $user->getUsers();
 
-        //Obtención del nombre de la empresa
+        //Obtención de empresas
         $company = new Company();
-        $result = $company->getCompany();
-        $nameCompany = $result['name_company'];
+        $companies = $company->getCompanies();
 
         //Condición en caso de error o no haya registros
         if($users == 'Error' || $users == 'Empty'){
@@ -37,7 +37,7 @@ switch($function){
         }else{
             $response['success'] = true;
             $response['users'] = $users;
-            $response['nameCompany'] = $nameCompany;
+            $response['companies'] = $companies;
         }
         
         echo json_encode($response);
@@ -50,11 +50,11 @@ switch($function){
         $name = isset($_POST['nameAddUser']) ? $_POST['nameAddUser'] : '';
         $phone = isset($_POST['phoneAddUser']) ? $_POST['phoneAddUser'] : '';
         $password = isset($_POST['passwordAddUser']) ? $_POST['passwordAddUser'] : '';
-        $company = $_SESSION['company_id'];
         $role = isset($_POST['roleAddUser']) ? $_POST['roleAddUser'] : '';
+        $company = isset($_POST['selectCompanyAddUser']) ? $_POST['selectCompanyAddUser'] : '';
 
         //Se comprueba que los datos se hayan ingresado correctamente
-        if(empty($name) || empty($phone) || empty($password) || empty($role)){
+        if(empty($name) || empty($phone) || empty($password) || empty($role) || empty($company)){
 
             $error = 'Es necesario ingresar los datos completos';
 
@@ -94,11 +94,11 @@ switch($function){
         $name = isset($_POST['inputNameEditUser']) ? $_POST['inputNameEditUser'] : '';
         $phone = isset($_POST['inputPhoneEditUser']) ? $_POST['inputPhoneEditUser'] : '';
         $password = isset($_POST['inputPasswordEditUser']) ? $_POST['inputPasswordEditUser'] : '';
-        $company = $_SESSION['company_id'];
+        $company = isset($_POST['selectCompanyEditUser']) ? $_POST['selectCompanyEditUser'] : '';
         $role = isset($_POST['selectRoleEditUser']) ? $_POST['selectRoleEditUser'] : '';
 
         //Se comprueba que los datos se hayan ingresado correctamente
-        if(empty($name) || empty($phone) || empty($password) || empty($role)){
+        if(empty($name) || empty($phone) || empty($password) || empty($company) || empty($role)){
 
             $error = 'Es necesario ingresar los datos completos';
 
@@ -189,19 +189,21 @@ switch($function){
 
         $result = $user->getUser($id);
 
+        //Obtención de empresas
+        $company = new Company();
+        $companies = $company->getCompanies();
+
+        //Obtención de roles
+        $role = new Role();
+        $roles = $role->getRoles();
+
         //Se verifica que la consulta se haya realizado correctamente
         if($result != 'Error'){
 
             $response['success'] = true;
             $response['user'] = $result;
-
-            /*//Se manda la información del usuario
-            $data['name'] = $userFound[0]['nombre_usuario'];
-            $data['phone'] = $userFound[0]['telefono'];
-            $data['password'] = $userFound[0]['clave'];
-            $data['company'] = $userFound[0]['empresa'];
-            $data['status'] = $userFound[0]['status_usuario'];
-            $data['role'] = $userFound[0]['rol_usuario'];*/
+            $response['companies'] = $companies;
+            $response['roles'] = $roles;
 
         }else{
             $response['success'] = false;

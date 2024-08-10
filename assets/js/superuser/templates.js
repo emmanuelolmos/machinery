@@ -24,7 +24,7 @@ function loadCategories(){
     var petition = {function: 'getCategories'};
     
     $.ajax({ 
-        url: '../../Controllers/Category/CategoryController.php', 
+        url: '../../Controllers/SuperUser/CategoryController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -88,7 +88,7 @@ function loadCategoriesEdit(id_category){
     var petition = {function: 'getCategories'};
     
     $.ajax({ 
-        url: '../../Controllers/Category/CategoryController.php', 
+        url: '../../Controllers/SuperUser/CategoryController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -165,7 +165,7 @@ function loadTableChecks(){
     var petition = {function: 'getChecks'};
     
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -240,7 +240,7 @@ function loadCardsCategory(){
     var petition = {function: 'getCategories'};
     
     $.ajax({ 
-        url: '../../Controllers/Category/CategoryController.php', 
+        url: '../../Controllers/SuperUser/CategoryController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -432,7 +432,7 @@ function loadDeleteChecks(){
     var petition = {function: 'getChecks'};
     
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -553,7 +553,7 @@ function deleteCheckDB(id){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -606,7 +606,7 @@ function deleteCategory(id){
             };
 
             $.ajax({ 
-                url: '../../Controllers/Category/CategoryController.php', 
+                url: '../../Controllers/SuperUser/CategoryController.php', 
                 type: 'POST', 
                 data: formData, 
                 success: function (data){
@@ -664,7 +664,7 @@ function storeTemplate(){
     };
 
     $.ajax({ 
-        url: '../../Controllers/Template/TemplateController.php', 
+        url: '../../Controllers/SuperUser/TemplateController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -717,7 +717,7 @@ function storeEditTemplate(){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Template/TemplateController.php', 
+        url: '../../Controllers/SuperUser/TemplateController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -763,7 +763,7 @@ function restoreTemplate(){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Template/TemplateController.php', 
+        url: '../../Controllers/SuperUser/TemplateController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -822,7 +822,7 @@ function deleteTemplate(){
             };
 
             $.ajax({ 
-                url: '../../Controllers/Template/TemplateController.php', 
+                url: '../../Controllers/SuperUser/TemplateController.php', 
                 type: 'POST', 
                 data: formData, 
                 success: function (data){
@@ -955,7 +955,7 @@ function editTemplate(id, name, category){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Template/TemplateController.php', 
+        url: '../../Controllers/SuperUser/TemplateController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -1016,7 +1016,7 @@ $(document).ready(function () {
         formData.append("function", 'insertCheck');
 
         $.ajax({
-            url: '../../Controllers/Check/CheckController.php', 
+            url: '../../Controllers/SuperUser/CheckController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,
@@ -1059,7 +1059,7 @@ $(document).ready(function () {
         formData.append("function", 'insertCategory');
 
         $.ajax({
-            url: '../../Controllers/Category/CategoryController.php', 
+            url: '../../Controllers/SuperUser/CategoryController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,

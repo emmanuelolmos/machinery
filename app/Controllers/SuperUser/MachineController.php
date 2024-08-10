@@ -2,9 +2,9 @@
 
 session_start();
 
-require "../../Models/User.php";
-require "../../Models/Company.php";
-require "../../Models/Machine.php";
+require "../../Models/SuperUser/User.php";
+require "../../Models/SuperUser/Company.php";
+require "../../Models/SuperUser/Machine.php";
 
 //Se obtiene la función a realizar
 if(isset($_POST['function'])){
@@ -46,7 +46,11 @@ switch($function){
         $machine = new Machine();
 
         //Obtención de la lista de maquinaria
-        $result = $machine->getMachines();
+        $result = $machine->getMachinesSA();
+
+        //Obtención de empresas
+        $company = new Company();
+        $companies = $company->getCompanies();
 
         //Condición en caso de error o no haya registros
         if($result == 'Error' || $result == 'Empty'){
@@ -55,6 +59,7 @@ switch($function){
         }else{
             $response['success'] = true;
             $response['machines'] = $result;
+            $response['companies'] = $companies;
         }
 
         echo json_encode($response);
@@ -72,15 +77,18 @@ switch($function){
         if($name == ''){
 
             //Obtención de la lista de maquinaria
-            $result = $machine->getMachines();
+            $result = $machine->getMachinesSA();
 
         }else{
 
             //Obtención de la lista de maquinaria
-            $company_id = $_SESSION['company_id'];
-            $result = $machine->findMachine($name, $company_id);
+            $result = $machine->findMachineSA($name);
 
         }
+
+        //Obtención de empresas
+        $company = new Company();
+        $companies = $company->getCompanies();
 
         //Condición en caso de error o no haya registros
         if($result == 'Error' || $result == 'Empty'){
@@ -89,6 +97,7 @@ switch($function){
         }else{
             $response['success'] = true;
             $response['machines'] = $result;
+            $response['companies'] = $companies;
         }
 
         echo json_encode($response);
@@ -106,11 +115,11 @@ switch($function){
         $description = isset($_POST['inputDescriptionAddMachineModal']) ? $_POST['inputDescriptionAddMachineModal'] : '';
         $date = isset($_POST['inputDateAddMachineModal']) ? $_POST['inputDateAddMachineModal'] : '';
         $status = '1';
-        $company = $_SESSION['company_id'];
+        $company = isset($_POST['selectCompanyAddMachine']) ? $_POST['selectCompanyAddMachine'] : '';
         $image = isset($_FILES['inputImageAddMachineModal']) ? $_FILES['inputImageAddMachineModal'] : '';
 
         //Se comprueba que los datos se hayan ingresado correctamente
-        if(empty($name) || empty($mark) || empty($model) || empty($serie) || empty($description) || empty($date) || empty($image['tmp_name'])){
+        if(empty($name) || empty($mark) || empty($model) || empty($serie) || empty($description) || empty($date) || empty($image['tmp_name']) || empty($company)){
 
             $error = 'Es necesario ingresar los datos completos';
 
@@ -177,6 +186,10 @@ switch($function){
 
         $result = $machine->getMachineItem($id);
 
+        //Obtención de empresas
+        $company = new Company();
+        $companies = $company->getCompanies();
+
         if($result == 'Error' || $result == 'Empty'){
             $error = $result;
         }else{
@@ -187,6 +200,7 @@ switch($function){
         if(empty($error)){
             $response['success'] = true;
             $response['machine'] = $result;
+            $response['companies'] = $companies;
         }else{
             $response['success'] = false;
             $response['error'] = $error;
@@ -208,11 +222,11 @@ switch($function){
         $description = isset($_POST['inputDescriptionEditMachineModal']) ? $_POST['inputDescriptionEditMachineModal'] : '';
         $date = isset($_POST['inputDateEditMachineModal']) ? $_POST['inputDateEditMachineModal'] : '';
         $status = '1';
-        $company = $_SESSION['company_id'];
+        $company = isset($_POST['selectCompanyEditMachineModal']) ? $_POST['selectCompanyEditMachineModal'] : '';
         $image = isset($_FILES['inputImageEditMachineModal']) ? $_FILES['inputImageEditMachineModal'] : '';
 
         //Se comprueba que los datos se hayan ingresado correctamente
-        if(empty($name) || empty($mark) || empty($model) || empty($serie) || empty($description) || empty($date)){
+        if(empty($name) || empty($mark) || empty($model) || empty($serie) || empty($description) || empty($date) || empty($company)){
 
             $error = 'Es necesario ingresar los datos completos';
 
@@ -283,7 +297,7 @@ switch($function){
 
         break;
 
-    /*
+    
     case 'getCompanies':
 
         //Se obtiene el modelo
@@ -294,16 +308,16 @@ switch($function){
 
         //Condición en caso de error o no haya registros
         if($companies == 'Error' || $companies == 'Empty'){
-            $data['success'] = false;
-            $data['error'] = $companies;
+            $response['success'] = false;
+            $response['error'] = $companies;
         }else{
-            $data['success'] = true;
-            $data['companies'] = $companies;
+            $response['success'] = true;
+            $response['companies'] = $companies;
         }
         
-        echo json_encode($data);
+        echo json_encode($response);
 
-        break;*/
+        break;
 
     default:
 

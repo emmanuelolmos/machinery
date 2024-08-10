@@ -42,7 +42,7 @@ function verifyCheckListRegister(){
     };
 
     $.ajax({
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -187,7 +187,7 @@ function loadChecksAssigned(){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -231,7 +231,7 @@ function loadCardsCategory(){
     var petition = {function: 'getCategories'};
     
     $.ajax({ 
-        url: '../../Controllers/Category/CategoryController.php', 
+        url: '../../Controllers/SuperUser/CategoryController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -325,7 +325,7 @@ function loadTableChecks(){
     var petition = {function: 'getChecks'};
     
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -632,7 +632,7 @@ function editTemplate(id, name, category){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Template/TemplateController.php', 
+        url: '../../Controllers/SuperUser/TemplateController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -689,7 +689,7 @@ function storeCheckList(state){
     };
 
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: formData, 
         success: function (data){
@@ -740,7 +740,7 @@ $(document).ready(function () {
         formData.append("function", 'insertCheck');
 
         $.ajax({
-            url: '../../Controllers/Check/CheckController.php', 
+            url: '../../Controllers/SuperUser/CheckController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,

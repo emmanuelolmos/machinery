@@ -6,7 +6,7 @@ function loadCompaniesAddMachine(){
     var petition = {function : 'getCompanies'};
     
     $.ajax({ 
-        url: '../../Controllers/SuperAdmin/MachineController.php', 
+        url: '../../Controllers/SuperUser/MachineController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -50,7 +50,7 @@ function loadMachines(){
     var petition = {function: 'getMachines'};
 
     $.ajax({ 
-        url: '../../Controllers/SuperAdmin/MachineController.php', 
+        url: '../../Controllers/SuperUser/MachineController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -156,7 +156,7 @@ function findMachine(){
     };
 
     $.ajax({ 
-        url: '../../Controllers/SuperAdmin/MachineController.php', 
+        url: '../../Controllers/SuperUser/MachineController.php', 
         type: 'POST', 
         data: petitionData, 
         success: function (response){
@@ -281,7 +281,7 @@ function loadDataMachine(id){
     };
 
     $.ajax({ 
-        url: '../../Controllers/SuperAdmin/MachineController.php', 
+        url: '../../Controllers/SuperUser/MachineController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -409,7 +409,7 @@ function deleteMachine(id){
             };
             
             $.ajax({ 
-                url: '../../Controllers/SuperAdmin/MachineController.php', 
+                url: '../../Controllers/SuperUser/MachineController.php', 
                 type: 'POST', 
                 data: petition, 
                 success: function (response){
@@ -480,7 +480,7 @@ function loadMaintenance(id){
     }
 
     $.ajax({ 
-        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -581,7 +581,7 @@ $(document).ready(function () {
         formData.append("function", 'insertMachine');
 
         $.ajax({
-            url: '../../Controllers/SuperAdmin/MachineController.php', 
+            url: '../../Controllers/SuperUser/MachineController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,
@@ -621,7 +621,7 @@ $(document).ready(function () {
         formData.append("function", 'updateMachine');
 
         $.ajax({
-            url: '../../Controllers/SuperAdmin/MachineController.php', 
+            url: '../../Controllers/SuperUser/MachineController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,
@@ -661,7 +661,7 @@ $(document).ready(function () {
         formData.append("function", "assignDateMaintenance")
 
         $.ajax({
-            url: '../../Controllers/Maintenance/MaintenanceController.php', 
+            url: '../../Controllers/SuperUser/MaintenanceController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,
@@ -701,7 +701,7 @@ $(document).ready(function () {
         formData.append("function", "reassignDateMaintenance")
 
         $.ajax({
-            url: '../../Controllers/Maintenance/MaintenanceController.php', 
+            url: '../../Controllers/SuperUser/MaintenanceController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,

@@ -16,7 +16,7 @@ function showListMaintenance(){
     var petition = {function: 'getListMaintenance'};
 
     $.ajax({ 
-        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -103,7 +103,7 @@ function showListNextMaintenance(){
     var petition = {function: 'getListNextMaintenance'}
 
     $.ajax({ 
-        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -190,7 +190,7 @@ function showNextMaintenancesModal(){
     var petition = {function: 'getListNextMaintenance'}
 
     $.ajax({ 
-        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -295,7 +295,7 @@ function loadDataListMaintenance(id, establishedDate, name){
     };
     
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -388,7 +388,7 @@ function changeStatusOfCheck(id_machine, name, establishedDate, id_assigned_chec
     };
 
     $.ajax({ 
-        url: '../../Controllers/Check/CheckController.php', 
+        url: '../../Controllers/SuperUser/CheckController.php', 
         type: 'POST', 
         data: petition, 
         success: function (data){
@@ -429,7 +429,7 @@ function sendImagesOfMaintenance(id_machine, establishedDate){
     formData.append("function", 'storeReport');
 
     $.ajax({
-        url: '../../Controllers/Maintenance/MaintenanceController.php', 
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
         type: 'POST', 
         data: formData, 
         cache: false,

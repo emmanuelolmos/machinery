@@ -5,7 +5,7 @@ function loadData(){
     };
     
     $.ajax({ 
-        url: '../../Controllers/Admin/UserController.php', 
+        url: '../../Controllers/SuperUser/UserController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -20,6 +20,7 @@ function loadData(){
                 for(let i=0; i < convertedInfo['users'].length; i++){
 
                     let roleUser = '';
+                    let companyUser = '';
 
                     switch(convertedInfo['users'][i].role_id){
                         case 1:
@@ -32,26 +33,35 @@ function loadData(){
                             roleUser = 'TÉCNICO'
                             break;
                     }
+
+                    let idCompanyUser = convertedInfo['users'][i].company_id;
+
+                    for(let j=0; j < convertedInfo['companies'].length; j++){
+
+                        let idCompany = convertedInfo['companies'][j].id_company;
+
+                        if(idCompanyUser == idCompany){
+
+                            companyUser = convertedInfo['companies'][j].name_company;
+
+                        }
+                    }
                     
                     //Cada dato del usuario
                     tbody += 
                     '<tr>' +
                         '<td style="padding: 10px;">' + convertedInfo['users'][i].name_user + '</td>' +
                         '<td style="padding: 10px;">' + convertedInfo['users'][i].phone_user + '</td>' +
-                        '<td style="padding: 10px;">' + convertedInfo['nameCompany'] + '</td>' +
+                        '<td style="padding: 10px;">' + companyUser + '</td>' +
                         '<td style="padding: 10px;">' + roleUser + '</td>' +
-                        '<td style="padding: 10px">';
-
-                    if(roleUser != 'SUPERADMIN'){
-                        tbody += '<button class="btn btn-success" onclick="loadDataUser(' + convertedInfo['users'][i].id_user + ')" data-bs-toggle="modal" data-bs-target="#editUserModal">' +
-                                    '<i class="bi bi-pencil-fill"></i>' +
-                                  '</button> ' +
-                                  '<button class="btn btn-danger" onclick="removeUser(' + convertedInfo['users'][i].id_user + ')">' +
-                                    '<i class="bi bi-person-dash-fill"></i>' +
-                                  '</button>';
-                    }
-
-                    tbody += '</td></tr>';
+                        '<td style="padding: 10px">' +
+                            '<button class="btn btn-success" onclick="loadDataUser(' + convertedInfo['users'][i].id_user + ')" data-bs-toggle="modal" data-bs-target="#editUserModal">' +
+                                '<i class="bi bi-pencil-fill"></i>' +
+                            '</button> ' +
+                            '<button class="btn btn-danger" onclick="removeUser(' + convertedInfo['users'][i].id_user + ')">' +
+                                '<i class="bi bi-person-dash-fill"></i>' +
+                            '</button>' +
+                        '</td></tr>';
 
                 }
 
@@ -88,6 +98,55 @@ function loadData(){
     }); 
 }
 
+function loadCompanies(){
+    var petition = {
+        function: 'getCompanies'
+    };
+
+    $.ajax({ 
+        url: '../../Controllers/SuperUser/UserController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (response){
+
+            var convertedInfo = JSON.parse(response);
+
+            if(convertedInfo['success']){
+
+                //Se borran los datos en caso de ya haber sido solicitados
+                $("#selectCompanyAddUser").remove();
+
+                //Se imprime el select para los nombres de empresas
+                $("#divCompanyAddUser").append(
+                    '<select class="form-select" name="selectCompanyAddUser" id="selectCompanyAddUser"></select>'
+                );
+
+                //Se obtienen las opciones de empresas
+                let optionsCompanies = '';
+
+                for(let i = 0; i < convertedInfo['companies'].length; i++){
+                    optionsCompanies += '<option value="' + convertedInfo['companies'][i].id_company + '">' + convertedInfo['companies'][i].name_company + '</option>';
+                }
+
+                //Se imprime la información
+
+                $("#selectCompanyAddUser").append(
+                    optionsCompanies
+                );
+                
+            }else{
+
+                alert(convertedInfo['error']);
+
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
+
 //Obtiene la información del usuario a editar
 function loadDataUser(id){
 
@@ -97,7 +156,7 @@ function loadDataUser(id){
     };
 
     $.ajax({ 
-        url: '../../Controllers/Admin/UserController.php', 
+        url: '../../Controllers/SuperUser/UserController.php', 
         type: 'POST', 
         data: petition, 
         success: function (response){
@@ -106,20 +165,60 @@ function loadDataUser(id){
 
             if(convertedInfo['success']){
 
-                //Se cargan los nombres de las empresas
-                //loadCompaniesEditUser(convertedInfo['company']);
-
                 //Se borran los datos en caso de ya haber sido solicitados
                 $("#inputIdEditUser").remove();
                 $("#inputNameEditUser").remove();
                 $("#inputPhoneEditUser").remove();
                 $("#inputPasswordEditUser").remove();
                 $("#selectRoleEditUser").remove();
-
-                //Se borra la alerta de error en el caso de que se hayan ingresado los datos incorrectos
+                $("#selectCompanyEditUser").remove();
                 $('#errorMessageContentEditUser').remove();
 
+                //Se imprime el select para los nombres de empresas
+                $("#divCompanyEditUser").append(
+                    '<select class="form-select" name="selectCompanyEditUser" id="selectCompanyEditUser"></select>'
+                );
+
+                //Se imprime el select para los nombres de empresas
+                $("#divRoleEditUser").append(
+                    '<select class="form-select" name="selectRoleEditUser" id="selectRoleEditUser"></select>'
+                );
+
+                //Se obtienen las opciones de empresas
+                let optionsCompanies = '';
+
+                for(let i = 0; i < convertedInfo['companies'].length; i++){
+
+                    if(convertedInfo['user'].company_id == convertedInfo['companies'][i].id_company){
+                        optionsCompanies += '<option value="' + convertedInfo['companies'][i].id_company + '" selected>' + convertedInfo['companies'][i].name_company + '</option>';
+                    }else{
+                        optionsCompanies += '<option value="' + convertedInfo['companies'][i].id_company + '">' + convertedInfo['companies'][i].name_company + '</option>';
+                    }
+
+                }
+
+                //Se obtienen las opciones de roles
+                let optionsRoles = '';
+
+                for(let i = 0; i < convertedInfo['roles'].length; i++){
+
+                    if(convertedInfo['user'].role_id == convertedInfo['roles'][i].id_role){
+                        optionsRoles += '<option value="' + convertedInfo['roles'][i].id_role + '" selected>' + convertedInfo['roles'][i].name_role + '</option>';
+                    }else{
+                        optionsRoles += '<option value="' + convertedInfo['roles'][i].id_role + '">' + convertedInfo['roles'][i].name_role + '</option>';
+                    }
+                    
+                }
+
                 //Se imprime la información
+
+                $("#selectCompanyEditUser").append(
+                    optionsCompanies
+                );
+
+                $("#selectRoleEditUser").append(
+                    optionsRoles
+                );
 
                 $("#divIdEditUser").append(
                     '<input class="form-control" id="inputIdEditUser" name="inputIdEditUser" type="hidden" value="' + id + '">'
@@ -136,31 +235,6 @@ function loadDataUser(id){
                 $("#divPasswordEditUser").append(
                     '<input class="form-control" id="inputPasswordEditUser" name="inputPasswordEditUser" type="text" placeholder="Ingresa la contraseña" value="' + convertedInfo['user'].password_user + '">'
                 );
-
-                let roles = '';
-
-                switch(convertedInfo['user'].role_id){
-                    case 2:
-
-                        roles += '<select class="form-select" id="selectRoleEditUser" name="selectRoleEditUser">' +
-                                    '<option value="2" selected>ADMIN</option>' +
-                                    '<option value="3">TÉCNICO</option>' +
-                                 '</select>';
-
-                        $("#divRoleEditUser").append(roles);
-
-                        break;
-                    case 3:
-
-                        roles += '<select class="form-select" id="selectRoleEditUser" name="selectRoleEditUser">' +
-                                    '<option value="2">ADMIN</option>' +
-                                    '<option value="3" selected>TÉCNICO</option>' +
-                                 '</select>';
-
-                        $("#divRoleEditUser").append(roles);
-
-                        break;
-                }
                 
             }else{
 
@@ -189,6 +263,7 @@ function removeUser(id){
       swalWithBootstrapButtons.fire({
         title: "Estás seguro de eliminar al usuario?",
         icon: "warning",
+        iconColor: "#ffdb00",
         showCancelButton: true,
         confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
@@ -203,7 +278,7 @@ function removeUser(id){
             };
             
             $.ajax({ 
-                url: '../../Controllers/Admin/UserController.php', 
+                url: '../../Controllers/SuperUser/UserController.php', 
                 type: 'POST', 
                 data: petition, 
                 success: function (response){
@@ -253,7 +328,7 @@ function removeUser(id){
           swalWithBootstrapButtons.fire({
             title: "Cancelado",
             text: "No se borró al usuario",
-            icon: "error"
+            icon: "success"
           });
         }
       });
@@ -273,7 +348,7 @@ $(document).ready(function () {
         formData.append('function', 'insertUser');
 
         $.ajax({ 
-            url: '../../Controllers/Admin/UserController.php', 
+            url: '../../Controllers/SuperUser/UserController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,
@@ -313,7 +388,7 @@ $(document).ready(function () {
         formData.append('function', 'updateUser');
 
         $.ajax({ 
-            url: '../../Controllers/Admin/UserController.php', 
+            url: '../../Controllers/SuperUser/UserController.php', 
             type: 'POST', 
             data: formData, 
             cache: false,

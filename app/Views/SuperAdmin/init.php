@@ -128,7 +128,7 @@
     <!-- Scripts -->
     <script src="../../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../../assets/js/bootstrap/bootstrap.bundle.js"></script>
-    <script src="../../../assets/js/superadmin/init.js"></script>
+    <script src="../../../assets/js/SuperUser/init.js"></script>
 
 </body>
 </html>
