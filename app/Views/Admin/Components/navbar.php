@@ -20,11 +20,11 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Plantillas</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Admin/templates.php'; ?>">Plantillas</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Api</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Admin/maintenance.php'; ?>">Mantenimiento</a>
         </li>
 
       </ul>

@@ -79,7 +79,7 @@
     <!-- Scripts -->
     <script src="../../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../../assets/js/bootstrap/bootstrap.bundle.js"></script>
-    <script src="../../../assets/js/admin/users.js"></script>
+    <script src="../../../assets/js/user/users.js"></script>
 
 </body>
 </html>

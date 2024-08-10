@@ -2,8 +2,8 @@
 
 session_start();
 
-require "../../Models/Category.php";
-require "../../Models/Template.php";
+require "../../Models/User/Category.php";
+require "../../Models/User/Template.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){

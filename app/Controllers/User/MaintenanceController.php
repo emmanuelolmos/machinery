@@ -2,11 +2,11 @@
 
 session_start();
 
-require "../../Models/Check.php";
-require "../../Models/Maintenance.php";
-require "../../Models/Machine.php";
-require "../../Models/Report.php";
-require "../../Models/Image.php";
+require "../../Models/User/Check.php";
+require "../../Models/User/Maintenance.php";
+require "../../Models/User/Machine.php";
+require "../../Models/User/Report.php";
+require "../../Models/User/Image.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){
@@ -136,7 +136,7 @@ switch($function){
         $maintenance = new Maintenance();
         $machine = new Machine();
 
-        $machines = $machine->getMachinesSA();
+        $machines = $machine->getMachines();
         $maintenances = $maintenance->getAllMaintenances();
 
         //Se preparan los datos obtenidos
@@ -160,7 +160,7 @@ switch($function){
         $maintenance = new Maintenance();
         $machine = new Machine();
 
-        $machines = $machine->getMachinesSA();
+        $machines = $machine->getMachines();
         $maintenances = $maintenance->getAllNextMaintenances();
 
         //Se preparan los datos obtenidos

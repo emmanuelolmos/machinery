@@ -2,8 +2,8 @@
 
 session_start();
 
-require "../../Models/Check.php";
-require "../../Models/Report.php";
+require "../../Models/User/Check.php";
+require "../../Models/User/Report.php";
 
 //Se obtiene la función
 if(isset($_POST['function'])){

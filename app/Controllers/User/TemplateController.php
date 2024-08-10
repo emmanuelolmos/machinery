@@ -2,8 +2,8 @@
 
 session_start();
 
-require "../../Models/Template.php";
-require "../../Models/Check.php";
+require "../../Models/User/Template.php";
+require "../../Models/User/Check.php";
 
 //Se obtiene la función a realizar
 if(isset($_POST['function'])){
