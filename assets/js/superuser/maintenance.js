@@ -1,8 +1,65 @@
 //Funciones para imprimir listas
 function showListReports(){
 
-    let tbody = '';
-    //Pendiente
+    $("#messageEmptyListReportsMaintenance").remove();
+    $("#tbodyTableReportsMaintenance").remove();
+
+    //Se solicitan los datos de las maquinas
+    var petition = {function: 'getMachines'};
+
+    $.ajax({
+        url: '../../Controllers/SuperUser/MachineController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let machines = convertedInfo['machines'];
+
+                //Se imprime la lista de maquinas
+                let tbody = '<tbody id="tbodyTableReportsMaintenance">';
+
+                //Número de maquinas
+                for(let i = 0; i < machines.length; i++){
+
+                    let machine = "'" + machines[i].name_machine + "'";
+
+                    //Se imprime la información de la maquina encontrada
+                    tbody +=    '<tr style="border: 1px solid black;">' +
+                                    '<td>' +
+                                        '<div class="col-12">' +
+                                            '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[i].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                        '</div>' +
+                                        machines[i].name_machine +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button class="btn btn-dark" onclick="showReportOptionsModal(' + machines[i].id_machine + ')">' +
+                                            '<i class="bi bi-filetype-pdf"></i>' +
+                                        '</button>' +
+                                    '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableReportsMaintenance").append(tbody);
+
+            }else{
+
+                $("#divMessageEmptyListReportsMaintenance").append(
+                    '<h5 id="messageEmptyListReportsMaintenance" class="text-center mt-5 fs-3">Sin maquinas registradas</h5>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 
 }
 
@@ -454,6 +511,94 @@ function sendImagesOfMaintenance(id_machine, establishedDate){
             alert('Error'); 
         } 
     });
+}
+
+function showReportOptionsModal(id){
+
+    $("#inputIdMachineShowReportOptionsModal").remove();
+
+    $("#divIdMachineShowReportOptionsModal").append(
+        '<input id="inputIdMachineShowReportOptionsModal" type="text" value="' + id + '" hidden></input>'
+    );
+
+    $("#showReportOptionsModal").modal('show');
+
+}
+
+function showListReportsModal(){
+
+    $("#messageEmptyListReportsMaintenanceModal").remove();
+    $("#tbodyTableReportsMaintenanceModal").remove();
+
+    //Se solicitan los datos de las maquinas
+    var petition = {function: 'getMachines'};
+
+    $.ajax({
+        url: '../../Controllers/SuperUser/MachineController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let machines = convertedInfo['machines'];
+
+                //Se imprime la lista de maquinas
+                let tbody = '<tbody id="tbodyTableReportsMaintenanceModal">';
+
+                //Número de maquinas
+                for(let i = 0; i < machines.length; i++){
+
+                    let machine = "'" + machines[i].name_machine + "'";
+
+                    //Se imprime la información de la maquina encontrada
+                    tbody +=    '<tr style="border: 1px solid black;">' +
+                                    '<td>' +
+                                        '<div class="col-12">' +
+                                            '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[i].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                        '</div>' +
+                                        machines[i].name_machine +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button class="btn btn-dark" onclick="showReportOptionsModal(' + machines[i].id_machine + ')">' +
+                                            '<i class="bi bi-filetype-pdf"></i>' +
+                                        '</button>' +
+                                    '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableReportsMaintenanceModal").append(tbody);
+
+            }else{
+
+                $("#divMessageEmptyListReportsMaintenanceModal").append(
+                    '<h5 id="messageEmptyListReportsMaintenanceModal" class="text-center mt-5 fs-3">Sin maquinas registradas</h5>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+    $('#showListReportsModal').modal('show');
+}
+
+function generateLastReport(){
+
+    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
+    alert("Se generó el último reporte de " + id_machine);
+}
+
+function generateGeneralReport(){
+    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
+    alert("Se generó el reporte general de " + id_machine);
 }
 
 //Llamada a las funciones
