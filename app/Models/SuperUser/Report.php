@@ -34,17 +34,18 @@ class Report{
         }
     }
 
-    function insertReport($establishedDate_report, $machine_id){
+    function insertReport($establishedDate_report, $observation_report, $machine_id){
 
         //Se agregan las variables faltantes
         $madeDate_report = date('Y-m-d');
         $user_id = $_SESSION['id_user'];
 
-        $query = "INSERT INTO reports (establishedDate_report, madeDate_report, user_id, machine_id) VALUES (:establishedDate_report, :madeDate_report, :user_id, :machine_id)";
+        $query = "INSERT INTO reports (establishedDate_report, madeDate_report, observation_report, user_id, machine_id) VALUES (:establishedDate_report, :madeDate_report, :observation_report, :user_id, :machine_id)";
 
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':establishedDate_report', $establishedDate_report);
         $statement->bindParam(':madeDate_report', $madeDate_report);
+        $statement->bindParam(':observation_report', $observation_report);
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':machine_id', $machine_id);
 

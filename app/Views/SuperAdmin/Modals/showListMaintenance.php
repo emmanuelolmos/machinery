@@ -4,6 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5" id="showListMaintenanceModalLabel">Mantenimiento</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
@@ -37,15 +38,19 @@
             </div>
 
             <div id="spacedivImageShowListMaintenanceModal">
-                <!-- Input para subir imagenes de evidencia --> 
+                <!-- Input para subir imagenes de evidencia -->
+            </div>
+
+            <div id="spacedivObservationShowListMaintenanceModal">
+                <!-- Textarea para ingresar observaciones -->
             </div>
 
             <div id="divMessageEmptyShowListMaintenanceModal">
                 <!-- Mensaje de vacío -->
             </div>
 
-            <div class="text-center mt-3">
-                <button type="button" type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Salir</button>
+            <div id="divButtonStoreMaintenance" class="text-center">
+                <!-- Botón para registrar el mantenimiento -->
             </div>
 
         </form>

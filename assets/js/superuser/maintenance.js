@@ -333,6 +333,8 @@ function loadDataListMaintenance(id, establishedDate, name){
     $("#inputIdShowListMaintenanceModal").remove();
     $("#errorMessageContentShowListMaintenanceModal").remove();
     $("#divImageShowListMaintenanceModal").remove();
+    $("#divObservationShowListMaintenanceModal").remove();
+    $("#buttonStoreMaintenance").remove();
     $("#titleShowListMaintenanceModal").remove();
 
     $("#divInputIdShowListMaintenanceModal").append(
@@ -390,20 +392,28 @@ function loadDataListMaintenance(id, establishedDate, name){
 
                 $("#tableShowListMaintenanceModal").append(tbody);
 
-                //checksready es una comprobación de que todos los checks fueron completados
+                //Checksready es una comprobación de que todos los checks fueron completados
                 if(convertedInfo['checksready']){
+
+                    //Se muestra el input para subir imagenes
                     $("#spacedivImageShowListMaintenanceModal").append(
                         '<div id="divImageShowListMaintenanceModal">' +
                             '<label class="form-label mt-2" for="inputImageShowListMaintenanceModal">Imagenes de evidencia</label>' +
-                            '<div class="d-flex">' +
-                                '<div style="width: 90%;">' +
-                                    '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
-                                '</div>' +
-                                '<div style="width: 10%;">' +
-                                    '<button onclick="sendImagesOfMaintenance(' + id + ', ' + date + ')" class="btn btn-dark ms-1" type="button"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>' +
-                                '</div>' +
-                            '</div>' +
+                            '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
                         '</div>'
+                    );
+
+                    //Se muestra el textarea para ingresar observaciones
+                    $("#spacedivObservationShowListMaintenanceModal").append(
+                        '<div id="divObservationShowListMaintenanceModal">' +
+                            '<label class="mt-2" class="form-label" for="inputObservationShowListMaintenanceModal">Observaciones</label>' +
+                            '<textarea class="form-control" name="inputObservationShowListMaintenanceModal" id="inputObservationShowListMaintenanceModal"></textarea>' +
+                        '</div>'
+                    );
+
+                    //Se muestra el botón
+                    $("#divButtonStoreMaintenance").append(
+                        '<button id="buttonStoreMaintenance" class="btn btn-dark mt-3" type="button" onclick="storeReport(' + id + ', ' + date + ')">Registrar</button>'
                     );
                 }
 
@@ -473,7 +483,7 @@ function changeStatusOfCheck(id_machine, name, establishedDate, id_assigned_chec
 }
 
 //Función para subir imagenes del mantenimiento
-function sendImagesOfMaintenance(id_machine, establishedDate){
+function storeReport(id_machine, establishedDate){ //sendImagesOfMaintenance(id_machine, establishedDate){
 
     $("#errorMessageContentShowListMaintenanceModal").remove();
     
