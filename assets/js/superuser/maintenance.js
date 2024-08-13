@@ -602,8 +602,75 @@ function showListReportsModal(){
 
 function generateLastReport(){
 
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
     let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
-    alert("Se generó el último reporte de " + id_machine);
+
+    //Se verifica que haya se hayan registrado mantenimientos
+
+    let petition = {
+        id_machine: id_machine,
+        function: 'verifyMaintenance'
+    }
+
+    $.ajax({
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['result'] != 'Empty'){
+
+                    //Se crea un formulario
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "last_report.php";
+
+                    //Se crea un input
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "id_machine";
+                    input.value = $("#inputIdMachineShowReportOptionsModal").val();
+
+                    //Se agrega el input al formulario
+                    form.appendChild(input);
+
+                    //Se manda el formulario y redirige
+                    document.body.appendChild(form);
+                    form.submit();
+
+                }else{
+
+                    //No se ha registrado algún mantenimiento
+                    $("#divMessageErrorMachineShowReportOptionsModal").append(
+                        '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">No se ha realizado mantenimiento aún.</h3>'
+                    );
+
+                }
+
+            }else{
+
+                //Ocurrió un error en la consulta
+                $("#divMessageErrorMachineShowReportOptionsModal").append(
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center mt-5 fs-3">Ocurrió un error en la consulta a la base de datos.</h3>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+}
+
+function deleteMessageReportOptions(){
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
 }
 
 function generateGeneralReport(){

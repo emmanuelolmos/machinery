@@ -184,18 +184,19 @@ switch($function){
         $machine_id = $_POST['id_machine'];
         $establishedDate = $_POST['establishedDate'];
         $images = $_FILES['inputImageShowListMaintenanceModal'];
+        $observation = $_POST['inputObservationShowListMaintenanceModal'];
 
         //Se verifica que no esté vacía
-        if(empty($images['name'][0])){
+        if(empty($images['name'][0]) || empty($observation)){
 
             $response['success'] = false;
-            $response['error'] = 'Es necesario ingresar las imagenes de evidencia';
+            $response['error'] = 'Es necesario ingresar las imagenes de evidencia y las observaciones';
 
         }else{
             
             //Se crea el reporte
             $report = new Report();
-            $id_report = $report->insertReport($establishedDate, $machine_id);
+            $id_report = $report->insertReport($establishedDate, $observation, $machine_id);
 
             if($id_report == 'Error'){
                 

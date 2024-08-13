@@ -59,6 +59,30 @@ class Company{
         }
     }
 
+    function getCompanyItem($id_company){
+
+        $id = $id_company;
+
+        $query = "SELECT * FROM companies WHERE id_company = :id";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id);
+
+        if($statement->execute()){
+
+            $company = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if(isset($company['name_company'])){
+                return $company;
+            }else{
+                return 'Empty';
+            }
+            
+        }else{
+            return 'Error';
+        }
+    }
+
     function removeCompany($id){
 
         $query = 'DELETE FROM empresa WHERE ID_empresa = :id';

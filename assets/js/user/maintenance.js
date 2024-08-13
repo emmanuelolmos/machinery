@@ -1,8 +1,65 @@
 //Funciones para imprimir listas
 function showListReports(){
 
-    let tbody = '';
-    //Pendiente
+    $("#messageEmptyListReportsMaintenance").remove();
+    $("#tbodyTableReportsMaintenance").remove();
+
+    //Se solicitan los datos de las maquinas
+    var petition = {function: 'getMachines'};
+
+    $.ajax({
+        url: '../../Controllers/User/MachineController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let machines = convertedInfo['machines'];
+
+                //Se imprime la lista de maquinas
+                let tbody = '<tbody id="tbodyTableReportsMaintenance">';
+
+                //Número de maquinas
+                for(let i = 0; i < machines.length; i++){
+
+                    let machine = "'" + machines[i].name_machine + "'";
+
+                    //Se imprime la información de la maquina encontrada
+                    tbody +=    '<tr style="border: 1px solid black;">' +
+                                    '<td>' +
+                                        '<div class="col-12">' +
+                                            '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[i].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                        '</div>' +
+                                        machines[i].name_machine +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button class="btn btn-dark" onclick="showReportOptionsModal(' + machines[i].id_machine + ')">' +
+                                            '<i class="bi bi-filetype-pdf"></i>' +
+                                        '</button>' +
+                                    '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableReportsMaintenance").append(tbody);
+
+            }else{
+
+                $("#divMessageEmptyListReportsMaintenance").append(
+                    '<h5 id="messageEmptyListReportsMaintenance" class="text-center mt-5 fs-3">Sin maquinas registradas</h5>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 
 }
 
@@ -276,6 +333,8 @@ function loadDataListMaintenance(id, establishedDate, name){
     $("#inputIdShowListMaintenanceModal").remove();
     $("#errorMessageContentShowListMaintenanceModal").remove();
     $("#divImageShowListMaintenanceModal").remove();
+    $("#divObservationShowListMaintenanceModal").remove();
+    $("#buttonStoreMaintenance").remove();
     $("#titleShowListMaintenanceModal").remove();
 
     $("#divInputIdShowListMaintenanceModal").append(
@@ -335,18 +394,25 @@ function loadDataListMaintenance(id, establishedDate, name){
 
                 //checksready es una comprobación de que todos los checks fueron completados
                 if(convertedInfo['checksready']){
+                    //Se muestra el input para subir imagenes
                     $("#spacedivImageShowListMaintenanceModal").append(
                         '<div id="divImageShowListMaintenanceModal">' +
                             '<label class="form-label mt-2" for="inputImageShowListMaintenanceModal">Imagenes de evidencia</label>' +
-                            '<div class="d-flex">' +
-                                '<div style="width: 90%;">' +
-                                    '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
-                                '</div>' +
-                                '<div style="width: 10%;">' +
-                                    '<button onclick="sendImagesOfMaintenance(' + id + ', ' + date + ')" class="btn btn-dark ms-1" type="button"><i class="bi bi-file-earmark-arrow-up-fill"></i></button>' +
-                                '</div>' +
-                            '</div>' +
+                            '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
                         '</div>'
+                    );
+
+                    //Se muestra el textarea para ingresar observaciones
+                    $("#spacedivObservationShowListMaintenanceModal").append(
+                        '<div id="divObservationShowListMaintenanceModal">' +
+                            '<label class="mt-2" class="form-label" for="inputObservationShowListMaintenanceModal">Observaciones</label>' +
+                            '<textarea class="form-control" name="inputObservationShowListMaintenanceModal" id="inputObservationShowListMaintenanceModal"></textarea>' +
+                        '</div>'
+                    );
+
+                    //Se muestra el botón
+                    $("#divButtonStoreMaintenance").append(
+                        '<button id="buttonStoreMaintenance" class="btn btn-dark mt-3" type="button" onclick="storeReport(' + id + ', ' + date + ')">Registrar</button>'
                     );
                 }
 
@@ -416,7 +482,7 @@ function changeStatusOfCheck(id_machine, name, establishedDate, id_assigned_chec
 }
 
 //Función para subir imagenes del mantenimiento
-function sendImagesOfMaintenance(id_machine, establishedDate){
+function storeReport(id_machine, establishedDate){ //sendImagesOfMaintenance(id_machine, establishedDate){
 
     $("#errorMessageContentShowListMaintenanceModal").remove();
     
@@ -454,6 +520,161 @@ function sendImagesOfMaintenance(id_machine, establishedDate){
             alert('Error'); 
         } 
     });
+}
+
+function showReportOptionsModal(id){
+
+    $("#inputIdMachineShowReportOptionsModal").remove();
+
+    $("#divIdMachineShowReportOptionsModal").append(
+        '<input id="inputIdMachineShowReportOptionsModal" type="text" value="' + id + '" hidden></input>'
+    );
+
+    $("#showReportOptionsModal").modal('show');
+
+}
+
+function showListReportsModal(){
+
+    $("#messageEmptyListReportsMaintenanceModal").remove();
+    $("#tbodyTableReportsMaintenanceModal").remove();
+
+    //Se solicitan los datos de las maquinas
+    var petition = {function: 'getMachines'};
+
+    $.ajax({
+        url: '../../Controllers/User/MachineController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let machines = convertedInfo['machines'];
+
+                //Se imprime la lista de maquinas
+                let tbody = '<tbody id="tbodyTableReportsMaintenanceModal">';
+
+                //Número de maquinas
+                for(let i = 0; i < machines.length; i++){
+
+                    let machine = "'" + machines[i].name_machine + "'";
+
+                    //Se imprime la información de la maquina encontrada
+                    tbody +=    '<tr style="border: 1px solid black;">' +
+                                    '<td>' +
+                                        '<div class="col-12">' +
+                                            '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[i].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                        '</div>' +
+                                        machines[i].name_machine +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<button class="btn btn-dark" onclick="showReportOptionsModal(' + machines[i].id_machine + ')">' +
+                                            '<i class="bi bi-filetype-pdf"></i>' +
+                                        '</button>' +
+                                    '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableReportsMaintenanceModal").append(tbody);
+
+            }else{
+
+                $("#divMessageEmptyListReportsMaintenanceModal").append(
+                    '<h5 id="messageEmptyListReportsMaintenanceModal" class="text-center mt-5 fs-3">Sin maquinas registradas</h5>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+    $('#showListReportsModal').modal('show');
+}
+
+function generateLastReport(){
+
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
+
+    //Se verifica que haya se hayan registrado mantenimientos
+
+    let petition = {
+        id_machine: id_machine,
+        function: 'verifyMaintenance'
+    }
+
+    $.ajax({
+        url: '../../Controllers/User/MaintenanceController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['result'] != 'Empty'){
+
+                    //Se crea un formulario
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "last_report.php";
+
+                    //Se crea un input
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "id_machine";
+                    input.value = $("#inputIdMachineShowReportOptionsModal").val();
+
+                    //Se agrega el input al formulario
+                    form.appendChild(input);
+
+                    //Se manda el formulario y redirige
+                    document.body.appendChild(form);
+                    form.submit();
+
+                }else{
+
+                    //No se ha registrado algún mantenimiento
+                    $("#divMessageErrorMachineShowReportOptionsModal").append(
+                        '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">No se ha realizado mantenimiento aún.</h3>'
+                    );
+
+                }
+
+            }else{
+
+                //Ocurrió un error en la consulta
+                $("#divMessageErrorMachineShowReportOptionsModal").append(
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center mt-5 fs-3">Ocurrió un error en la consulta a la base de datos.</h3>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+}
+
+function deleteMessageReportOptions(){
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+}
+
+function generateGeneralReport(){
+    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
+    alert("Se generó el reporte general de " + id_machine);
 }
 
 //Llamada a las funciones

@@ -138,5 +138,6 @@ $env = parse_ini_file('../../../.env');
     <script src="../../../assets/js/jquery/jquery.min.js"></script>
     <script src="../../../assets/js/bootstrap/bootstrap.bundle.js"></script>
     <script src="../../../assets/js/superuser/maintenance.js"></script>
+    <script src="../../../assets/js/superuser/report.js"></script>
 </body>
 </html>

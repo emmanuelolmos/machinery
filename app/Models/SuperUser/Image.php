@@ -61,6 +61,25 @@ class Image{
         
     }
 
+    function getImagesForReport($report_id){
+
+        $query = 'SELECT * FROM evidences_images WHERE report_id = :report_id';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':report_id', $report_id);
+
+        if($statement->execute()){
+
+            $images = $statement->fetchAll();
+
+            return $images;
+
+        }else{
+            return 'Error';
+        }
+
+    }
+
     
 }
 

@@ -34,17 +34,64 @@ class Report{
         }
     }
 
-    function insertReport($establishedDate_report, $machine_id){
+    function getLastReport($id_machine){
+
+        $query = 'SELECT * FROM reports WHERE machine_id = :machine_id ORDER BY madeDate_report DESC';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam('machine_id', $id_machine);
+
+        if($statement->execute()){
+
+            //Se comprueba que exista el registro
+            $reports = $statement->fetchAll();
+
+            if(isset($reports[0]['id_report'])){
+                return $reports;
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+    }
+
+    function getReportContent($id_report){
+
+        $query = 'SELECT * FROM reports_contents WHERE report_id = :report_id ORDER BY assigned_check_content';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam('report_id', $id_report);
+
+        if($statement->execute()){
+
+            //Se comprueba que exista el registro
+            $reports_contents = $statement->fetchAll();
+
+            if(isset($reports_contents[0]['id_report_content'])){
+                return $reports_contents;
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+    }
+
+    function insertReport($establishedDate_report, $observation_report, $machine_id){
 
         //Se agregan las variables faltantes
         $madeDate_report = date('Y-m-d');
         $user_id = $_SESSION['id_user'];
 
-        $query = "INSERT INTO reports (establishedDate_report, madeDate_report, user_id, machine_id) VALUES (:establishedDate_report, :madeDate_report, :user_id, :machine_id)";
+        $query = "INSERT INTO reports (establishedDate_report, madeDate_report, observation_report, user_id, machine_id) VALUES (:establishedDate_report, :madeDate_report, :observation_report, :user_id, :machine_id)";
 
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':establishedDate_report', $establishedDate_report);
         $statement->bindParam(':madeDate_report', $madeDate_report);
+        $statement->bindParam(':observation_report', $observation_report);
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':machine_id', $machine_id);
 
