@@ -86,6 +86,8 @@ function showListMaintenance(){
                 let machines = convertedInfo['machines'];
                 let maintenances = convertedInfo['maintenances'];
 
+                let empty = true;
+
                 //Se imprime la lista de maquinas con mantenimiento pendientes
 
                 let tbody = '<tbody id="tbodyTableMaintenance">';
@@ -100,6 +102,8 @@ function showListMaintenance(){
 
                             let date = "'" + maintenances[i].dateNext_maintenance + "'";
                             let machine = "'" + machines[j].name_machine + "'";
+
+                            empty = false;
 
                             //Se imprime la información de la maquina encontrada
                             tbody +=    '<tr style="border: 1px solid black;">' +
@@ -122,7 +126,13 @@ function showListMaintenance(){
 
                 tbody += '</tbody>';
 
-                $("#tableMaintenance").append(tbody);
+                if(empty){
+                    $("#divMessageEmptyListMaintenance").append(
+                        '<h5 id="messageEmptyListMaintenance" class="text-center mt-5 fs-3">Sin mantenimientos pendientes</h5>'
+                    );
+                }else{
+                    $("#tableMaintenance").append(tbody);
+                }
 
             }else{
 
@@ -173,6 +183,8 @@ function showListNextMaintenance(){
                 let machines = convertedInfo['machines'];
                 let maintenances = convertedInfo['maintenances'];
 
+                let empty = true;
+
                 //Se imprime la lista de maquinas con mantenimiento pendientes
 
                 let tbody = '<tbody id="tbodyTableNextMaintenance">';
@@ -187,6 +199,8 @@ function showListNextMaintenance(){
 
                             let date = "'" + maintenances[i].dateNext_maintenance + "'";
                             let machine = "'" + machines[j].name_machine + "'";
+
+                            empty = false;
 
                             //Se imprime la información de la maquina encontrada
                             tbody +=    '<tr>' +
@@ -209,7 +223,15 @@ function showListNextMaintenance(){
 
                 tbody += '</tbody>';
 
-                $("#tableNextMaintenance").append(tbody);
+                if(empty){
+                    $("#divMessageEmptyNextMaintenance").append(
+                        '<h5 id="messageEmptyListNextMaintenance" class="text-center mt-5 fs-3">Sin mantenimientos pendientes</h5>'
+                    );
+                }else{
+                    $("#tableNextMaintenance").append(tbody);
+                }
+
+                
 
             }else{
 
@@ -260,6 +282,8 @@ function showNextMaintenancesModal(){
                 let machines = convertedInfo['machines'];
                 let maintenances = convertedInfo['maintenances'];
 
+                let empty = true;
+
                 //Se imprime la lista de maquinas con mantenimiento pendientes
 
                 let tbody = '<tbody id="tbodyTableShowNextMaintenance">';
@@ -274,6 +298,8 @@ function showNextMaintenancesModal(){
 
                             let date = "'" + maintenances[i].dateNext_maintenance + "'";
                             let machine = "'" + machines[j].name_machine + "'";
+
+                            empty = false;
 
                             //Se imprime la información de la maquina encontrada
                             tbody +=    '<tr>' +
@@ -296,7 +322,13 @@ function showNextMaintenancesModal(){
 
                 tbody += '</tbody>';
 
-                $("#tableShowNextMaintenance").append(tbody);
+                if(empty){
+                    $("#divMessageEmptyShowNextMaintenance").append(
+                        '<h5 id="messageEmptyListShowNextMaintenance" class="text-center mt-5 fs-3">Sin mantenimientos pendientes</h5>'
+                    );
+                }else{
+                    $("#tableShowNextMaintenance").append(tbody);
+                }
 
             }else{
 
