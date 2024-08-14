@@ -6,17 +6,17 @@ if (!isset($_SESSION['id_user'])) {
     header('Location: ../../../');
 } else {
     // Se verifica que el usuario tenga el rol correcto
-    if ($_SESSION['role_id'] != 1) {
+    if ($_SESSION['role_id'] != 2) {
         header('Location: ../../../');
     }
 }
 
 //Se obtienen los modelos necesarios
-require "../../Models/SuperUser/Machine.php";
-require "../../Models/SuperUser/Company.php";
-require "../../Models/SuperUser/Report.php";
-require "../../Models/SuperUser/User.php";
-require "../../Models/SuperUser/Image.php";
+require "../../Models/User/Machine.php";
+require "../../Models/User/Company.php";
+require "../../Models/User/Report.php";
+require "../../Models/User/User.php";
+require "../../Models/User/Image.php";
 
 // Carga de archivo .env
 $env = parse_ini_file('../../../.env');
@@ -304,6 +304,6 @@ ob_start();
 
     $dompdf->render();
 
-    $dompdf->stream("reporte_.pdf", array("Attachment" => false));
+    $dompdf->stream("Reporte_" . $machineFound['name_machine'] . "_" . $reportFound['madeDate_report'] . ".pdf", array("Attachment" => false));
 
 ?>

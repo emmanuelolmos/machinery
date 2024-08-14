@@ -39,7 +39,7 @@ class Report{
         $query = 'SELECT * FROM reports WHERE machine_id = :machine_id ORDER BY madeDate_report DESC';
 
         $statement = $this->connection->prepare($query);
-        $statement->bindParam('machine_id', $id_machine);
+        $statement->bindParam(':machine_id', $id_machine);
 
         if($statement->execute()){
 
@@ -52,6 +52,38 @@ class Report{
                 return 'Empty';
             }
 
+        }else{
+            return 'Error';
+        }
+    }
+
+    function getReportsForDates($start_date, $end_date, $id_machine){
+
+        $query = 'SELECT * FROM reports WHERE machine_id = :machine_id AND madeDate_report >= :startdate AND madeDate_report <= :enddate';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':startdate', $start_date);
+        $statement->bindParam(':enddate', $end_date);
+        $statement->bindParam(':machine_id', $id_machine);
+
+        if($statement->execute()){
+
+            $reports = $statement->fetchAll();
+            
+            //Se verifica que tenga registros
+            if(isset($reports[0]['id_report'])){
+
+                //Se verifica que tenga más de un registro
+                if(count($reports) > 1){
+
+                    return $reports;
+                    
+                }else{
+                    return 'One';
+                }
+            }else{
+                return 'Empty';
+            }
         }else{
             return 'Error';
         }

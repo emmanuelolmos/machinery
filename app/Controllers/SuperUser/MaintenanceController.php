@@ -257,6 +257,62 @@ switch($function){
 
         break;
 
+    case 'verifyReportForDates':
+
+        //Se obtienen los datos
+        $id_machine = $_POST['id_machine'];
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+
+        //Primera comprobación: No sean variables vacías
+        if(empty($start_date) || empty($end_date)){
+
+            $response['success'] = false;
+            $response['error'] = 'Es necesario ingresar ambas fechas';
+
+        }else{
+
+            //Segunda comprobación: Las fechas se ingresaran en el orden correcto
+            if($start_date > $end_date){
+
+                $response['success'] = false;
+                $response['error'] = 'La fecha inicial no puede ser superior a la fecha final';
+
+            }else{
+
+                //Se obtiene el resultado de los parámetros
+                $report = new Report();
+                $reports = $report->getReportsForDates($start_date, $end_date, $id_machine);
+
+                switch($reports){
+                    case 'Error':
+                        $response['success'] = false;
+                        $response['error'] = 'Ocurrió un error en la consulta a la base de datos';
+                        break;
+
+                    case 'Empty':
+                        $response['success'] = false;
+                        $response['error'] = 'No hay mantenimientos reportados en las fechas solicitadas';
+                        break;
+
+                    case 'One':
+                        $response['success'] = true;
+                        $response['one'] = true;
+                        break;
+
+                    default:
+                        $response['success'] = true;
+                        $reponse['one'] = false;
+                }
+
+            }
+
+        }
+
+        echo json_encode($response);
+
+        break;
+
     case 'sendImagesOfMaintenance':
 
         //Se reciben los datos

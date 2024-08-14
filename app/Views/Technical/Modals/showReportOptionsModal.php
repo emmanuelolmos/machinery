@@ -31,16 +31,16 @@
                         
                         <div>
                             <label class="form-label">Desde: </label>
-                            <input class="form-control" type="date">
+                            <input id="inputStartDateShowReportOptionsModal" class="form-control" type="date">
                         </div>
 
                         <div class="mt-2">
                             <label class="form-label">Hasta: </label>
-                            <input class="form-control" type="date">
+                            <input id="inputEndDateShowReportOptionsModal" class="form-control" type="date">
                         </div>
 
                         <div class="text-center mt-3">
-                            <button class="btn btn-dark">Generar reporte</button>
+                            <button type="button" onclick="generateGeneralReport()" class="btn btn-dark">Generar reporte</button>
                         </div>
 
                     </div>

@@ -624,10 +624,12 @@ function generateLastReport(){
 
                 if(convertedInfo['result'] != 'Empty'){
 
+                    deleteMessageReportOptions();
+
                     //Se crea un formulario
                     var form = document.createElement("form");
                     form.method = "POST";
-                    form.action = "last_report.php";
+                    form.action = "report.php";
 
                     //Se crea un input
                     var input = document.createElement("input");
@@ -655,7 +657,7 @@ function generateLastReport(){
 
                 //Ocurrió un error en la consulta
                 $("#divMessageErrorMachineShowReportOptionsModal").append(
-                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center mt-5 fs-3">Ocurrió un error en la consulta a la base de datos.</h3>'
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">Ocurrió un error en la consulta a la base de datos.</h3>'
                 );
                 
             }
@@ -668,13 +670,86 @@ function generateLastReport(){
 
 }
 
-function deleteMessageReportOptions(){
+function generateGeneralReport(){
+
     $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    var formData = {
+        start_date: $("#inputStartDateShowReportOptionsModal").val(),
+        end_date: $("#inputEndDateShowReportOptionsModal").val(),
+        id_machine: $("#inputIdMachineShowReportOptionsModal").val(),
+        function: 'verifyReportForDates'
+    };
+
+    $.ajax({
+        url: '../../Controllers/User/MaintenanceController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['one']){
+                    
+                    //Se hace uso del método para el último mantenimiento
+                    generateLastReport();
+
+                }else{
+
+                    //Se guardan los datos que se enviarán
+                    let data = {
+                        start_date: $("#inputStartDateShowReportOptionsModal").val(),
+                        end_date: $("#inputEndDateShowReportOptionsModal").val(),
+                        id_machine: $("#inputIdMachineShowReportOptionsModal").val()
+                    }
+
+                    //Se crea un formulario
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "reports.php";
+
+                    //Se crean los inputs
+                    for (var key in data){
+                        if (data.hasOwnProperty(key)) {
+                            var input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = key;
+                            input.value = data[key];
+                            form.appendChild(input);
+                        }
+                    }
+
+                    deleteMessageReportOptions();
+
+                    //Se manda el formulario y redirige
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+
+            }else{
+                $("#divMessageErrorMachineShowReportOptionsModal").append(
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">' + convertedInfo['error'] + '</h3>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 }
 
-function generateGeneralReport(){
-    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
-    alert("Se generó el reporte general de " + id_machine);
+function deleteMessageReportOptions(){
+
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    var inputStartDate = document.getElementById("inputStartDateShowReportOptionsModal");
+    inputStartDate.value = "";
+
+    var inputEndDate = document.getElementById("inputEndDateShowReportOptionsModal");
+    inputEndDate.value = "";
 }
 
 //Llamada a las funciones

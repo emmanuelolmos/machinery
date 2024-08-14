@@ -12,15 +12,15 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Admin/machines.php'; ?>">Maquinas</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Technical/machines.php'; ?>">Maquinas</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Admin/templates.php'; ?>">Plantillas</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Technical/templates.php'; ?>">Plantillas</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Admin/maintenance.php'; ?>">Mantenimiento</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo $env["APP_URL"] . '/app/Views/Technical/maintenance.php'; ?>">Mantenimiento</a>
         </li>
 
       </ul>
