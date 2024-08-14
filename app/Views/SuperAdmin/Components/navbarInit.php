@@ -14,17 +14,43 @@
       </ul>
 
       <ul class="navbar-nav">
+
+        <?php 
+
+          require "../../Models/SuperUser/Maintenance.php";
+
+          $maintenance = new Maintenance();
+          $maintenances = $maintenance->getAllMaintenances();
+
+          if($maintenances != 'Error' || $maintenances != 'Empty'){
+            echo '
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name_user'] ?>
-                </a>
-                <div class="dropdown-menu " style="width: 0px;">
-                    <a class="dropdown-item text-center" href="<?php echo $env["APP_URL"] . '/app/Controllers/Login/SessionController.php?function=exitSession'; ?>">
-                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-                    </a>
-                </div>
+              <a class="nav-link text-danger" href="' . $env["APP_URL"] . '/app/Views/SuperAdmin/maintenance.php" role="button">
+                <i class="bi bi-exclamation-circle-fill"></i>
+              </a>
             </li>
-        </ul>
+            ';
+          }
+
+        ?>
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name_user'] ?>
+          </a>
+
+          <div class="dropdown-menu " style="width: 0px;">
+
+            <a class="dropdown-item text-center" href="<?php echo $env["APP_URL"] . '/app/Controllers/Login/SessionController.php?function=exitSession'; ?>">
+              <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </a>
+
+          </div>
+
+        </li>
+
+      </ul>
 
     </div>
 

@@ -187,6 +187,69 @@ class Maintenance{
         }
     }
 
+    function getAllMaintenancesAlert(){
+
+        $currentDate = date('Y-m-d');
+        $company_id = $_SESSION['company_id'];
+
+        //Se obtienen los mantenimientos pendientes
+        $query = "SELECT * FROM maintenance WHERE dateNext_maintenance <= :dateNext_maintenance";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':dateNext_maintenance', $currentDate);
+
+        if($statement->execute()){
+
+            $maintenances = $statement->fetchAll();
+
+            //Se comprueba que haya registros
+            if(isset($maintenances[0]['id_maintenance'])){
+
+                //Se obtienen las maquinas de la empresa
+                $query = "SELECT * FROM machines WHERE company_id = :company_id";
+
+                $statement = $this->connection->prepare($query);
+                $statement->bindParam(':company_id', $company_id);
+
+                if($statement->execute()){
+
+                    $machines = $statement->fetchAll();
+
+                    if(isset($machines[0]['id_machine'])){
+
+                        //Se obtuvieron los mantenimientos y las maquinas
+                        $result = 'Empty';
+
+                        //Se verifica
+                        for($i = 0; $i < count($maintenances); $i++){
+
+                            for($j = 0; $j < count($machines); $j++){
+                                if($maintenances[$i]['machine_id'] == $machines[$j]['id_machine']){
+                                    $result = '';
+                                }
+                            }
+
+                        }
+
+                        return $result;
+
+                    }else{
+                        return 'Empty';
+                    }
+                }else{
+                    return 'Error';
+                }
+
+            }else{
+                return 'Empty';
+            }
+
+        }else{
+            return 'Error';
+        }
+
+    }
+
     
 }
 

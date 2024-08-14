@@ -752,7 +752,12 @@ function deleteMessageReportOptions(){
     inputEndDate.value = "";
 }
 
+function deleteAlertMaintenance(){
+    $("#alertMaintenances").remove();
+}
+
 //Llamada a las funciones
 showListReports();
 showListMaintenance();
 showListNextMaintenance();
+deleteAlertMaintenance();
