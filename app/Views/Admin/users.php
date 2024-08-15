@@ -74,6 +74,7 @@
     <?php
         include 'Modals/addUser.php';
         include 'Modals/editUser.php';
+        include 'Modals/messageMaintenanceModal.php';
     ?>
 
     <!-- Scripts -->

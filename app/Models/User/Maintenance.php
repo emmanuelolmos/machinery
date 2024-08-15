@@ -218,20 +218,28 @@ class Maintenance{
                     if(isset($machines[0]['id_machine'])){
 
                         //Se obtuvieron los mantenimientos y las maquinas
-                        $result = 'Empty';
+                        $result = 0;
+                        //$result = 'Empty';
 
                         //Se verifica
                         for($i = 0; $i < count($maintenances); $i++){
 
                             for($j = 0; $j < count($machines); $j++){
                                 if($maintenances[$i]['machine_id'] == $machines[$j]['id_machine']){
-                                    $result = '';
+                                    $result++;
+                                    //$result = '';
                                 }
                             }
 
                         }
 
-                        return $result;
+                        if($result == 0){
+                            return 'Empty';
+                        }else{
+                            return $result;
+                        }
+
+                        //return $result;
 
                     }else{
                         return 'Empty';

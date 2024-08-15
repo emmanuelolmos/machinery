@@ -184,6 +184,7 @@
 
         include 'Modals/addCheck.php';
         include 'Modals/showChecks.php';
+        include 'Modals/messageMaintenanceModal.php';
 
     ?>
 

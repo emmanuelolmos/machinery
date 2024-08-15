@@ -1,50 +1,60 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="<?php echo $env["APP_URL"]; ?>">MAQUINAS</a>
 
-    <a class="navbar-brand" href="<?php echo $env["APP_URL"]; ?>">MAQUINAS</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarMachines">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <div class="collapse navbar-collapse" id="navbarMachines">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Contenedor derecho -->
+            <ul class="navbar-nav ms-auto d-flex align-items-start">
+                <li class="nav-item">
+                    <p class="nav-link me-2 mt-md-3 fw-bold" style="font-size: 17px;" href=""><?php echo $_SESSION['name_user'] ?></p>
+                </li>
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Alertas de mantenimientos pendientes --> 
+                <?php 
+                    require "../../Models/User/Maintenance.php";
 
-      </ul>
+                    $maintenance = new Maintenance();
+                    $maintenances = $maintenance->getAllMaintenancesAlert();
+            
+                    if($maintenances != 'Error' || $maintenances != 'Empty'){
 
-      <ul class="navbar-nav">
-      <?php 
+                        //$numberMaintenances = count($maintenances);
 
-        require "../../Models/User/Maintenance.php";
+                        echo '
+                        <li class="nav-item">
+                            <a href="' . $env["APP_URL"] . '/app/Views/Technical/maintenance.php" class="nav-link d-flex position-relative mt-md-3 me-2">
+                                <i class="bi bi-bell-fill text-dark" style="font-size: 20px;"></i>
+                                <span class="badge bg-danger position-absolute translate-middle p-1 rounded-circle" style="font-size: 10px; top: 10px; right: -10px;">' . $maintenances . '</span>
+                            </a>
+                        </li>
+                      ';
+                    }else{
 
-        $maintenance = new Maintenance();
-        $maintenances = $maintenance->getAllMaintenancesAlert();
+                        if($maintenances == 'Empty'){
 
-        if($maintenances != 'Error' || $maintenances != 'Empty'){
-          echo '
-          <li id="alertMaintenances" class="nav-item dropdown">
-            <a class="nav-link text-danger" href="' . $env["APP_URL"] . '/app/Views/Technical/maintenance.php" role="button">
-              <i class="bi bi-exclamation-circle-fill"></i>
-            </a>
-          </li>
-          ';
-        }
+                            echo '
+                                <li class="nav-item">
+                                    <a data-bs-toggle="modal" data-bs-target="#messageMaintenanceModal" class="nav-link d-flex position-relative mt-md-3 me-2">
+                                        <i class="bi bi-bell-fill text-dark" style="font-size: 20px;"></i>
+                                    </a>
+                                </li>
+                                ';
+                        }
 
-      ?>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name_user'] ?>
-                </a>
-                <div class="dropdown-menu " style="width: 0px;">
-                    <a class="dropdown-item text-center" href="<?php echo $env["APP_URL"] . '/app/Controllers/Login/SessionController.php?function=exitSession'; ?>">
-                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    }
+                ?>
+
+                <li class="nav-item">
+                    <a href="<?php echo $env["APP_URL"] . '/app/Controllers/Login/SessionController.php?function=exitSession'; ?>" class="nav-link mt-md-3">
+                        <i class="bi bi-box-arrow-right text-dark" style="font-size: 24px;"></i>
                     </a>
-                </div>
-            </li>
-        </ul>
-
+                </li>
+            </ul>
+        </div>
     </div>
-
-  </div>
 </nav>

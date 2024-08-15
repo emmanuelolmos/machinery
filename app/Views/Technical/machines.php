@@ -74,6 +74,7 @@
         include 'Modals/editMachine.php';
         include 'Modals/addMaintenance.php';
         include 'Modals/editMaintenance.php';
+        include 'Modals/messageMaintenanceModal.php';
     ?>
 
     <!-- Scripts -->

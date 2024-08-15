@@ -132,6 +132,7 @@ $env = parse_ini_file('../../../.env');
         include 'Modals/showNextMaintenance.php';
         include 'Modals/showListReportsModal.php';
         include 'Modals/showReportOptionsModal.php';
+        include 'Modals/messageMaintenanceModal.php';
     ?>
 
     <!-- Scripts -->

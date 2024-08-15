@@ -195,6 +195,7 @@ $env = parse_ini_file('../../../.env');
         include 'Modals/showChecks.php';
         include 'Modals/addCheck.php';
         include 'Modals/deleteCheck.php';
+        include 'Modals/messageMaintenanceModal.php';
     ?>
 
     <!-- Scripts -->
