@@ -34,30 +34,6 @@ $env = parse_ini_file('../../../.env');
         
         <div class="d-flex mb-4">
 
-            <div id="divReports" class="divReports mx-3" style="width: 40%;">
-                <div>
-                    <br>
-                    <h1 class="text-center mt-5 fs-4">Reportes</h1>
-
-                    <div class="table-responsive text-center mt-4" style="max-height: 650px; overflow-y: auto;">
-                        <table id="tableReportsMaintenance" class="" style="width: 100%;">
-                            <thead class="bg-success text-white">
-                                <tr class="">
-                                    <th class="p-2" style="width: 60%;">Maquinas</th>
-                                    <th class="p-2" style="width: 40%;">Generar reporte</th>
-                                </tr>
-                            </thead>
-                            
-                            <!-- tbody --> 
-                        </table>
-                    </div>
-
-                    <div id="divMessageEmptyListReportsMaintenance">
-                        <!-- Mensaje de vacío --> 
-                    </div>
-                </div>
-            </div>
-
             <div id="divAlarms" class="divAlarms mx-2" style="width: 100%;">
                 
                 <div>
@@ -66,10 +42,7 @@ $env = parse_ini_file('../../../.env');
                     <div class="mt-5">
 
                         <!-- Botones para mostrar Reportes y Pendientes --> 
-                        <div class="divButtonsRP d-flex justify-content-center">
-                            <div class="divButtonsRP me-5">
-                                <button onclick="showListReportsModal()" class="btn btn-primary">Reportes</button>
-                            </div>
+                        <div class="divButtonsRP">
                             <div class="divButtonsRP ms-5">
                                 <button onclick="showNextMaintenancesModal()" class="btn btn-primary">Próximos</button>
                             </div>
@@ -99,10 +72,12 @@ $env = parse_ini_file('../../../.env');
 
             <div id="divNextMaintenance" class="divNextMaintenance mx-3" style="width: 50%;">
                 <div>
-                    <br>
-                    <h3 class="text-center mt-5 fs-4">Próximos</h3>
 
-                    <div class="table-responsive text-center mt-4" style="max-height: 650px; overflow-y: auto;">
+                    <h3 class="text-center mt-4 fs-3">Próximos</h3>
+
+                    <br>
+
+                    <div class="table-responsive text-center mt-3" style="max-height: 650px; overflow-y: auto;">
                         <table id="tableNextMaintenance" style="width: 100%;">
                             <thead class="bg-success text-white">
                                 <tr>
