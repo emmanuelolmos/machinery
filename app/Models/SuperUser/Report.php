@@ -132,7 +132,7 @@ class Report{
             //Se creó el registro del reporte, ahora se guarda la información
 
             //Se obtiene el id
-            $query = "SELECT * FROM reports WHERE establishedDate_report = :establishedDate_report AND machine_id = :machine_id";
+            $query = "SELECT * FROM reports WHERE establishedDate_report = :establishedDate_report AND machine_id = :machine_id ORDER BY id_report DESC";
 
             $statement = $this->connection->prepare($query);
             $statement->bindParam(':establishedDate_report', $establishedDate_report);

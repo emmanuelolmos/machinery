@@ -72,6 +72,7 @@
         include 'Modals/editMaintenance.php';
         include 'Modals/messageMaintenanceModal.php';
         include 'Modals/showListMaintenance.php';
+        include 'Modals/showReportOptionsModal.php';
     ?>
 
     <!-- Scripts -->

@@ -89,6 +89,7 @@ function loadMachines(){
                                                 '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
                                                 '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
+                                                '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
@@ -208,6 +209,7 @@ function findMachine(){
                                                 '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
                                                 '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
+                                                '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
@@ -809,6 +811,175 @@ function storeReport(id_machine, establishedDate){ //sendImagesOfMaintenance(id_
             alert('Error'); 
         } 
     });
+}
+
+//Para la generación de reportes
+
+function showReportOptionsModal(id){
+
+    $("#inputIdMachineShowReportOptionsModal").remove();
+
+    $("#divIdMachineShowReportOptionsModal").append(
+        '<input id="inputIdMachineShowReportOptionsModal" type="text" value="' + id + '" hidden></input>'
+    );
+
+    $("#showReportOptionsModal").modal('show');
+
+}
+
+function generateLastReport(){
+
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    let id_machine = $("#inputIdMachineShowReportOptionsModal").val();
+
+    //Se verifica que haya se hayan registrado mantenimientos
+
+    let petition = {
+        id_machine: id_machine,
+        function: 'verifyMaintenance'
+    }
+
+    $.ajax({
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['result'] != 'Empty'){
+
+                    deleteMessageReportOptions();
+
+                    //Se crea un formulario
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "report.php";
+                    form.target = "_blank";
+
+                    //Se crea un input
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "id_machine";
+                    input.value = $("#inputIdMachineShowReportOptionsModal").val();
+
+                    //Se agrega el input al formulario
+                    form.appendChild(input);
+
+                    //Se manda el formulario y redirige
+                    document.body.appendChild(form);
+                    form.submit();
+
+                }else{
+
+                    //No se ha registrado algún mantenimiento
+                    $("#divMessageErrorMachineShowReportOptionsModal").append(
+                        '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">No se ha realizado mantenimiento aún.</h3>'
+                    );
+
+                }
+
+            }else{
+
+                //Ocurrió un error en la consulta
+                $("#divMessageErrorMachineShowReportOptionsModal").append(
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">Ocurrió un error en la consulta a la base de datos.</h3>'
+                );
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+}
+
+function generateGeneralReport(){
+
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    var formData = {
+        start_date: $("#inputStartDateShowReportOptionsModal").val(),
+        end_date: $("#inputEndDateShowReportOptionsModal").val(),
+        id_machine: $("#inputIdMachineShowReportOptionsModal").val(),
+        function: 'verifyReportForDates'
+    };
+
+    $.ajax({
+        url: '../../Controllers/SuperUser/MaintenanceController.php', 
+        type: 'POST', 
+        data: formData, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['one']){
+                    
+                    //Se hace uso del método para el último mantenimiento
+                    generateLastReport();
+
+                }else{
+
+                    //Se guardan los datos que se enviarán
+                    let data = {
+                        start_date: $("#inputStartDateShowReportOptionsModal").val(),
+                        end_date: $("#inputEndDateShowReportOptionsModal").val(),
+                        id_machine: $("#inputIdMachineShowReportOptionsModal").val()
+                    }
+
+                    //Se crea un formulario
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "reports.php";
+                    form.target = "_blank";
+
+                    //Se crean los inputs
+                    for (var key in data){
+                        if (data.hasOwnProperty(key)) {
+                            var input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = key;
+                            input.value = data[key];
+                            form.appendChild(input);
+                        }
+                    }
+
+                    deleteMessageReportOptions();
+
+                    //Se manda el formulario y redirige
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+
+            }else{
+                $("#divMessageErrorMachineShowReportOptionsModal").append(
+                    '<h3 id="divMessageErrorContentMachineShowReportOptionsModal" class="text-center text-danger mt-1 fs-5">' + convertedInfo['error'] + '</h3>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+}
+
+function deleteMessageReportOptions(){
+
+    $("#divMessageErrorContentMachineShowReportOptionsModal").remove();
+
+    var inputStartDate = document.getElementById("inputStartDateShowReportOptionsModal");
+    inputStartDate.value = "";
+
+    var inputEndDate = document.getElementById("inputEndDateShowReportOptionsModal");
+    inputEndDate.value = "";
 }
 
 //Formularios de los modales
