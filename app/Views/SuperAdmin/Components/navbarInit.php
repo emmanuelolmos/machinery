@@ -21,7 +21,7 @@
                     $maintenance = new Maintenance();
                     $maintenances = $maintenance->getAllMaintenances();
             
-                    if($maintenances != 'Error' || $maintenances != 'Empty'){
+                    if($maintenances != 'Error' && $maintenances != 'Empty'){
 
                         $numberMaintenances = count($maintenances);
 

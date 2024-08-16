@@ -11,9 +11,6 @@
             <!-- Contenedor izquierdo --> 
             <ul class="navbar-nav me-auto" style="font-size: 18px;">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $env["APP_URL"] . '/app/Views/Technical/users.php'; ?>">Usuarios</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="<?php echo $env["APP_URL"] . '/app/Views/Technical/machines.php'; ?>">Maquinas</a>
                 </li>
                 <li class="nav-item">
@@ -37,7 +34,7 @@
                     $maintenance = new Maintenance();
                     $maintenances = $maintenance->getAllMaintenancesAlert();
             
-                    if($maintenances != 'Error' || $maintenances != 'Empty'){
+                    if($maintenances != 'Error' && $maintenances != 'Empty'){
 
                         //$numberMaintenances = count($maintenances);
 

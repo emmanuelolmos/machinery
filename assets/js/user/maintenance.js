@@ -662,6 +662,7 @@ function generateLastReport(){
                     var form = document.createElement("form");
                     form.method = "POST";
                     form.action = "report.php";
+                    form.target = "_blank";
 
                     //Se crea un input
                     var input = document.createElement("input");
@@ -741,6 +742,7 @@ function generateGeneralReport(){
                     var form = document.createElement("form");
                     form.method = "POST";
                     form.action = "reports.php";
+                    form.target = "_blank";
 
                     //Se crean los inputs
                     for (var key in data){

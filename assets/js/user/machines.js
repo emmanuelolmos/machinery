@@ -73,6 +73,9 @@ function loadMachines(){
 
                 //Se llena con el siguiente ciclo
                 for(let i=0; i < convertedInfo['machines'].length; i++){
+
+                    $nameMachine = "'" + convertedInfo['machines'][i].name_machine.toUpperCase() + "'";
+
                     cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
                                 '<div class="card">' +
                                     '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
@@ -85,6 +88,7 @@ function loadMachines(){
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
                                                 '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
+                                                '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
@@ -178,6 +182,9 @@ function findMachine(){
 
                 //Se llena con el siguiente ciclo
                 for(let i=0; i < convertedInfo['machines'].length; i++){
+
+                    $nameMachine = "'" + convertedInfo['machines'][i].name_machine.toUpperCase() + "'";
+
                     cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
                                 '<div class="card">' +
                                     '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
@@ -190,6 +197,7 @@ function findMachine(){
                                                 '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
                                                 '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
+                                                '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
                                                 '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
                                             '</ul>' +
                                         '</div>' +
@@ -522,6 +530,244 @@ function loadMaintenance(id){
             alert('Error'); 
         } 
     }); 
+}
+
+function showListChecksMaintenance(id_machine, name){
+
+    //Se debe comprobar que haya un mantenimiento registrado
+
+    var petition = {
+        id_machine: id_machine,
+        function: 'verifyMaintenance'
+    };
+
+    $.ajax({
+        url: '../../Controllers/User/MaintenanceController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                if(convertedInfo['result'] != 'Empty'){
+
+                    //Se muestran los checks
+                    loadDataListMaintenance(id_machine, convertedInfo['result'][0].dateNext_maintenance, name);
+
+                }else{
+                    $("#messageMaintenanceModal").modal("show");
+                }
+
+            }else{
+                alert('Error en la consulta de mantenimientos');
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
+
+}
+
+//Funciones para cargar la información de los modales
+function loadDataListMaintenance(id, establishedDate, name){
+
+    $("#tbodyTableShowListMaintenanceModal").remove();
+    $("#messageEmptyShowListMaintenanceModal").remove();
+    $("#inputIdShowListMaintenanceModal").remove();
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    $("#divImageShowListMaintenanceModal").remove();
+    $("#divObservationShowListMaintenanceModal").remove();
+    $("#buttonStoreMaintenance").remove();
+    $("#titleShowListMaintenanceModal").remove();
+
+    $("#divInputIdShowListMaintenanceModal").append(
+        '<input id="inputIdShowListMaintenanceModal" value="' + id + '" hidden></input>'
+    );
+
+    //Se coloca el nombre de la maquina
+    $("#divTitleShowListMaintenanceModal").append(
+        '<h1 id="titleShowListMaintenanceModal" class="fs-5 text-center">' + name + '</h1>'
+    );
+
+    //Se obtienen la información de los checks asignados a la maquina
+    var petition = {
+        id_machine: id,
+        establishedDate_report: establishedDate,
+        function: 'getChecksAssigned'
+    };
+    
+    $.ajax({ 
+        url: '../../Controllers/User/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+
+                let checks = convertedInfo['checks'];
+                let date = "'" + establishedDate + "'";
+                let machine_name = "'" + name + "'";
+
+                //Se imprime la lista de maquinas con mantenimiento pendientes
+
+                let tbody = '<tbody id="tbodyTableShowListMaintenanceModal">';
+
+                for(let i = 0; i < checks.length; i++){
+                    tbody +=    '<tr>' +
+                                    '<td>' + checks[i].content_assigned_check + '</td>' +
+                                    '<td>';
+
+                    if(checks[i].status_assigned_check == '1'){
+                        //Check completo
+                        tbody += '<button type="button" class="btn text-success" onclick="changeStatusOfCheck(' + id + ', ' + machine_name + ', ' + date + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-check-circle-fill"></i></button>';
+                    }else{
+                        //Check incompleto
+                        tbody += '<button type="button" class="btn" onclick="changeStatusOfCheck(' + id + ', ' + machine_name + ', ' + date + ', ' + checks[i].id_assigned_check + ', ' + checks[i].status_assigned_check + ')"><i class="bi bi-circle"></i></button>';
+                    }
+
+                    tbody +=        '</td>' +
+                                '</tr>';
+                }
+
+                tbody += '</tbody>';
+
+                $("#tableShowListMaintenanceModal").append(tbody);
+
+                //Checksready es una comprobación de que todos los checks fueron completados
+                if(convertedInfo['checksready']){
+
+                    //Se muestra el input para subir imagenes
+                    $("#spacedivImageShowListMaintenanceModal").append(
+                        '<div id="divImageShowListMaintenanceModal">' +
+                            '<label class="form-label mt-2" for="inputImageShowListMaintenanceModal">Imagenes de evidencia</label>' +
+                            '<input class="form-control" id="inputImageShowListMaintenanceModal" name="inputImageShowListMaintenanceModal[]" type="file" accept="image/*" multiple>' +
+                        '</div>'
+                    );
+
+                    //Se muestra el textarea para ingresar observaciones
+                    $("#spacedivObservationShowListMaintenanceModal").append(
+                        '<div id="divObservationShowListMaintenanceModal">' +
+                            '<label class="mt-2" class="form-label" for="inputObservationShowListMaintenanceModal">Observaciones</label>' +
+                            '<textarea class="form-control" name="inputObservationShowListMaintenanceModal" id="inputObservationShowListMaintenanceModal"></textarea>' +
+                        '</div>'
+                    );
+
+                    //Se muestra el botón
+                    $("#divButtonStoreMaintenance").append(
+                        '<button id="buttonStoreMaintenance" class="btn btn-dark mt-3" type="button" onclick="storeReport(' + id + ', ' + date + ')">Registrar</button>'
+                    );
+                }
+
+            }else{
+
+                let error = convertedInfo['error'];
+
+                //Se muestran mensajes
+
+                if(error == 'Error'){
+                    alert('Ocurrió un problema en la consulta de datos.');
+                }else{
+                    $("#divMessageEmptyShowListMaintenanceModal").append(
+                        '<h5 id="messageEmptyShowListMaintenanceModal" class="text-center mt-5 fs-3">No hay checks asignados</h5>'
+                    );
+                }
+                
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+
+    $('#showListMaintenanceModal').modal('show');
+}
+
+//Función para cambiar el estatus de un check
+function changeStatusOfCheck(id_machine, name, establishedDate, id_assigned_check, status_assigned_check){
+
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    
+    //Se manda al controlador
+    var petition = {
+        id_assigned_check: id_assigned_check,
+        status_assigned_check: status_assigned_check,
+        function: 'changeStatusOfCheck'
+    };
+
+    $.ajax({ 
+        url: '../../Controllers/User/CheckController.php', 
+        type: 'POST', 
+        data: petition, 
+        success: function (data){
+
+            loadDataListMaintenance(id_machine, establishedDate, name);
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-success">Se registró correctamente el cambio</h4>'
+                );
+
+            }else{
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-danger">No se registró correctamente el cambio</h4>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    }); 
+}
+
+//Función para subir imagenes del mantenimiento
+function storeReport(id_machine, establishedDate){ //sendImagesOfMaintenance(id_machine, establishedDate){
+
+    $("#errorMessageContentShowListMaintenanceModal").remove();
+    
+    //Se manda la información del formulario
+    var formElement = document.getElementById("formShowListMaintenanceModal");
+
+    formData = new FormData(formElement);
+    formData.append("id_machine", id_machine);
+    formData.append("establishedDate", establishedDate);
+    formData.append("function", 'storeReport');
+
+    $.ajax({
+        url: '../../Controllers/User/MaintenanceController.php', 
+        type: 'POST', 
+        data: formData, 
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data){
+
+            var convertedInfo = JSON.parse(data);
+
+            if(convertedInfo['success']){
+                
+                location.reload();
+
+            }else{
+                $("#errorMessageShowListMaintenanceModal").append(
+                    '<h4 id="errorMessageContentShowListMaintenanceModal" class="mt-2 fs-5 text-center text-danger">' + convertedInfo['error'] + '</h4>'
+                );
+            }
+
+        }, 
+        error: function (jqXHR, textStatus, errorThrown) { 
+            alert('Error'); 
+        } 
+    });
 }
 
 
