@@ -76,46 +76,46 @@ function loadMachines(){
 
                     $nameMachine = "'" + convertedInfo['machines'][i].name_machine.toUpperCase() + "'";
 
-                    cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
-                                '<div class="card">' +
-                                    '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
-                                    '<div class="card-body">' +
-                                        //Nombre y opciones
-                                        '<div class="d-flex justify-content-between mb-2">' +
-                                            '<h5 class="card-title fs-6 mt-2">' + convertedInfo['machines'][i].name_machine.toUpperCase() + '</h5>' +
-                                            '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
-                                            '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
-                                                '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
-                                                '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
-                                                '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
-                                                '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
-                                                '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
-                                                '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
-                                            '</ul>' +
-                                        '</div>' +
-                                        //Descripción
-                                        '<p class="card-text">' + convertedInfo['machines'][i].observation_machine +'</p>' +
-                                        '<p class="card-text">Empresa: ' + nameCompany +'</p>' +
-                                        //Información adicional
-                                        '<div class="d-flex justify-content-between mb-3">' +
-                                            '<div class="bg-primary ms-1 me-2 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Marca: ' + convertedInfo['machines'][i].mark_machine + '</p>' +
+                    cards +=    '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">' +
+                                    '<div class="card mb-2">' +
+                                        '<div class="d-flex flex-column">' +
+                                            '<div class="mx-auto" style="height: 150px; display: flex; align-items: center;">' +
+                                                '<img class="" style="max-width: 100%; max-height: 100%; height: auto; width: auto;" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '">' +
                                             '</div>' +
-                                            '<div class="bg-primary ms-2 me-1 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Modelo: ' + convertedInfo['machines'][i].model_machine + '</p>' +
-                                            '</div>' +
-                                        '</div>' +
-                                        '<div class="d-flex justify-content-between mb-3">' +
-                                            '<div class="bg-secondary ms-1 me-2 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Fecha de compra: ' + convertedInfo['machines'][i].date_machine + '</p>' +
-                                            '</div>' +
-                                            '<div class="bg-secondary ms-2 me-1 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">N. Serie: ' + convertedInfo['machines'][i].serie_machine + '</p>' +
+                                            '<div>' +
+                                                '<div class="d-flex justify-content-between mb-2">' +
+                                                    '<h5 class="card-title fs-5 mt-2 ms-3">' + convertedInfo['machines'][i].name_machine.toUpperCase() + '</h5>' +
+                                                    '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
+                                                    '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
+                                                        '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
+                                                        '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
+                                                        '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
+                                                        '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
+                                                        '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
+                                                        '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
+                                                    '</ul>' +
+                                                '</div>' +
+                                                '<div class="mb-1" style="height: 70px; overflow: auto; text-align: justify;">' +
+                                                    '<p class="mx-3">' + convertedInfo['machines'][i].observation_machine +'</p>' +
+                                                '</div>' +
+                                                '<div class="mx-2">' +
+                                                    '<div class="bg-primary">' +
+                                                        '<p class="p-2 ms-2 text-white h1 fs-6">Más información</p>' +
+                                                    '</div>' +
+                                                    '<div>' +
+                                                        '<ul class="list-group list-group-flush">' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Empresa:</b> Bitala</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Marca:</b> ' + convertedInfo['machines'][i].mark_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Modelo:</b> ' + convertedInfo['machines'][i].model_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Núm. serie:</b> ' + convertedInfo['machines'][i].serie_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Fecha de compra:</b> ' + convertedInfo['machines'][i].date_machine + '</li>' +
+                                                        '</ul>' +
+                                                    '</div>' +
+                                                '</div>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
-                                '</div>' +
-                             '</div>';
+                                '</div>';
                 }
 
                 $("#divRowTable").append(cards);
@@ -196,46 +196,46 @@ function findMachine(){
 
                     $nameMachine = "'" + convertedInfo['machines'][i].name_machine.toUpperCase() + "'";
 
-                    cards += '<div class="col-xl-3 col-lg-4 col-md-6 mt-3 mb-3 mb-sm-0">' +
-                                '<div class="card">' +
-                                    '<img class="card-img-top" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '" alt="" style="height: 300px">' +
-                                    '<div class="card-body">' +
-                                        //Nombre y opciones
-                                        '<div class="d-flex justify-content-between mb-2">' +
-                                            '<h5 class="card-title fs-6 mt-2">' + convertedInfo['machines'][i].name_machine.toUpperCase() + '</h5>' +
-                                            '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
-                                            '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
-                                                '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
-                                                '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
-                                                '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
-                                                '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
-                                                '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
-                                                '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
-                                            '</ul>' +
-                                        '</div>' +
-                                        //Descripción
-                                        '<p class="card-text">' + convertedInfo['machines'][i].observation_machine +'</p>' +
-                                        '<p class="card-text">Empresa: ' + nameCompany + '</p>' +
-                                        //Información adicional
-                                        '<div class="d-flex justify-content-between mb-3">' +
-                                            '<div class="bg-primary ms-1 me-2 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Marca: ' + convertedInfo['machines'][i].mark_machine + '</p>' +
+                    cards +=    '<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">' +
+                                    '<div class="card mb-2">' +
+                                        '<div class="d-flex flex-column">' +
+                                            '<div class="mx-auto" style="height: 150px; display: flex; align-items: center;">' +
+                                                '<img class="" style="max-width: 100%; max-height: 100%; height: auto; width: auto;" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + convertedInfo['machines'][i].image_machine + '">' +
                                             '</div>' +
-                                            '<div class="bg-primary ms-2 me-1 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Modelo: ' + convertedInfo['machines'][i].model_machine + '</p>' +
-                                            '</div>' +
-                                        '</div>' +
-                                        '<div class="d-flex justify-content-between mb-3">' +
-                                            '<div class="bg-secondary ms-1 me-2 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">Fecha de compra: ' + convertedInfo['machines'][i].date_machine + '</p>' +
-                                            '</div>' +
-                                            '<div class="bg-secondary ms-2 me-1 w-50 rounded-2" style="color: #FEFEFE;">' +
-                                                '<p class="mt-2 fw-bold text-center">N. Serie: ' + convertedInfo['machines'][i].serie_machine + '</p>' +
+                                            '<div>' +
+                                                '<div class="d-flex justify-content-between mb-2">' +
+                                                    '<h5 class="card-title fs-5 mt-2 ms-3">' + convertedInfo['machines'][i].name_machine.toUpperCase() + '</h5>' +
+                                                    '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i></button>' +
+                                                    '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">' +
+                                                        '<li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editMachineModal" onclick="loadDataMachine(' + convertedInfo['machines'][i].id_machine + ')">Editar maquina</li>' +
+                                                        '<li class="dropdown-item" onclick="loadMaintenance(' + convertedInfo['machines'][i].id_machine + ')">Asignar mantenimiento</li>' +
+                                                        '<li class="dropdown-item" onclick="redirectChecks(' + convertedInfo['machines'][i].id_machine + ')">Asignar checks</li>' +
+                                                        '<li class="dropdown-item" onclick="showListChecksMaintenance(' + convertedInfo['machines'][i].id_machine + ', ' + $nameMachine + ')">Ver mantenimiento</li>' +
+                                                        '<li class="dropdown-item" onclick="showReportOptionsModal(' + convertedInfo['machines'][i].id_machine + ')">Generar reporte</li>' +
+                                                        '<li class="dropdown-item" onclick="deleteMachine(' + convertedInfo['machines'][i].id_machine + ')">Eliminar maquinas</li>' +
+                                                    '</ul>' +
+                                                '</div>' +
+                                                '<div class="mb-1" style="height: 70px; overflow: auto; text-align: justify;">' +
+                                                    '<p class="mx-3">' + convertedInfo['machines'][i].observation_machine +'</p>' +
+                                                '</div>' +
+                                                '<div class="mx-2">' +
+                                                    '<div class="bg-primary">' +
+                                                        '<p class="p-2 ms-2 text-white h1 fs-6">Más información</p>' +
+                                                    '</div>' +
+                                                    '<div>' +
+                                                        '<ul class="list-group list-group-flush">' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Empresa:</b> Bitala</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Marca:</b> ' + convertedInfo['machines'][i].mark_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Modelo:</b> ' + convertedInfo['machines'][i].model_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Núm. serie:</b> ' + convertedInfo['machines'][i].serie_machine + '</li>' +
+                                                            '<li class="list-group-item text-center" style="top: -10px;"><b>Fecha de compra:</b> ' + convertedInfo['machines'][i].date_machine + '</li>' +
+                                                        '</ul>' +
+                                                    '</div>' +
+                                                '</div>' +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
-                                '</div>' +
-                             '</div>';
+                                '</div>';
                 }
 
                 $("#divRowTable").append(cards);

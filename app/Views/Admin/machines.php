@@ -57,9 +57,11 @@
     
         </div>
 
-        <div id="divPrincipalTable" class="ms-3 me-3">
+        <div id="divPrincipalTable" class="container p-3">
+            <br>
             <div id="divRowTable" class="row">
                 <!--Tabla de maquinaria-->
+                
             </div>
 
             <br id="brCards">
