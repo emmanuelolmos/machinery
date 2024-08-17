@@ -89,9 +89,9 @@ $reports = $report->getReportsForDates($start_date, $end_date, $id_machine);
         }
 
         .imgMachine {
-            height: 150px;
+            height: auto;
             width: 250px;
-            margin-top: 30px;
+            margin: 0 auto;
         }
 
         .divSpaceMaintenances{
@@ -142,8 +142,8 @@ $reports = $report->getReportsForDates($start_date, $end_date, $id_machine);
 
         .imgEvidence {
             height: 200px;
-            width: 150px;
             margin-right: 20px;
+            margin-bottom: 10px;
         }
 
         .subtitleReport {

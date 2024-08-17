@@ -91,9 +91,9 @@ ob_start();
         }
 
         .imgMachine {
-            height: 150px;
+            height: auto;
             width: 250px;
-            margin-top: 60px;
+            margin: 0 auto;
         }
 
         .divContainerChecksObserv {
@@ -140,8 +140,8 @@ ob_start();
 
         .imgEvidence {
             height: 200px;
-            width: 150px;
             margin-right: 20px;
+            margin-bottom: 10px;
         }
 
         .subtitleReport {

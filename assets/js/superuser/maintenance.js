@@ -105,7 +105,7 @@ function showListMaintenance(){
                             tbody +=    '<tr style="border: 1px solid black;">' +
                                             '<td>' +
                                                 '<div class="col-12">' +
-                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="height: 100px;">' +
                                                 '</div>' +
                                                 machines[j].name_machine +
                                             '</td>' +
@@ -192,7 +192,7 @@ function showListNextMaintenance(){
                             tbody +=    '<tr>' +
                                             '<td>' +
                                                 '<div class="col-12">' +
-                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="height: 100px;">' +
                                                 '</div>' +
                                                 machines[j].name_machine +
                                             '</td>' +
@@ -279,7 +279,7 @@ function showNextMaintenancesModal(){
                             tbody +=    '<tr>' +
                                             '<td>' +
                                                 '<div class="col-12">' +
-                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="width: 150px; height: 100px;">' +
+                                                    '<img class="mt-2" src="http://tallergeorgio.hopto.org:5613/tallergeorgio/imagenes/maquinas/' + machines[j].image_machine + '" alt="" style="height: 100px;">' +
                                                 '</div>' +
                                                 machines[j].name_machine +
                                             '</td>' +
